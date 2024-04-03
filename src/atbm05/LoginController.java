@@ -5,17 +5,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.event.ActionEvent;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import DataAccessLayer.DataAccessLayer;
 
@@ -35,10 +30,11 @@ public class LoginController {
         Alert.AlertType popUp = Alert.AlertType.INFORMATION;
         String title = "Login Successfully";
         String msg = "Welcome " + username + "!";
-        
+        boolean flag = false;
         
         try {
             DataAccessLayer.getInstance(username, password).connect();
+            flag = true;
         } catch (SQLException e) {
             popUp = Alert.AlertType.ERROR;
             title = "Login failed";
@@ -47,6 +43,15 @@ public class LoginController {
             showAlert(popUp, title, msg);
         } 
         
+        if (flag == true) {
+            ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("Main.fxml"));
+            Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
+            Scene scene1 = new Scene(fxmlLoader.load());
+            stage.setScene(scene1);
+            stage.centerOnScreen();
+            stage.show();
+        }
     } 
 
     private void showAlert(Alert.AlertType alertType, String title, String message) throws SQLException {
