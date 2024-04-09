@@ -11,7 +11,31 @@ import dto.Nhansu;
 
 public class NHANSUController {
     @FXML
-    private TableView<Role> nhansuTableView;
+    private TableView<Nhansu> nhansuTableView;
+
+    @FXML
+    private TableColumn<Nhansu, String> MANV;
+
+    @FXML
+    private TableColumn<Nhansu, String> HOTEN;
+
+    @FXML
+    private TableColumn<Nhansu, String> PHAI;
+
+    @FXML
+    private TableColumn<Nhansu, String> NGSINH;
+
+    @FXML
+    private TableColumn<Nhansu, String> PHUCAP;
+
+    @FXML
+    private TableColumn<Nhansu, String> DT;
+
+    @FXML
+    private TableColumn<Nhansu, String> VAITRO;
+
+    @FXML
+    private TableColumn<Nhansu, String> MADV;
 
     @FXML
     private void onAddClick_NHANSU() {
