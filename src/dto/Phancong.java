@@ -1,9 +1,5 @@
 package dto;
-
-import java.time.LocalDate;
-
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Phancong {
@@ -74,8 +70,5 @@ public class Phancong {
     }
     public SimpleStringProperty MACTproperty(){
         return MACT;
-    }
-    public String getDT(){
-        return DT.get();
     }
 }

@@ -2,6 +2,7 @@ package dto;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import java.time.LocalDate;
 
 public class SinhVien {
@@ -20,7 +21,7 @@ public class SinhVien {
 
     }
 
-    public SinhVien(String MASV, String HOTEN, String PHAI, Date NGSINH, String DIACHI, String SDT, String MACT, String MANGANH, int SOTCTL, float DIEMTBTL){
+    public SinhVien(String MASV, String HOTEN, String PHAI, LocalDate NGSINH, String DIACHI, String SDT, String MACT, String MANGANH, int SOTCTL, float DIEMTBTL){
         this.MASV.set(MASV);
         this.HOTEN.set(HOTEN);
         this.PHAI.set(PHAI);
@@ -36,7 +37,7 @@ public class SinhVien {
     // Getters and setters
 
     public String getMASV() {
-        return MASV.get;
+        return MASV.get();
     }
 
     public void setMASV(String MASV) {
@@ -73,7 +74,7 @@ public class SinhVien {
         return NGSINH.get();
     }
 
-    public void setNGSINH(Date NGSINH) {
+    public void setNGSINH(LocalDate NGSINH) {
         this.NGSINH.set(NGSINH);
     }
     

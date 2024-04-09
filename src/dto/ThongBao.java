@@ -2,7 +2,6 @@ package dto;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import java.time.LocalDate;
-import java.util.Date;
 
 //DTO for THONGBAO table
 public class ThongBao {

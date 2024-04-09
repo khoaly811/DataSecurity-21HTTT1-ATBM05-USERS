@@ -1,8 +1,8 @@
 package dto;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import java.time.LocalDate;
-import java.util.Date;
 
 // DTO for KHMO table
 public class KHMo {
@@ -16,7 +16,7 @@ public class KHMo {
 
     }
 
-    public KHMo(String MAHP, int HOCKY, int NAM, String MACT, Date NGAYBD){
+    public KHMo(String MAHP, int HOCKY, int NAM, String MACT, LocalDate NGAYBD){
         this.MAHP.set(MAHP);
         this.HOCKY.set(HOCKY);
         this.NAM.set(NAM);
@@ -74,10 +74,10 @@ public class KHMo {
     }
 
     public LocalDate getNGAYBD(){
-        return NGAYBD.get;
+        return NGAYBD.get();
     }
 
-    public void setNGAYBD(Date NGAYBD){
+    public void setNGAYBD(LocalDate NGAYBD){
         this.NGAYBD.set(NGAYBD);
     }
 

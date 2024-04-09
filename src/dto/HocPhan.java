@@ -1,8 +1,6 @@
 package dto;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import java.time.LocalDate;
-import java.util.Date;
 
 public class HocPhan {
     private final SimpleStringProperty MAHP = new SimpleStringProperty();
@@ -56,7 +54,7 @@ public class HocPhan {
         return SOTC.get();
     }
     
-    public void setSOTCTL(int SOTC) {
+    public void setSOTC(int SOTC) {
         this.SOTC.set(SOTC);
     }
 
@@ -68,7 +66,7 @@ public class HocPhan {
         return SOTIETLT.get();
     }
     
-    public void setSOTCTL(int SOTIETLT) {
+    public void setSOTIETLT(int SOTIETLT) {
         this.SOTIETLT.set(SOTIETLT);
     }
 
@@ -80,7 +78,7 @@ public class HocPhan {
         return SOTIETTH.get();
     }
     
-    public void setSOTCTL(int SOTIETTH) {
+    public void setSOTIETT(int SOTIETTH) {
         this.SOTIETTH.set(SOTIETTH);
     }
 
