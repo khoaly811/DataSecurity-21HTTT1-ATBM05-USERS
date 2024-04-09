@@ -16,8 +16,14 @@ xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <TableView layoutX="25.0" layoutY="85.0" prefHeight="480.0" prefWidth="818.0">
       <columns>
-        <TableColumn prefWidth="75.0" text="C1" />
-        <TableColumn prefWidth="75.0" text="C2" />
+        <TableColumn fx:id="MANV" prefWidth="75.0" text="MANV" />
+        <TableColumn fx:id="HOTEN" prefWidth="75.0" text="Ho ten" />
+        <TableColumn fx:id="PHAI" prefWidth="75.0" text="Phai" />
+        <TableColumn fx:id="NGSINH" prefWidth="75.0" text="Ngay sinh" />
+        <TableColumn fx:id="PHUCAP" prefWidth="75.0" text="Phu cap" />
+        <TableColumn fx:id="DT" prefWidth="75.0" text="Dien thoai" />
+        <TableColumn fx:id="VAITRO" prefWidth="75.0" text="Vai tro" />
+        <TableColumn fx:id="MADV" prefWidth="75.0" text="MADV" />
       </columns>
     </TableView>
     <TextField layoutX="474.0" layoutY="42.0" prefHeight="26.0" prefWidth="292.0" promptText="Keywords..." />
