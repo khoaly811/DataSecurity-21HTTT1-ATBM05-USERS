@@ -3,10 +3,16 @@ package atbm05;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import oracle.jdbc.OracleTypes;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
+import DataAccessLayer.DataAccessLayer;
 import dto.Nhansu;
 
 public class NHANSUController {
@@ -61,7 +67,7 @@ public class NHANSUController {
         HOTEN.setCellValueFactory(cellData -> cellData.getValue().HOTENproperty());
         PHAI.setCellValueFactory(cellData -> cellData.getValue().PHAIproperty());
         NGSINH.setCellValueFactory(cellData -> cellData.getValue().NGSINHproperty().asString());
-        PHUCAP.setCellValueFactory(cellData -> cellData.getValue().PHUCAPproperty());
+        PHUCAP.setCellValueFactory(cellData -> cellData.getValue().PHUCAPproperty().asString());
         DT.setCellValueFactory(cellData -> cellData.getValue().DTproperty());
         VAITRO.setCellValueFactory(cellData -> cellData.getValue().VAITROproperty());
         MADV.setCellValueFactory(cellData -> cellData.getValue().MADVproperty());
@@ -72,9 +78,10 @@ public class NHANSUController {
         //     searchUsers(newValue);
         // });
         nhansuList = FXCollections.observableArrayList();
+        loadNhansuFromDatabase();
     }
 
-    private void loadRolesFromDatabase() {
+    private void loadNhansuFromDatabase() {
         DataAccessLayer dal = null;
         Connection conn = null;
         CallableStatement cst = null;
@@ -83,17 +90,21 @@ public class NHANSUController {
         try {
             dal = DataAccessLayer.getInstance("your_username", "your_password");
             conn = dal.connect();
-            cst = conn.prepareCall("{CALL SP_VIEW_TABLE(?)}");
-            cst.registerOutParameter(1, "NHANSU");
+            cst = conn.prepareCall("{CALL C##QLK.SP_VIEW_TABLE(?,?)}");
+            cst.setString(1, "NHANSU");
+            cst.registerOutParameter(2, OracleTypes.CURSOR);
+            System.out.println("nhan beo 1");
             cst.execute();
-            rs = cst.getObject(1);
+            System.out.println("nhan beo 2");
+            rs = (ResultSet) cst.getObject(2);
+            System.out.println("Nhan beo 3");
             while (rs.next()) {
                 Nhansu ns = new Nhansu();
                 ns.setMANV(rs.getString("MANV"));
                 ns.setHOTEN((rs.getString("HOTEN")));
                 ns.setPHAI((rs.getString("PHAI")));
-                ns.setNGSINH((rs.getString("NGSINH")));
-                ns.setPHUCAP((rs.getString("PHUCAP")));
+                ns.setNGSINH((rs.getDate("NGSINH").toLocalDate()));
+                ns.setPHUCAP((rs.getInt("PHUCAP")));
                 ns.setDT((rs.getString("DT")));
                 ns.setVAITRO((rs.getString("VAITRO")));
                 ns.setMADV((rs.getString("MADV")));
@@ -101,11 +112,11 @@ public class NHANSUController {
                 nhansuList.add(ns);
             }
         } catch (SQLException e) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Failed to load roles from the database.");
             System.out.println(e.getMessage());
+            
         }
 
         // Set the loaded users to the table view
-        nhansuListTableView.setItems(nhansuList);
+        nhansuTableView.setItems(nhansuList);
     }
 }
