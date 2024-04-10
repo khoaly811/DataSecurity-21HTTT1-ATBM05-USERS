@@ -15,7 +15,7 @@
   <children>
     <TableView fx:id="nhansuTableView" layoutX="25.0" layoutY="85.0" prefHeight="480.0" prefWidth="818.0">
       <columns>
-        <TableColumn fx:id="MANV" prefWidth="75.0" text="MANV" />
+        <!-- <TableColumn fx:id="MANV" prefWidth="75.0" text="MANV" /> -->
         <TableColumn fx:id="HOTEN" prefWidth="75.0" text="Ho ten" />
         <TableColumn fx:id="PHAI" prefWidth="75.0" text="Phai" />
         <TableColumn fx:id="NGSINH" prefWidth="75.0" text="Ngay sinh" />

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="765.0" prefWidth="668.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="atbm05.DANGKYController">
+  <children>
+    <TableView fx:id="dangkyTableView" layoutX="25.0" layoutY="85.0" prefHeight="480.0" prefWidth="818.0">
+      <columns>
+        <!-- <TableColumn fx:id="MANV" prefWidth="75.0" text="MANV" /> -->
+        <TableColumn fx:id="HOTENSV" prefWidth="75.0" text="Ho ten sinh vien" />
+         <TableColumn fx:id="HOTENGV" prefWidth="75.0" text="Ho ten giang vien" />
+        <TableColumn fx:id="TENHP" prefWidth="75.0" text="Ten hoc phan" />
+        <TableColumn fx:id="HK" prefWidth="75.0" text="Hoc ky" />
+        <TableColumn fx:id="NAM" prefWidth="75.0" text="Nam" />
+        <TableColumn fx:id="DIEMTH" prefWidth="75.0" text="Diem thuc hanh" />
+        <TableColumn fx:id="DIEMQT" prefWidth="75.0" text="Diem qua trinh" />
+        <TableColumn fx:id="DIEMCK" prefWidth="75.0" text="Diem cuoi ky" />
+        <TableColumn fx:id="DIEMTK" prefWidth="75.0" text="Diem tong ket" />
+      </columns>
+    </TableView>
+    <TextField layoutX="474.0" layoutY="42.0" prefHeight="26.0" prefWidth="292.0" promptText="Keywords..." />
+    <Button layoutX="785.0" layoutY="42.0" mnemonicParsing="false" text="Search" />
+    <Button layoutX="893.0" layoutY="86.0" mnemonicParsing="false" onAction="#onAddClick_DANGKY" prefHeight="26.0" prefWidth="106.0" text="Thêm Nhân sụ" />
+    <Button layoutX="893.0" layoutY="136.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="106.0" text="Cập nhật" />
+    <Button layoutX="894.0" layoutY="184.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="106.0" style="-fx-background-color: red;" text="Xóa nhân sự" textFill="WHITE" />
+    <ImageView fitHeight="56.0" fitWidth="63.0" layoutX="918.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+        <Image url="@image/1144760.png" />
+      </image>
+    </ImageView>
+    <Button layoutX="919.0" layoutY="14.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="54.0" style="-fx-background-color: transparent; -fx-cursor-hover: pointer;">
+      <cursor>
+        <Cursor fx:constant="HAND" />
+      </cursor>
+    </Button>
+      <TextField layoutX="57.0" layoutY="599.0" />
+  </children>
+</AnchorPane>

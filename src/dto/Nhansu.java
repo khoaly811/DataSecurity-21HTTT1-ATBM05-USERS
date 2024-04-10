@@ -15,7 +15,6 @@ public class Nhansu {
     private final SimpleStringProperty DT = new SimpleStringProperty();
     private final SimpleStringProperty VAITRO = new SimpleStringProperty();
     // private final SimpleStringProperty MADV = new SimpleStringProperty();
-    private final SimpleStringProperty TENDV = new SimpleStringProperty();
     private final ObjectProperty<Donvi> donviProperty = new SimpleObjectProperty<>();
 
     // public Donvi getDonvi() {
@@ -32,7 +31,7 @@ public class Nhansu {
         this.MANV.set(MANV);
         this.HOTEN.set(HOTEN);
     }
-    public Nhansu(String MANV, String HOTEN, String PHAI, LocalDate NGSINH, int PHUCAP, String DT, String VAITRO, Donvi donvi) {
+    public Nhansu(String MANV, String HOTEN, String PHAI, LocalDate NGSINH, int PHUCAP, String DT, String VAITRO) {
         this.MANV.set(MANV);
         this.HOTEN.set(HOTEN);
         this.PHAI.set(PHAI);
@@ -40,21 +39,8 @@ public class Nhansu {
         this.PHUCAP.set(PHUCAP);
         this.DT.set(DT);
         this.VAITRO.set(VAITRO);
-        this.TENDV.set(donvi != null ? donvi.getTENDV() : "");
-        this.donviProperty.set(donvi);
     }
-    public String getTENDV() {
-        return TENDV.get();
-    }
-
-    public void setTENDV(String TENDV) {
-        this.TENDV.set(TENDV);
-    }
-
-    public SimpleStringProperty TENDVproperty() {
-        return TENDV;
-    }
-
+   
     public Donvi getDonvi() {
         return donviProperty.get();
     }
