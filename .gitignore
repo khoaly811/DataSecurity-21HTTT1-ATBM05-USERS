@@ -1,4 +1,6 @@
 lib/*
 .DS_Store
 .vscode/launch.json
+.vscode/settings.json
+.vscode/c_cpp_properties.json
 bin/*
