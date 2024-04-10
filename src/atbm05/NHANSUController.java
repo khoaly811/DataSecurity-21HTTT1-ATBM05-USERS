@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import oracle.jdbc.OracleTypes;
 
 import java.sql.CallableStatement;
@@ -56,6 +57,24 @@ public class NHANSUController {
         System.out.println("Delete");
     }
 
+    @FXML
+    private TextField hotenDisplay;
+
+    @FXML
+    private TextField phaiDisplay;
+
+    @FXML
+    private TextField phucapDisplay;
+
+    @FXML
+    private TextField ngsinhDisplay;
+
+    @FXML
+    private TextField dienthoaiDisplay;
+
+    @FXML
+    private TextField tendvDisplay;
+
     private ObservableList<Nhansu> nhansuList = FXCollections.observableArrayList();
 
     @FXML
@@ -69,6 +88,29 @@ public class NHANSUController {
         TENDV.setCellValueFactory(cellData -> cellData.getValue().getDonvi().TENDVproperty());
         nhansuList = FXCollections.observableArrayList();
         loadNhansuFromDatabase();
+
+        HOTEN.setCellValueFactory(cellData -> cellData.getValue().HOTENproperty());
+        PHAI.setCellValueFactory(cellData -> cellData.getValue().PHAIproperty());
+        NGSINH.setCellValueFactory(cellData -> cellData.getValue().NGSINHproperty().asString());
+        PHUCAP.setCellValueFactory(cellData -> cellData.getValue().PHUCAPproperty().asString());
+        DT.setCellValueFactory(cellData -> cellData.getValue().DTproperty());
+        VAITRO.setCellValueFactory(cellData -> cellData.getValue().VAITROproperty());
+        TENDV.setCellValueFactory(cellData -> cellData.getValue().getDonvi().TENDVproperty());
+        nhansuList = FXCollections.observableArrayList();
+        loadNhansuFromDatabase();
+
+        // Add listener to the TableView selection model
+        nhansuTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                // Display the selected row's information in the corresponding TextFields
+                hotenDisplay.setText(newSelection.getHOTEN());
+                phaiDisplay.setText(newSelection.getPHAI());
+                ngsinhDisplay.setText(newSelection.getNGSINH().toString());
+                phucapDisplay.setText(String.valueOf(newSelection.getPHUCAP()));
+                dienthoaiDisplay.setText(newSelection.getDT());
+                tendvDisplay.setText(newSelection.getDonvi().getTENDV());
+            }
+        });
     }
 
     private void loadNhansuFromDatabase() {
@@ -96,7 +138,7 @@ public class NHANSUController {
                 ns.setDT((rs.getString("DT")));
                 ns.setVAITRO((rs.getString("VAITRO")));
                 String tendv = rs.getString("TENDV");
-                System.out.println("TENDV: " + tendv);
+                System.out.println("TENDV là: " + tendv);
                 Donvi dv = new Donvi();
                 dv.setTENDV(tendv);
                 ns.setDonvi(dv);
@@ -104,10 +146,11 @@ public class NHANSUController {
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            
+
         }
 
         // Set the loaded users to the table view
         nhansuTableView.setItems(nhansuList);
     }
+
 }
