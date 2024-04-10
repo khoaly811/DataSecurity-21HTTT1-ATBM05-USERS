@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import DataAccessLayer.DataAccessLayer;
+import dto.Donvi;
 import dto.Nhansu;
 
 public class NHANSUController {
@@ -105,7 +106,11 @@ public class NHANSUController {
                 ns.setPHUCAP((rs.getInt("PHUCAP")));
                 ns.setDT((rs.getString("DT")));
                 ns.setVAITRO((rs.getString("VAITRO")));
-                ns.setTENDV((rs.getString("TENDV")));
+                String tendv = rs.getString("TENDV");
+                System.out.println("TENDV: " + tendv); // Log the value of TENDV
+                Donvi dv = new Donvi();
+                dv.setTENDV(tendv);
+                ns.setDonvi(dv);
                 nhansuList.add(ns);
             }
         } catch (SQLException e) {

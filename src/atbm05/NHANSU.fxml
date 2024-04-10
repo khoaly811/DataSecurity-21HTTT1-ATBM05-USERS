@@ -23,7 +23,7 @@ xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
         <TableColumn fx:id="PHUCAP" prefWidth="75.0" text="Phu cap" />
         <TableColumn fx:id="DT" prefWidth="75.0" text="Dien thoai" />
         <TableColumn fx:id="VAITRO" prefWidth="75.0" text="Vai tro" />
-        <TableColumn fx:id="MADV" prefWidth="75.0" text="MADV" />
+        <TableColumn fx:id="TENDV" prefWidth="75.0" text="TEN DV" />
       </columns>
     </TableView>
     <TextField layoutX="474.0" layoutY="42.0" prefHeight="26.0" prefWidth="292.0" promptText="Keywords..." />
