@@ -1,0 +1,49 @@
+CREATE OR REPLACE FUNCTION F_CS_SINHVIEN(
+    P_SCHEMA IN VARCHAR2,
+    P_OBJECT IN VARCHAR2
+)
+RETURN VARCHAR2
+AS
+    USERNAME VARCHAR2(130);
+    USERROLE NUMBER;
+    PREDICATE   VARCHAR2(1000); 
+BEGIN
+    USERNAME := SYS_CONTEXT('USERENV', 'SESSION_USER');
+    
+    IF USERNAME = 'C##QLK' THEN
+        RETURN '';
+    ELSE
+        SELECT COUNT(*) INTO USERROLE FROM DBA_ROLE_PRIVS WHERE GRANTEE = USERNAME AND (GRANTED_ROLE = 'GVU' OR GRANTED_ROLE = 'NVCB'
+        OR GRANTED_ROLE = 'GV' OR GRANTED_ROLE = 'TDV' OR GRANTED_ROLE = 'TKHOA');
+
+        IF USERROLE > 0 THEN
+            PREDICATE := '1=1'; 
+        ELSE
+            SELECT COUNT(*) INTO USERROLE FROM DBA_ROLE_PRIVS WHERE GRANTEE = USERNAME AND (GRANTED_ROLE = 'SV');
+
+            IF USERROLE > 0 THEN
+                PREDICATE := 'MASV = ''' || USERNAME || '''';
+            ELSE
+                PREDICATE := '1=0'; 
+            END IF;
+        END IF;
+    END IF;
+
+    RETURN PREDICATE;
+END;
+/
+BEGIN
+    DBMS_RLS.ADD_POLICY(
+        OBJECT_SCHEMA    => 'C##QLK',
+        OBJECT_NAME      => 'SINHVIEN',
+        policy_name      => 'SINHVIEN_POLICY',
+        function_schema  => 'C##QLK',
+        policy_function  => 'F_CS_SINHVIEN',
+        statement_types  => 'SELECT, UPDATE, INSERT',
+        update_check     => TRUE,
+        enable           => TRUE);
+END;
+/
+GRANT SELECT ON C##QLK.SINHVIEN TO NVCB,GVU,GV,TDV,TKHOA,SV;
+GRANT INSERT, UPDATE ON C##QLK.SINHVIEN TO GVU;
+GRANT UPDATE(DCHI, DT) ON C##QLK.SINHVIEN TO SV;
