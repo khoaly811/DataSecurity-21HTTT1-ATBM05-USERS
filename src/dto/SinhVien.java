@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import java.time.LocalDate;
 
-public class SinhVien {
+public class Sinhvien {
     private final SimpleStringProperty MASV = new SimpleStringProperty();
     private final SimpleStringProperty HOTEN = new SimpleStringProperty();
     private final SimpleStringProperty PHAI = new SimpleStringProperty();
@@ -17,11 +17,11 @@ public class SinhVien {
     private final SimpleIntegerProperty SOTCTL = new SimpleIntegerProperty();
     private final SimpleFloatProperty DIEMTBTL = new SimpleFloatProperty();
     
-    public SinhVien(){
+    public Sinhvien(){
 
     }
 
-    public SinhVien(String MASV, String HOTEN, String PHAI, LocalDate NGSINH, String DIACHI, String SDT, String MACT, String MANGANH, int SOTCTL, float DIEMTBTL){
+    public Sinhvien(String MASV, String HOTEN, String PHAI, LocalDate NGSINH, String DIACHI, String SDT, String MACT, String MANGANH, int SOTCTL, float DIEMTBTL){
         this.MASV.set(MASV);
         this.HOTEN.set(HOTEN);
         this.PHAI.set(PHAI);

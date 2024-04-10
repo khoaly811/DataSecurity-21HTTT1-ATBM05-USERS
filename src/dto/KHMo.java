@@ -5,18 +5,18 @@ import javafx.beans.property.SimpleObjectProperty;
 import java.time.LocalDate;
 
 // DTO for KHMO table
-public class KHMo {
+public class KHmo {
     private final SimpleStringProperty MAHP = new SimpleStringProperty();
     private final SimpleIntegerProperty HOCKY = new SimpleIntegerProperty();
     private final SimpleIntegerProperty NAM = new SimpleIntegerProperty();
     private final SimpleStringProperty MACT = new SimpleStringProperty();
     private final SimpleObjectProperty<LocalDate> NGAYBD = new SimpleObjectProperty<>();
     
-    public KHMo(){
+    public KHmo(){
 
     }
 
-    public KHMo(String MAHP, int HOCKY, int NAM, String MACT, LocalDate NGAYBD){
+    public KHmo(String MAHP, int HOCKY, int NAM, String MACT, LocalDate NGAYBD){
         this.MAHP.set(MAHP);
         this.HOCKY.set(HOCKY);
         this.NAM.set(NAM);

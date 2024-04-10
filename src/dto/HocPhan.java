@@ -2,7 +2,7 @@ package dto;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class HocPhan {
+public class Hocphan {
     private final SimpleStringProperty MAHP = new SimpleStringProperty();
     private final SimpleStringProperty TENHP = new SimpleStringProperty();
     private final SimpleIntegerProperty SOTC = new SimpleIntegerProperty();
@@ -11,11 +11,11 @@ public class HocPhan {
     private final SimpleIntegerProperty SOSVTOIDA = new SimpleIntegerProperty();
     private final SimpleStringProperty MADV = new SimpleStringProperty();
     
-    public HocPhan() {
+    public Hocphan() {
 
     }
 
-    public HocPhan(String MAHP, String TENHP, int SOTC, int SOTIETLT, int SOTIETTH, int SOSVTOIDA, String MADV){
+    public Hocphan(String MAHP, String TENHP, int SOTC, int SOTIETLT, int SOTIETTH, int SOSVTOIDA, String MADV){
         this.MAHP.set(MAHP);
         this.TENHP.set(TENHP);
         this.SOTC.set(SOTC);

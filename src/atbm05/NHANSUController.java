@@ -41,7 +41,7 @@ public class NHANSUController {
     private TableColumn<Nhansu, String> VAITRO;
 
     @FXML
-    private TableColumn<Nhansu, String> MADV;
+    private TableColumn<Nhansu, String> TENDV;
 
     @FXML
     private void onAddClick_NHANSU() {
@@ -70,7 +70,7 @@ public class NHANSUController {
         PHUCAP.setCellValueFactory(cellData -> cellData.getValue().PHUCAPproperty().asString());
         DT.setCellValueFactory(cellData -> cellData.getValue().DTproperty());
         VAITRO.setCellValueFactory(cellData -> cellData.getValue().VAITROproperty());
-        MADV.setCellValueFactory(cellData -> cellData.getValue().MADVproperty());
+        TENDV.setCellValueFactory(cellData -> cellData.getValue().getDonvi().TENDVproperty());
         // searchRoleField.textProperty().addListener((observable, oldValue, newValue) -> {
         //     searchRoles(newValue);
         // });
@@ -90,25 +90,22 @@ public class NHANSUController {
         try {
             dal = DataAccessLayer.getInstance("your_username", "your_password");
             conn = dal.connect();
-            cst = conn.prepareCall("{CALL C##QLK.SP_VIEW_TABLE(?,?)}");
-            cst.setString(1, "NHANSU");
-            cst.registerOutParameter(2, OracleTypes.CURSOR);
+            cst = conn.prepareCall("{CALL C##QLK.SP_VIEW_NHANSU(?)}");
+            cst.registerOutParameter(1, OracleTypes.CURSOR);
             System.out.println("nhan beo 1");
             cst.execute();
             System.out.println("nhan beo 2");
-            rs = (ResultSet) cst.getObject(2);
+            rs = (ResultSet) cst.getObject(1);
             System.out.println("Nhan beo 3");
             while (rs.next()) {
                 Nhansu ns = new Nhansu();
-                ns.setMANV(rs.getString("MANV"));
                 ns.setHOTEN((rs.getString("HOTEN")));
                 ns.setPHAI((rs.getString("PHAI")));
                 ns.setNGSINH((rs.getDate("NGSINH").toLocalDate()));
                 ns.setPHUCAP((rs.getInt("PHUCAP")));
                 ns.setDT((rs.getString("DT")));
                 ns.setVAITRO((rs.getString("VAITRO")));
-                ns.setMADV((rs.getString("MADV")));
-
+                ns.setTENDV((rs.getString("TENDV")));
                 nhansuList.add(ns);
             }
         } catch (SQLException e) {

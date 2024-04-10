@@ -2,6 +2,8 @@ package dto;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.ObjectProperty;
+
 import java.time.LocalDate;
 
 public class Nhansu {
@@ -12,8 +14,17 @@ public class Nhansu {
     private final SimpleIntegerProperty PHUCAP = new SimpleIntegerProperty();
     private final SimpleStringProperty DT = new SimpleStringProperty();
     private final SimpleStringProperty VAITRO = new SimpleStringProperty();
-    private final SimpleStringProperty MADV = new SimpleStringProperty();
+    // private final SimpleStringProperty MADV = new SimpleStringProperty();
+    private final SimpleStringProperty TENDV = new SimpleStringProperty();
+    private final ObjectProperty<Donvi> donviProperty = new SimpleObjectProperty<>();
 
+    // public Donvi getDonvi() {
+    //     return donvi;
+    // }
+
+    // public void setDonvi(Donvi donvi) {
+    //     this.donvi = donvi;
+    // }
     public Nhansu(){
 
     }
@@ -21,7 +32,7 @@ public class Nhansu {
         this.MANV.set(MANV);
         this.HOTEN.set(HOTEN);
     }
-    public Nhansu(String MANV, String HOTEN, String PHAI, LocalDate NGSINH, int PHUCAP, String DT, String VAITRO, String MADV){
+    public Nhansu(String MANV, String HOTEN, String PHAI, LocalDate NGSINH, int PHUCAP, String DT, String VAITRO, Donvi donvi) {
         this.MANV.set(MANV);
         this.HOTEN.set(HOTEN);
         this.PHAI.set(PHAI);
@@ -29,7 +40,31 @@ public class Nhansu {
         this.PHUCAP.set(PHUCAP);
         this.DT.set(DT);
         this.VAITRO.set(VAITRO);
-        this.MADV.set(MADV);
+        this.TENDV.set(donvi != null ? donvi.getTENDV() : "");
+        this.donviProperty.set(donvi);
+    }
+    public String getTENDV() {
+        return TENDV.get();
+    }
+
+    public void setTENDV(String TENDV) {
+        this.TENDV.set(TENDV);
+    }
+
+    public SimpleStringProperty TENDVproperty() {
+        return TENDV;
+    }
+
+    public Donvi getDonvi() {
+        return donviProperty.get();
+    }
+
+    public void setDonvi(Donvi donvi) {
+        this.donviProperty.set(donvi);
+    }
+
+    public ObjectProperty<Donvi> donviProperty() {
+        return donviProperty;
     }
     public String getMANV(){
         return MANV.get();
@@ -97,13 +132,13 @@ public class Nhansu {
     public SimpleStringProperty VAITROproperty(){
         return VAITRO;
     }
-    public String getMADV(){
-        return MADV.get();
-    }
-    public void setMADV(String MADV){
-        this.MADV.set(MADV);
-    }
-    public SimpleStringProperty MADVproperty(){
-        return MADV;
-    }
+    // public String getMADV(){
+    //     return MADV.get();
+    // }
+    // public void setMADV(String MADV){
+    //     this.MADV.set(MADV);
+    // }
+    // public SimpleStringProperty MADVproperty(){
+    //     return MADV;
+    // }
 }

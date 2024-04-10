@@ -4,16 +4,16 @@ import javafx.beans.property.SimpleObjectProperty;
 import java.time.LocalDate;
 
 //DTO for THONGBAO table
-public class ThongBao {
+public class Thongbao {
     private final SimpleStringProperty MATB = new SimpleStringProperty();
     private final SimpleStringProperty NOIDUNG= new SimpleStringProperty();
     private final SimpleObjectProperty<LocalDate> THOIGIAN = new SimpleObjectProperty<>();
 
-    public ThongBao(){
+    public Thongbao(){
 
     }
 
-    public ThongBao(String MATB, String NOIDUNG, LocalDate THOIGIAN){
+    public Thongbao(String MATB, String NOIDUNG, LocalDate THOIGIAN){
         this.MATB.set(MATB);
         this.NOIDUNG.set(NOIDUNG);
         this.THOIGIAN.set(THOIGIAN);

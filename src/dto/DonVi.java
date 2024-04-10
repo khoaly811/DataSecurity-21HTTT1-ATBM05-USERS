@@ -2,16 +2,16 @@ package dto;
 import javafx.beans.property.SimpleStringProperty;
 
 
-public class DonVi {
+public class Donvi {
     private final SimpleStringProperty MADV = new SimpleStringProperty();
     private final SimpleStringProperty TENDV = new SimpleStringProperty();;
     private final SimpleStringProperty TRUONGDV = new SimpleStringProperty();;
     
-    public DonVi(){
+    public Donvi(){
 
     }
 
-    public DonVi(String MADV, String TENDV, String TRUONGDV){
+    public Donvi(String MADV, String TENDV, String TRUONGDV){
         this.MADV.set(MADV);
         this.TENDV.set(TENDV);
         this.TRUONGDV.set(TRUONGDV);
