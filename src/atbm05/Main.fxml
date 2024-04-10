@@ -8,7 +8,7 @@
   <tabs>
       <Tab text="NHANSU">
          <content>
-            <fx:include source="NHANSU.fxml" />
+            <fx:include source="DANGKY.fxml" />
          </content>
       </Tab>
     <Tab text="PHANCONG">
@@ -24,6 +24,7 @@
       <Tab text="DANGKY">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            <!-- <fx:include source="DANGKY.fxml" /> -->
          </content>
       </Tab>
       <Tab text="KHMO">

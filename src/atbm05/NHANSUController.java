@@ -21,9 +21,6 @@ public class NHANSUController {
     private TableView<Nhansu> nhansuTableView;
 
     @FXML
-    private TableColumn<Nhansu, String> MANV;
-
-    @FXML
     private TableColumn<Nhansu, String> HOTEN;
 
     @FXML
@@ -63,8 +60,6 @@ public class NHANSUController {
 
     @FXML
     public void initialize() {
-        // Initialize table columns
-        MANV.setCellValueFactory(cellData -> cellData.getValue().MANVproperty());
         HOTEN.setCellValueFactory(cellData -> cellData.getValue().HOTENproperty());
         PHAI.setCellValueFactory(cellData -> cellData.getValue().PHAIproperty());
         NGSINH.setCellValueFactory(cellData -> cellData.getValue().NGSINHproperty().asString());
@@ -72,12 +67,6 @@ public class NHANSUController {
         DT.setCellValueFactory(cellData -> cellData.getValue().DTproperty());
         VAITRO.setCellValueFactory(cellData -> cellData.getValue().VAITROproperty());
         TENDV.setCellValueFactory(cellData -> cellData.getValue().getDonvi().TENDVproperty());
-        // searchRoleField.textProperty().addListener((observable, oldValue, newValue) -> {
-        //     searchRoles(newValue);
-        // });
-        // searchUserField.textProperty().addListener((observable, oldValue, newValue) -> {
-        //     searchUsers(newValue);
-        // });
         nhansuList = FXCollections.observableArrayList();
         loadNhansuFromDatabase();
     }
@@ -107,7 +96,7 @@ public class NHANSUController {
                 ns.setDT((rs.getString("DT")));
                 ns.setVAITRO((rs.getString("VAITRO")));
                 String tendv = rs.getString("TENDV");
-                System.out.println("TENDV: " + tendv); // Log the value of TENDV
+                System.out.println("TENDV: " + tendv);
                 Donvi dv = new Donvi();
                 dv.setTENDV(tendv);
                 ns.setDonvi(dv);
