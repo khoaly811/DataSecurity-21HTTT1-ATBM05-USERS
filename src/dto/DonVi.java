@@ -1,12 +1,15 @@
 package dto;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 
 
 public class Donvi {
     private final SimpleStringProperty MADV = new SimpleStringProperty();
     private final SimpleStringProperty TENDV = new SimpleStringProperty();;
     private final SimpleStringProperty TRUONGDV = new SimpleStringProperty();;
-    
+    private final ObjectProperty<Nhansu> nhansuProperty = new SimpleObjectProperty<>();
+
     public Donvi(){
 
     }
@@ -15,6 +18,18 @@ public class Donvi {
         this.MADV.set(MADV);
         this.TENDV.set(TENDV);
         this.TRUONGDV.set(TRUONGDV);
+    }
+
+    public Nhansu getNhansu() {
+        return nhansuProperty.get();
+    }
+
+    public void setNhansu(Nhansu nhansu) {
+        this.nhansuProperty.set(nhansu);
+    }
+
+    public ObjectProperty<Nhansu> nhansuProperty() {
+        return nhansuProperty;
     }
 
     // Getters and setters
