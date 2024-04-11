@@ -3,6 +3,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.ObjectProperty;
 import java.time.LocalDate;
 
 public class Sinhvien {
@@ -14,6 +15,7 @@ public class Sinhvien {
     private final SimpleStringProperty SDT = new SimpleStringProperty();
     private final SimpleStringProperty MACT = new SimpleStringProperty();
     private final SimpleStringProperty MANGANH = new SimpleStringProperty();
+    private final ObjectProperty<Donvi> donviProperty = new SimpleObjectProperty<>();
     private final SimpleIntegerProperty SOTCTL = new SimpleIntegerProperty();
     private final SimpleFloatProperty DIEMTBTL = new SimpleFloatProperty();
     
@@ -21,7 +23,7 @@ public class Sinhvien {
 
     }
 
-    public Sinhvien(String MASV, String HOTEN, String PHAI, LocalDate NGSINH, String DIACHI, String SDT, String MACT, String MANGANH, int SOTCTL, float DIEMTBTL){
+    public Sinhvien(String MASV, String HOTEN, String PHAI, LocalDate NGSINH, String DIACHI, String SDT, String MACT,String MANGANH, int SOTCTL, float DIEMTBTL){
         this.MASV.set(MASV);
         this.HOTEN.set(HOTEN);
         this.PHAI.set(PHAI);
@@ -129,6 +131,7 @@ public class Sinhvien {
     public SimpleStringProperty MANGANHproperty(){
         return MANGANH;
     }
+    
     public int getSOTCTL() {
         return SOTCTL.get();
     }
@@ -151,5 +154,17 @@ public class Sinhvien {
 
     public SimpleFloatProperty DIEMTBTLproperty(){
         return DIEMTBTL;
+    }
+
+    public Donvi getDonvi() {
+        return donviProperty.get();
+    }
+
+    public void setDonvi(Donvi donvi) {
+        this.donviProperty.set(donvi);
+    }
+
+    public ObjectProperty<Donvi> donviProperty() {
+        return donviProperty;
     }
 }
