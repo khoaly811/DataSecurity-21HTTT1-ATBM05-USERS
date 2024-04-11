@@ -1,6 +1,8 @@
 package dto;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.ObjectProperty;
 
 public class Hocphan {
     private final SimpleStringProperty MAHP = new SimpleStringProperty();
@@ -9,20 +11,21 @@ public class Hocphan {
     private final SimpleIntegerProperty SOTIETLT = new SimpleIntegerProperty();
     private final SimpleIntegerProperty SOTIETTH = new SimpleIntegerProperty();
     private final SimpleIntegerProperty SOSVTOIDA = new SimpleIntegerProperty();
-    private final SimpleStringProperty MADV = new SimpleStringProperty();
-    
+    //  private final SimpleStringProperty MADV = new SimpleStringProperty();
+
+    private final ObjectProperty<Donvi> donviProperty = new SimpleObjectProperty<>();
     public Hocphan() {
 
     }
 
-    public Hocphan(String MAHP, String TENHP, int SOTC, int SOTIETLT, int SOTIETTH, int SOSVTOIDA, String MADV){
+    public Hocphan(String MAHP, String TENHP, int SOTC, int SOTIETLT, int SOTIETTH, int SOSVTOIDA){
         this.MAHP.set(MAHP);
         this.TENHP.set(TENHP);
         this.SOTC.set(SOTC);
         this.SOTIETLT.set(SOTIETLT);
         this.SOTIETTH.set(SOTIETTH);
         this.SOSVTOIDA.set(SOSVTOIDA);
-        this.MADV.set(MADV);
+        // this.MADV.set(MADV);
     }
 
     // Getters and setters
@@ -78,7 +81,7 @@ public class Hocphan {
         return SOTIETTH.get();
     }
     
-    public void setSOTIETT(int SOTIETTH) {
+    public void setSOTIETTH(int SOTIETTH) {
         this.SOTIETTH.set(SOTIETTH);
     }
 
@@ -90,7 +93,7 @@ public class Hocphan {
         return SOSVTOIDA.get();
     }
     
-    public void setSOTCTL(int SOSVTOIDA) {
+    public void setSOSVTOIDA(int SOSVTOIDA) {
         this.SOSVTOIDA.set(SOSVTOIDA);
     }
 
@@ -98,13 +101,25 @@ public class Hocphan {
         return SOSVTOIDA;
     }
 
-    public String getMADV(){
-        return MADV.get();
+    // public String getMADV(){
+    //     return MADV.get();
+    // }
+    // public void setMADV(String MADV){
+    //     this.MADV.set(MADV);
+    // }
+    // public SimpleStringProperty MADVproperty(){
+    //     return MADV;
+    // }
+
+    public Donvi getDonvi() {
+        return donviProperty.get();
     }
-    public void setMADV(String MADV){
-        this.MADV.set(MADV);
+
+    public void setDonvi(Donvi donvi) {
+        this.donviProperty.set(donvi);
     }
-    public SimpleStringProperty MADVproperty(){
-        return MADV;
+
+    public ObjectProperty<Donvi> donviProperty() {
+        return donviProperty;
     }
 }
