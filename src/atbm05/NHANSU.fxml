@@ -16,26 +16,28 @@
     <TableView fx:id="nhansuTableView" layoutX="25.0" layoutY="85.0" prefHeight="480.0" prefWidth="818.0">
       <columns>
         <!-- <TableColumn fx:id="MANV" prefWidth="75.0" text="MANV" /> -->
-        <TableColumn fx:id="HOTEN" prefWidth="75.0" text="Ho ten" />
-        <TableColumn fx:id="PHAI" prefWidth="75.0" text="Phai" />
-        <TableColumn fx:id="NGSINH" prefWidth="75.0" text="Ngay sinh" />
-        <TableColumn fx:id="PHUCAP" prefWidth="75.0" text="Phu cap" />
-        <TableColumn fx:id="DT" prefWidth="75.0" text="Dien thoai" />
-        <TableColumn fx:id="VAITRO" prefWidth="75.0" text="Vai tro" />
-        <TableColumn fx:id="TENDV" prefWidth="75.0" text="TEN DV" />
+        <TableColumn fx:id="HOTEN" prefWidth="101.0" text="Ho ten" />
+        <TableColumn fx:id="PHAI" prefWidth="77.0" text="Phai" />
+        <TableColumn fx:id="NGSINH" prefWidth="82.0" text="Ngay sinh" />
+        <TableColumn fx:id="PHUCAP" prefWidth="72.0" text="Phu cap" />
+        <TableColumn fx:id="DT" prefWidth="130.0" text="Dien thoai" />
+        <TableColumn fx:id="VAITRO" prefWidth="116.0" text="Vai tro" />
+        <TableColumn fx:id="TENDV" prefWidth="239.0" text="TEN DV" />
+        <!-- Set the visibility of this column to false -->
+        <TableColumn fx:id="MANV" prefWidth="0.0" text="MANV" visible="false" />
       </columns>
     </TableView>
     <TextField layoutX="474.0" layoutY="42.0" prefHeight="26.0" prefWidth="292.0" promptText="Keywords..." />
     <Button layoutX="785.0" layoutY="42.0" mnemonicParsing="false" text="Search" />
     <Button layoutX="893.0" layoutY="86.0" mnemonicParsing="false" onAction="#onAddClick_NHANSU" prefHeight="26.0" prefWidth="106.0" text="Thêm Nhân sụ" />
-    <Button layoutX="893.0" layoutY="136.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="106.0" text="Cập nhật" />
+    <Button fx:id="updateNS" layoutX="893.0" layoutY="136.0" mnemonicParsing="false" onAction="#updateNSClick" prefHeight="26.0" prefWidth="106.0" text="Cập nhật" />
     <Button layoutX="894.0" layoutY="184.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="106.0" style="-fx-background-color: red;" text="Xóa nhân sự" textFill="WHITE" />
     <ImageView fitHeight="56.0" fitWidth="63.0" layoutX="918.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="@image/1144760.png" />
       </image>
     </ImageView>
-    <Button layoutX="919.0" layoutY="14.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="54.0" style="-fx-background-color: transparent; -fx-cursor-hover: pointer;">
+    <Button fx:id="profileButton" layoutX="919.0" layoutY="14.0" mnemonicParsing="false" onAction="#profileButtonclick" prefHeight="59.0" prefWidth="54.0" style="-fx-background-color: transparent; -fx-cursor-hover: pointer;">
       <cursor>
         <Cursor fx:constant="HAND" />
       </cursor>
@@ -50,7 +52,7 @@
       <TextField fx:id="phucapDisplay" layoutX="341.0" layoutY="617.0" />
       <TextField fx:id="ngsinhDisplay" layoutX="341.0" layoutY="579.0" />
       <TextField fx:id="dienthoaiDisplay" layoutX="87.0" layoutY="617.0" />
-      <TextField fx:id="tendvDisplay" layoutX="341.0" layoutY="661.0" />
+      <TextField fx:id="tendvDisplay" layoutX="341.0" layoutY="661.0" prefHeight="25.0" prefWidth="209.0" />
       <Label layoutX="268.0" layoutY="665.0" text="Tên đơn vị" />
       <Button layoutX="980.0" layoutY="14.0" mnemonicParsing="false" text="Thông báo" />
       <Button layoutX="941.0" layoutY="641.0" mnemonicParsing="false" text="Đăng xuất">

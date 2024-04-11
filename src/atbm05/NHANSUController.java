@@ -2,7 +2,9 @@ package atbm05;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -43,6 +45,9 @@ public class NHANSUController {
     private TableColumn<Nhansu, String> TENDV;
 
     @FXML
+    private TableColumn<Nhansu, String> MANV;
+
+    @FXML
     private void onAddClick_NHANSU() {
         System.out.println("Added");
     }
@@ -75,6 +80,12 @@ public class NHANSUController {
     @FXML
     private TextField tendvDisplay;
 
+    @FXML
+    private Button updateNS;
+
+    @FXML
+    private Button profileButton;
+
     private ObservableList<Nhansu> nhansuList = FXCollections.observableArrayList();
 
     @FXML
@@ -86,23 +97,14 @@ public class NHANSUController {
         DT.setCellValueFactory(cellData -> cellData.getValue().DTproperty());
         VAITRO.setCellValueFactory(cellData -> cellData.getValue().VAITROproperty());
         TENDV.setCellValueFactory(cellData -> cellData.getValue().getDonvi().TENDVproperty());
+        MANV.setCellValueFactory(cellData -> cellData.getValue().MANVproperty());
         nhansuList = FXCollections.observableArrayList();
         loadNhansuFromDatabase();
 
-        HOTEN.setCellValueFactory(cellData -> cellData.getValue().HOTENproperty());
-        PHAI.setCellValueFactory(cellData -> cellData.getValue().PHAIproperty());
-        NGSINH.setCellValueFactory(cellData -> cellData.getValue().NGSINHproperty().asString());
-        PHUCAP.setCellValueFactory(cellData -> cellData.getValue().PHUCAPproperty().asString());
-        DT.setCellValueFactory(cellData -> cellData.getValue().DTproperty());
-        VAITRO.setCellValueFactory(cellData -> cellData.getValue().VAITROproperty());
-        TENDV.setCellValueFactory(cellData -> cellData.getValue().getDonvi().TENDVproperty());
-        nhansuList = FXCollections.observableArrayList();
-        loadNhansuFromDatabase();
 
         // Add listener to the TableView selection model
         nhansuTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                // Display the selected row's information in the corresponding TextFields
                 hotenDisplay.setText(newSelection.getHOTEN());
                 phaiDisplay.setText(newSelection.getPHAI());
                 ngsinhDisplay.setText(newSelection.getNGSINH().toString());
@@ -138,7 +140,8 @@ public class NHANSUController {
                 ns.setDT((rs.getString("DT")));
                 ns.setVAITRO((rs.getString("VAITRO")));
                 String tendv = rs.getString("TENDV");
-                System.out.println("TENDV là: " + tendv);
+                ns.setMANV((rs.getString("MANV")));
+                //System.out.println("TENDV là: " + tendv);
                 Donvi dv = new Donvi();
                 dv.setTENDV(tendv);
                 ns.setDonvi(dv);
@@ -151,6 +154,16 @@ public class NHANSUController {
 
         // Set the loaded users to the table view
         nhansuTableView.setItems(nhansuList);
+    }
+
+    @FXML
+    private void updateNSClick(ActionEvent event) {
+        System.out.println("update");
+    }
+
+    @FXML
+    private void profileButtonclick(ActionEvent event) {
+        System.out.println("Profile");
     }
 
 }
