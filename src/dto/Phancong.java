@@ -1,6 +1,8 @@
 package dto;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.ObjectProperty;
 
 public class Phancong {
     private final SimpleStringProperty MAGV = new SimpleStringProperty();
@@ -8,7 +10,8 @@ public class Phancong {
     private final SimpleIntegerProperty HK = new SimpleIntegerProperty();
     private final SimpleIntegerProperty NAM = new SimpleIntegerProperty();
     private final SimpleStringProperty MACT = new SimpleStringProperty();
-    
+    private final ObjectProperty<Nhansu> nhansuProperty = new SimpleObjectProperty<>();
+    private final ObjectProperty<Hocphan> hocphanProperty = new SimpleObjectProperty<>();
 
     public Phancong(){
 
@@ -20,6 +23,29 @@ public class Phancong {
         this.HK.set(HK);
         this.NAM.set(NAM);
         this.MACT.set(MACT);
+    }
+
+    public Nhansu getNhansu() {
+        return nhansuProperty.get();
+    }
+
+    public void setNhansu(Nhansu nhansu) {
+        this.nhansuProperty.set(nhansu);
+    }
+
+    public ObjectProperty<Nhansu> nhansuProperty() {
+        return nhansuProperty;
+    }
+    public Hocphan getHocphan() {
+        return hocphanProperty.get();
+    }
+
+    public void setHocphan(Hocphan hocphan) {
+        this.hocphanProperty.set(hocphan);
+    }
+
+    public ObjectProperty<Hocphan> hocphanProperty() {
+        return hocphanProperty;
     }
 
     public String getMAGV(){
