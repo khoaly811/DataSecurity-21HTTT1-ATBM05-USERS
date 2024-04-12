@@ -374,6 +374,8 @@ BEGIN
 END;
 /
 
+
+--NHAN 12/04 22h (nay dung de checkpoint de ma minh biet duoc cho nao de run statement)
 SELECT * FROM USER_ERRORS WHERE NAME = 'SP_ALL_UPDATE_NHANSU';
 CREATE OR REPLACE PROCEDURE SP_DELETE_NHANSU(
     
@@ -396,4 +398,4 @@ BEGIN
     SP_GRANT_EXECUTE('SP_DELETE_NHANSU', 'SV');
 END;
 /
---NHAN 12/04 22h (nay dung de checkpoint de ma minh biet duoc cho nao de run statement)
+
