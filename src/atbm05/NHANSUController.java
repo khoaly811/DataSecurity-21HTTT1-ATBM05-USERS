@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -12,6 +13,7 @@ import oracle.jdbc.OracleTypes;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -101,7 +103,6 @@ public class NHANSUController {
         nhansuList = FXCollections.observableArrayList();
         loadNhansuFromDatabase();
 
-
         // Add listener to the TableView selection model
         nhansuTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -141,7 +142,7 @@ public class NHANSUController {
                 ns.setVAITRO((rs.getString("VAITRO")));
                 String tendv = rs.getString("TENDV");
                 ns.setMANV((rs.getString("MANV")));
-                //System.out.println("TENDV là: " + tendv);
+                // System.out.println("TENDV là: " + tendv);
                 Donvi dv = new Donvi();
                 dv.setTENDV(tendv);
                 ns.setDonvi(dv);
@@ -159,6 +160,55 @@ public class NHANSUController {
     @FXML
     private void updateNSClick(ActionEvent event) {
         System.out.println("update");
+        String HOTEN = hotenDisplay.getText().trim();
+        String NGSINH = ngsinhDisplay.getText().trim();
+        String DT = dienthoaiDisplay.getText().trim();
+        String Phai = phaiDisplay.getText().trim();
+        String PHUCAP = phucapDisplay.getText().trim();
+
+        // Retrieve the selected item from the TableView
+        Nhansu selectedNhanSu = nhansuTableView.getSelectionModel().getSelectedItem();
+
+        if (selectedNhanSu != null) {
+            String MANV = selectedNhanSu.getMANV();
+            // System.out.println(MANV);
+            // System.out.println(HOTEN);
+            // System.out.println(DT);
+
+            DataAccessLayer dal = null;
+            Connection conn = null;
+            CallableStatement cst = null;
+            PreparedStatement pst = null;
+            ResultSet rs = null;
+
+            // Now you have MANV, you can use it for further processing
+            try {
+                dal = DataAccessLayer.getInstance("", "");
+                conn = dal.connect();
+                pst = conn.prepareStatement(
+                        "update C##QLK.NHANSU set DT = ?");
+                pst.setString(1, DT);
+                
+                int rowsAffected = pst.executeUpdate();
+
+                pst = conn.prepareStatement(
+                        "update C##QLK.NHANSU set HOTEN = ?");
+                pst.setString(1, HOTEN);
+                rowsAffected = pst.executeUpdate();
+                // cst.setString(2, Phai);
+                // cst.setString(3, NGSINH);
+                // cst.setString(4, PHUCAP);
+                // cst.setString(5, DT);
+                // cst.setString(2, MANV);
+                System.out.println(HOTEN);
+                System.out.println(MANV);
+                System.out.println("DONE");
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        } else {
+            System.out.println("No row selected.");
+        }
     }
 
     @FXML
