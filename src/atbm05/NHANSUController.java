@@ -10,7 +10,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import oracle.jdbc.OracleTypes;
-
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -214,6 +215,59 @@ public class NHANSUController {
     @FXML
     private void profileButtonclick(ActionEvent event) {
         System.out.println("Profile");
+    }
+
+    @FXML
+    private void deleteNSClick(ActionEvent event) {
+        System.out.println("Delete");
+        Nhansu selectedNhanSu = nhansuTableView.getSelectionModel().getSelectedItem();
+
+        if (selectedNhanSu != null) {
+            String MANV = selectedNhanSu.getMANV();
+            
+            DataAccessLayer dal = null;
+            Connection conn = null;
+            CallableStatement cst = null;
+            
+            try {
+                dal = DataAccessLayer.getInstance("", "");
+                conn = dal.connect();
+                cst = conn.prepareCall("{CALL C##QLK.SP_DELETE_NHANSU(?)}");
+                cst.setString(1, MANV);
+                
+                int rowsAffected = cst.executeUpdate();
+                
+                if (rowsAffected > 0) {
+                    System.out.println("Deleted successfully.");
+                    // You can show a success message here if needed
+                } else {
+                    System.out.println("No rows deleted.");
+                    // You can show a message indicating that no rows were deleted if needed
+                }
+            } catch (SQLException e) {
+                System.out.println("Failed to delete: " + e.getMessage());
+                showAlert(Alert.AlertType.ERROR, "Error", "Failed to delete user: " + e.getMessage());
+            } finally {
+                // Close resources in a finally block to ensure they are always closed
+                try {
+                    if (cst != null) cst.close();
+                    if (conn != null) conn.close();
+                } catch (SQLException e) {
+                    System.out.println("Error closing resources: " + e.getMessage());
+                }
+            }
+        } else {
+            System.out.println("No row selected.");
+        }
+        
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
 }
