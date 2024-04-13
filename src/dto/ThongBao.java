@@ -3,6 +3,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 import java.sql.Time;
+//doi ten file
 
 //DTO for THONGBAO table
 public class Thongbao {

@@ -4,7 +4,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleFloatProperty;
-
+//doi ten file
 public class Dangky {
     private final SimpleStringProperty MASV = new SimpleStringProperty();
     private final SimpleStringProperty MAGV = new SimpleStringProperty();
