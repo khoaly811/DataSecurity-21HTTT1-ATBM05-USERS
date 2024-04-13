@@ -1,7 +1,6 @@
 package atbm05;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -26,14 +25,6 @@ public class DONVIController {
 
     @FXML 
     private TableColumn<Donvi, String> HOTEN_TDV;
-
-    @FXML
-    private Button profileButton;
-
-    @FXML
-    private void profileButtonClick(ActionEvent event) {
-
-    }
 
     @FXML
     private void onAddClick_DONVI() {

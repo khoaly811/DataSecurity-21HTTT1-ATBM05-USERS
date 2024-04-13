@@ -10,13 +10,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import oracle.jdbc.OracleTypes;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
+
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 import DataAccessLayer.DataAccessLayer;
 import dto.Donvi;
@@ -128,8 +127,11 @@ public class NHANSUController {
             conn = dal.connect();
             cst = conn.prepareCall("{CALL C##QLK.SP_VIEW_NHANSU(?)}");
             cst.registerOutParameter(1, OracleTypes.CURSOR);
+            System.out.println("nhan beo 1");
             cst.execute();
+            System.out.println("nhan beo 2");
             rs = (ResultSet) cst.getObject(1);
+            System.out.println("Nhan beo 3");
             while (rs.next()) {
                 Nhansu ns = new Nhansu();
                 ns.setHOTEN((rs.getString("HOTEN")));
@@ -157,57 +159,44 @@ public class NHANSUController {
 
     @FXML
     private void updateNSClick(ActionEvent event) {
-        System.out.println("update");
-        String HOTEN = hotenDisplay.getText().trim();
-        String NGSINH = ngsinhDisplay.getText().trim();
-        String DT = dienthoaiDisplay.getText().trim();
-        String Phai = phaiDisplay.getText().trim();
-        String PHUCAP = phucapDisplay.getText().trim();
+        String INP_HOTEN = hotenDisplay.getText().trim();
+        String INP_PHAI = phaiDisplay.getText().trim();
+        LocalDate INP_NGSINH = LocalDate.parse(ngsinhDisplay.getText().trim()); // Assuming your date format is parseable
+        int INP_PHUCAP = Integer.parseInt(phucapDisplay.getText().trim());
+        String INP_DT = dienthoaiDisplay.getText().trim();
 
-        // Retrieve the selected item from the TableView
-        Nhansu selectedNhanSu = nhansuTableView.getSelectionModel().getSelectedItem();
+        DataAccessLayer dal = null;
+        Connection conn = null;
+        CallableStatement cst = null;
+        ResultSet rs = null;
 
-        if (selectedNhanSu != null) {
-            String MANV = selectedNhanSu.getMANV();
-            // System.out.println(MANV);
-            // System.out.println(HOTEN);
-            // System.out.println(DT);
-
-            DataAccessLayer dal = null;
-            Connection conn = null;
-            CallableStatement cst = null;
-            PreparedStatement pst = null;
-            ResultSet rs = null;
-
-            // Now you have MANV, you can use it for further processing
+        try {
+            dal = DataAccessLayer.getInstance("your_username", "your_password");
+            conn = dal.connect();
+            System.out.println("khoa beo 1");
+            cst = conn.prepareCall("{CALL C##QLK.SP_ALL_UPDATE_NHANSU(?,?,?,?,?)}");
+            cst.setString(1, INP_HOTEN);
+            cst.setString(2, INP_PHAI);
+            cst.setDate(3, java.sql.Date.valueOf(INP_NGSINH));
+            cst.setInt(4, INP_PHUCAP);
+            cst.setString(5, INP_DT);
+            System.out.println("khoa beo 2");
+            cst.executeUpdate();
+            System.out.println("khoa beo 3");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            // Close resources
             try {
-                dal = DataAccessLayer.getInstance("", "");
-                conn = dal.connect();
-                pst = conn.prepareStatement(
-                        "update C##QLK.NHANSU set DT = ?");
-                pst.setString(1, DT);
-                
-                int rowsAffected = pst.executeUpdate();
-
-                pst = conn.prepareStatement(
-                        "update C##QLK.NHANSU set HOTEN = ?");
-                pst.setString(1, HOTEN);
-                rowsAffected = pst.executeUpdate();
-                // cst.setString(2, Phai);
-                // cst.setString(3, NGSINH);
-                // cst.setString(4, PHUCAP);
-                // cst.setString(5, DT);
-                // cst.setString(2, MANV);
-                System.out.println(HOTEN);
-                System.out.println(MANV);
-                System.out.println("DONE");
+                if (rs != null) rs.close();
+                if (cst != null) cst.close();
+                if (conn != null) conn.close();
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
-        } else {
-            System.out.println("No row selected.");
         }
     }
+
 
     @FXML
     private void profileButtonclick(ActionEvent event) {
