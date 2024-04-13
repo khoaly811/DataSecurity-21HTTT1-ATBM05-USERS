@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import java.time.LocalDate;
+//doi ten file
 
 public class Sinhvien {
     private final SimpleStringProperty MASV = new SimpleStringProperty();

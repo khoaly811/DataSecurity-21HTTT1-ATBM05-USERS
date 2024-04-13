@@ -3,6 +3,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.ObjectProperty;
+//doi ten file
 
 public class Hocphan {
     private final SimpleStringProperty MAHP = new SimpleStringProperty();

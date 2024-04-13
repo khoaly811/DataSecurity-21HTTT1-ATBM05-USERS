@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.ObjectProperty;
 
 import java.time.LocalDate;
+//doi ten file
 
 public class Nhansu {
     private final SimpleStringProperty MANV = new SimpleStringProperty();
