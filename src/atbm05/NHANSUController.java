@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -248,6 +249,42 @@ public class NHANSUController {
         
     }
 
+    @FXML
+    private void insertNSClick(ActionEvent event) {
+        String INP_HOTEN = hotenDisplay.getText().trim();
+        String INP_PHAI = phaiDisplay.getText().trim();
+        LocalDate INP_NGSINH = LocalDate.parse(ngsinhDisplay.getText().trim()); // Assuming your date format is parseable
+        int INP_PHUCAP = Integer.parseInt(phucapDisplay.getText().trim());
+        String INP_DT = dienthoaiDisplay.getText().trim();
+
+        DataAccessLayer dal = null;
+        Connection conn = null;
+        CallableStatement cst = null;
+        ResultSet rs = null;
+
+        try {
+            dal = DataAccessLayer.getInstance("your_username", "your_password");
+            conn = dal.connect();
+            cst = conn.prepareCall("{CALL SP_INSERT_NHANSU(?,?,?,?,?)}");
+            cst.setString(1, INP_HOTEN);
+            cst.setString(2, INP_PHAI);
+            cst.setDate(3, java.sql.Date.valueOf(INP_NGSINH));
+            cst.setInt(4, INP_PHUCAP);
+            cst.setString(5, INP_DT);
+            cst.executeUpdate();
+            System.out.println("Insert successful.");
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (cst != null) cst.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+        }
+    }
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
