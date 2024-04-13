@@ -3,9 +3,10 @@ package atbm05;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-// import javafx.scene.control.TextField;
+import javafx.scene.control.TextField;
 import oracle.jdbc.OracleTypes;
 
 import java.sql.CallableStatement;
@@ -14,9 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import DataAccessLayer.DataAccessLayer;
-import dto.Phancong;
-import dto.Nhansu;
-import dto.Hocphan;
+import dto.*;
 
 public class PHANCONGController {
     @FXML
@@ -38,18 +37,32 @@ public class PHANCONGController {
     private TableColumn<Phancong, String> MACT;
 
     @FXML
+    private Button updatePC;
+
+    @FXML
+    private Button deletePC;
+
+    @FXML
+    private Button profileButton;
+
+    @FXML
     private void onAddClick_PHANCONG() {
         System.out.println("Added");
     }
 
     @FXML
-    private void onUpdateClick_PHANCONG() {
+    private void updatePCClick() {
         System.out.println("Updated");
     }
 
     @FXML
-    private void onDeleteClick_PHANCONG() {
+    private void deletePCClick() {
         System.out.println("Delete");
+    }
+
+    @FXML
+    private void profileButtonclick() {
+
     }
 
     // @FXML
@@ -104,11 +117,8 @@ public class PHANCONGController {
             conn = dal.connect();
             cst = conn.prepareCall("{CALL C##QLK.SP_VIEW_PHANCONG(?)}");
             cst.registerOutParameter(1, OracleTypes.CURSOR);
-            System.out.println("nhan beo 1");
             cst.execute();
-            System.out.println("nhan beo 2");
             rs = (ResultSet) cst.getObject(1);
-            System.out.println("Nhan beo 3");
             while (rs.next()) {
                 Phancong pc = new Phancong();
                 Nhansu ns = new Nhansu();
