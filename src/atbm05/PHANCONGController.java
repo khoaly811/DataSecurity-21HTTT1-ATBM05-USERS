@@ -2,6 +2,7 @@ package atbm05;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -65,20 +66,20 @@ public class PHANCONGController {
 
     }
 
-    // @FXML
-    // private TextField hotengvDisplay;
+    @FXML
+    private TextField giaovienDisplay;
 
-    // @FXML
-    // private TextField tenhpDisplay;
+    @FXML
+    private TextField hocphanDisplay;
 
-    // @FXML
-    // private TextField hockyDisplay;
+    @FXML
+    private TextField hockyDisplay;
 
-    // @FXML
-    // private TextField namDisplay;
+    @FXML
+    private TextField namDisplay;
 
-    // @FXML
-    // private TextField chuongtrinhDisplay;
+    @FXML
+    private TextField chuongtrinhDisplay;
 
 
     private ObservableList<Phancong> phancongList = FXCollections.observableArrayList();
@@ -93,17 +94,17 @@ public class PHANCONGController {
         phancongList = FXCollections.observableArrayList();
         loadPhancongFromDatabase();
 
-        // Add listener to the TableView selection model
-        // phancongTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-        //     if (newSelection != null) {
-        //         // Display the selected row's information in the corresponding TextFields
-        //         hotengvDisplay.setText(newSelection.getNhansu().getHOTEN());
-        //         tenhpDisplay.setText(newSelection.getHocphan().getTENHP());
-        //         hockyDisplay.setText(String.valueOf(newSelection.getHK()));
-        //         namDisplay.setText(String.valueOf(newSelection.getNAM()));
-        //         chuongtrinhDisplay.setText(newSelection.getMACT());
-        //     }
-        // });
+        //Add listener to the TableView selection model
+        phancongTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                // Display the selected row's information in the corresponding TextFields
+                giaovienDisplay.setText(newSelection.getNhansu().getHOTEN());
+                hocphanDisplay.setText(newSelection.getHocphan().getTENHP());
+                hockyDisplay.setText(String.valueOf(newSelection.getHK()));
+                namDisplay.setText(String.valueOf(newSelection.getNAM()));
+                chuongtrinhDisplay.setText(newSelection.getMACT());
+            }
+        });
     }
 
     private void loadPhancongFromDatabase() {
@@ -124,12 +125,12 @@ public class PHANCONGController {
                 Nhansu ns = new Nhansu();
                 Hocphan hp = new Hocphan();
 
-                String tengv = rs.getString("HOTEN_GV");
-                System.out.println("TEN GIANG VIEN: " + tengv);
+                String tengv = rs.getString("HOTEN");
+                //System.out.println("TEN GIANG VIEN: " + tengv);
                 ns.setHOTEN(tengv);
                 pc.setNhansu(ns);
 
-                String tenhp = rs.getString("TEN_HP");
+                String tenhp = rs.getString("TENHP");
                 System.out.println("TEN HOC PHAN: " + tenhp);
                 hp.setTENHP(tenhp);
                 pc.setHocphan(hp);
@@ -146,5 +147,20 @@ public class PHANCONGController {
         }
 
         phancongTableView.setItems(phancongList);
+    }
+
+    @FXML
+    private void deleteNPCClick(ActionEvent event) {
+        System.out.println("DeletePC");
+    }
+
+    @FXML
+    private void updatePCClick(ActionEvent event) {
+        System.out.println("updatePC");
+    }
+
+    @FXML
+    private void onAddClick_PHANCONG(ActionEvent event) {
+        System.out.println("addPC");
     }
 }
