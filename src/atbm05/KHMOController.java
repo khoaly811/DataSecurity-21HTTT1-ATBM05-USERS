@@ -40,15 +40,7 @@ public class KHMOController {
         System.out.println("Added");
     }
 
-    @FXML
-    private void onUpdateClick_KHMO() {
-        System.out.println("Updated");
-    }
-
-    @FXML
-    private void onDeleteClick_KHMO() {
-        System.out.println("Delete");
-    }
+   
 
     @FXML
     private TextField tenhpDisplay;
@@ -123,5 +115,95 @@ public class KHMOController {
 
         khmoTableView.setItems(khmoList);
 
+    }
+
+    @FXML
+    private void deleteKHMOClick(ActionEvent event) {
+        System.out.println("Delete");
+        Nhansu selectedNhanSu = phancongTableView.getSelectionModel().getSelectedItem();
+
+        if (selectedNhanSu != null) {
+            String MANV = selectedNhanSu.getMANV();
+            
+            DataAccessLayer dal = null;
+            Connection conn = null;
+            CallableStatement cst = null;
+            
+            try {
+                dal = DataAccessLayer.getInstance("", "");
+                conn = dal.connect();
+                cst = conn.prepareCall("{CALL C##QLK.SP_DELETE_KHMO(?)}");
+                cst.setString(1, MANV);
+                
+                int rowsAffected = cst.executeUpdate();
+                
+                if (rowsAffected > 0) {
+                    System.out.println("Deleted successfully.");
+                    // You can show a success message here if needed
+                } else {
+                    System.out.println("No rows deleted.");
+                    // You can show a message indicating that no rows were deleted if needed
+                }
+            } catch (SQLException e) {
+                System.out.println("Failed to delete: " + e.getMessage());
+                showAlert(Alert.AlertType.ERROR, "Error", "Failed to delete user: " + e.getMessage());
+            } finally {
+                // Close resources in a finally block to ensure they are always closed
+                try {
+                    if (cst != null) cst.close();
+                    if (conn != null) conn.close();
+                } catch (SQLException e) {
+                    System.out.println("Error closing resources: " + e.getMessage());
+                }
+            }
+        } else {
+            System.out.println("No row selected.");
+        }
+    }
+
+    @FXML
+    private void updateKHMOClick(ActionEvent event) {
+        String INP_HOTEN = hotenDisplay.getText().trim();
+        String INP_PHAI = phaiDisplay.getText().trim();
+        LocalDate INP_NGSINH = LocalDate.parse(ngsinhDisplay.getText().trim()); // Assuming your date format is parseable
+        int INP_PHUCAP = Integer.parseInt(phucapDisplay.getText().trim());
+        String INP_DT = dienthoaiDisplay.getText().trim();
+
+        DataAccessLayer dal = null;
+        Connection conn = null;
+        CallableStatement cst = null;
+        ResultSet rs = null;
+
+        try {
+            dal = DataAccessLayer.getInstance("your_username", "your_password");
+            conn = dal.connect();
+            cst = conn.prepareCall("{CALL C##QLK.SP_ALL_UPDATE_KHMO(?,?,?,?,?)}");
+            cst.setString(1, INP_HOTEN);
+            cst.setString(2, INP_PHAI);
+            cst.setDate(3, java.sql.Date.valueOf(INP_NGSINH));
+            cst.setInt(4, INP_PHUCAP);
+            cst.setString(5, INP_DT);
+            cst.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            // Close resources
+            try {
+                if (rs != null) rs.close();
+                if (cst != null) cst.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }   
