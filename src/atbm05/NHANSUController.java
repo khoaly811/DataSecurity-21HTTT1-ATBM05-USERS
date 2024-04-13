@@ -265,25 +265,24 @@ public class NHANSUController {
         try {
             dal = DataAccessLayer.getInstance("your_username", "your_password");
             conn = dal.connect();
-            cst = conn.prepareCall("{CALL SP_INSERT_NHANSU(?,?,?,?,?)}");
+            cst = conn.prepareCall("{CALL C##QLK.SP_INSERT_NHANSU(?,?,?,?,?)}");
             cst.setString(1, INP_HOTEN);
             cst.setString(2, INP_PHAI);
             cst.setDate(3, java.sql.Date.valueOf(INP_NGSINH));
             cst.setInt(4, INP_PHUCAP);
             cst.setString(5, INP_DT);
-            cst.executeUpdate();
-            System.out.println("Insert successful.");
+            int rowsAffected = cst.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Insert successfully.");
+                // You can show a success message here if needed
+            } else {
+                System.out.println("No rows deleted.");
+                // You can show a message indicating that no rows were deleted if needed
+            }
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (cst != null) cst.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                System.out.println("Error: " + e.getMessage());
-            }
-        }
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to add user: " + e.getMessage());
+        } 
     }
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
