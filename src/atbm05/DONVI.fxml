@@ -24,21 +24,21 @@
     </TableView>
     <TextField layoutX="474.0" layoutY="42.0" prefHeight="26.0" prefWidth="292.0" promptText="Keywords..." />
     <Button layoutX="785.0" layoutY="42.0" mnemonicParsing="false" text="Search" />
-    <Button layoutX="893.0" layoutY="86.0" mnemonicParsing="false" onAction="#onAddClick_NHANSU" prefHeight="26.0" prefWidth="106.0" text="Thêm Nhân sụ" />
-    <Button fx:id="updateNS" layoutX="893.0" layoutY="136.0" mnemonicParsing="false" onAction="#updateNSClick" prefHeight="26.0" prefWidth="106.0" text="Cập nhật" />
-    <Button fx:id="deleteNS" layoutX="894.0" layoutY="184.0" mnemonicParsing="false" onAction="#deleteNSClick" prefHeight="26.0" prefWidth="106.0" style="-fx-background-color: red;" text="Xóa nhân sự" textFill="WHITE" />
+    <!-- <Button layoutX="893.0" layoutY="86.0" mnemonicParsing="false" onAction="#onAddClick_NHANSU" prefHeight="26.0" prefWidth="106.0" text="Thêm Nhân sụ" />
+    <Button fx:id="updateNS" layoutX="893.0" layoutY="136.0" mnemonicParsing="false" onAction="#updateNSClick" prefHeight="26.0" prefWidth="106.0" text="Cập nhật" /> -->
+    <!-- <Button fx:id="deleteNS" layoutX="894.0" layoutY="184.0" mnemonicParsing="false" onAction="#deleteNSClick" prefHeight="26.0" prefWidth="106.0" style="-fx-background-color: red;" text="Xóa nhân sự" textFill="WHITE" /> -->
     <ImageView fitHeight="56.0" fitWidth="63.0" layoutX="918.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="@image/1144760.png" />
       </image>
     </ImageView>
-    <Button fx:id="profileButton" layoutX="919.0" layoutY="14.0" mnemonicParsing="false" onAction="#profileButtonclick" prefHeight="59.0" prefWidth="54.0" style="-fx-background-color: transparent; -fx-cursor-hover: pointer;">
+    <Button fx:id="profileButton" layoutX="919.0" layoutY="14.0" mnemonicParsing="false" onAction="#profileButtonClick" prefHeight="59.0" prefWidth="54.0" style="-fx-background-color: transparent; -fx-cursor-hover: pointer;">
       <cursor>
         <Cursor fx:constant="HAND" />
       </cursor>
     </Button>
       <Label layoutX="38.0" layoutY="583.0" text="Họ tên" />
-      <TextField fx:id="hotenDisplay" layoutX="85.0" layoutY="579.0" />
+      <!-- <TextField fx:id="hotenDisplay" layoutX="85.0" layoutY="579.0" />
       <TextField fx:id="phaiDisplay" layoutX="85.0" layoutY="661.0" />
       <Label layoutX="38.0" layoutY="665.0" text="Phái" />
       <Label layoutX="274.0" layoutY="583.0" text="Ngày sinh" />
@@ -47,7 +47,7 @@
       <TextField fx:id="phucapDisplay" layoutX="341.0" layoutY="617.0" />
       <TextField fx:id="ngsinhDisplay" layoutX="341.0" layoutY="579.0" />
       <TextField fx:id="dienthoaiDisplay" layoutX="87.0" layoutY="617.0" />
-      <TextField fx:id="tendvDisplay" layoutX="341.0" layoutY="661.0" prefHeight="25.0" prefWidth="209.0" />
+      <TextField fx:id="tendvDisplay" layoutX="341.0" layoutY="661.0" prefHeight="25.0" prefWidth="209.0" /> -->
       <Label layoutX="268.0" layoutY="665.0" text="Tên đơn vị" />
       <Button layoutX="980.0" layoutY="14.0" mnemonicParsing="false" text="Thông báo" />
       <Button layoutX="941.0" layoutY="641.0" mnemonicParsing="false" text="Đăng xuất">
