@@ -52,6 +52,7 @@
       <TextField fx:id="ngsinhDisplay" layoutX="341.0" layoutY="579.0" />
       <TextField fx:id="dienthoaiDisplay" layoutX="87.0" layoutY="617.0" />
       <TextField fx:id="tendvDisplay" layoutX="341.0" layoutY="661.0" prefHeight="25.0" prefWidth="209.0" />
+      <TextField fx:id="manvDisplay" layoutX="341.0" layoutY="661.0" prefHeight="25.0" prefWidth="209.0" visible = "false" />
       <Label layoutX="268.0" layoutY="665.0" text="Tên đơn vị" />
       <Button layoutX="980.0" layoutY="14.0" mnemonicParsing="false" text="Thông báo" />
       <Button layoutX="941.0" layoutY="641.0" mnemonicParsing="false" text="Đăng xuất">

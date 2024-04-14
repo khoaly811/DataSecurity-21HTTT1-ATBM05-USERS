@@ -14,7 +14,6 @@ import oracle.jdbc.OracleTypes;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -87,6 +86,9 @@ public class NHANSUController {
     private TextField tendvDisplay;
 
     @FXML
+    private TextField manvDisplay;
+
+    @FXML
     private Button updateNS;
 
     @FXML
@@ -119,6 +121,7 @@ public class NHANSUController {
                 phucapDisplay.setText(String.valueOf(newSelection.getPHUCAP()));
                 dienthoaiDisplay.setText(newSelection.getDT());
                 tendvDisplay.setText(newSelection.getDonvi().getTENDV());
+                manvDisplay.setText(newSelection.getMANV());
             }
         });
 
@@ -175,7 +178,7 @@ public class NHANSUController {
         LocalDate INP_NGSINH = LocalDate.parse(ngsinhDisplay.getText().trim()); // Assuming your date format is parseable
         int INP_PHUCAP = Integer.parseInt(phucapDisplay.getText().trim());
         String INP_DT = dienthoaiDisplay.getText().trim();
-
+        String INP_MANV = manvDisplay.getText().trim();
         DataAccessLayer dal = null;
         Connection conn = null;
         CallableStatement cst = null;
@@ -185,12 +188,13 @@ public class NHANSUController {
             dal = DataAccessLayer.getInstance("your_username", "your_password");
             conn = dal.connect();
             System.out.println("khoa beo 1");
-            cst = conn.prepareCall("{CALL C##QLK.SP_ALL_UPDATE_NHANSU(?,?,?,?,?)}");
+            cst = conn.prepareCall("{CALL C##QLK.SP_ALL_UPDATE_NHANSU(?,?,?,?,?,?)}");
             cst.setString(1, INP_HOTEN);
             cst.setString(2, INP_PHAI);
             cst.setDate(3, java.sql.Date.valueOf(INP_NGSINH));
             cst.setInt(4, INP_PHUCAP);
             cst.setString(5, INP_DT);
+            cst.setString(6, INP_MANV);
             System.out.println("khoa beo 2");
             cst.executeUpdate();
             System.out.println("khoa beo 3");
@@ -341,16 +345,7 @@ public class NHANSUController {
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-        } finally {
-            // Close the resources
-            try {
-                if (rs != null) rs.close();
-                if (cst != null) cst.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
-        }
+        } 
     
         // Set the loaded users to the table view
         nhansuTableView.setItems(FXCollections.observableArrayList(nhansuList));
