@@ -27,8 +27,7 @@
         <TableColumn fx:id="MANV" prefWidth="0.0" text="MANV" visible="false" />
       </columns>
     </TableView>
-    <TextField layoutX="474.0" layoutY="42.0" prefHeight="26.0" prefWidth="292.0" promptText="Keywords..." />
-    <Button layoutX="785.0" layoutY="42.0" mnemonicParsing="false" text="Search" />
+    <TextField fx:id="searchNS" layoutX="474.0" layoutY="42.0" prefHeight="26.0" prefWidth="292.0" promptText="Keywords..." />
     <Button layoutX="893.0" layoutY="86.0" mnemonicParsing="false" onAction="#insertNSClick" prefHeight="26.0" prefWidth="106.0" text="Thêm Nhân sụ" />
     <Button fx:id="updateNS" layoutX="893.0" layoutY="136.0" mnemonicParsing="false" onAction="#updateNSClick" prefHeight="26.0" prefWidth="106.0" text="Cập nhật" />
     <Button fx:id="deleteNS" layoutX="894.0" layoutY="184.0" mnemonicParsing="false" onAction="#deleteNSClick" prefHeight="26.0" prefWidth="106.0" style="-fx-background-color: red;" text="Xóa nhân sự" textFill="WHITE" />

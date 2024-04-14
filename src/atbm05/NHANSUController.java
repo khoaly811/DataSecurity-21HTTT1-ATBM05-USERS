@@ -14,9 +14,12 @@ import oracle.jdbc.OracleTypes;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import DataAccessLayer.DataAccessLayer;
 import dto.Donvi;
@@ -89,6 +92,9 @@ public class NHANSUController {
     @FXML
     private Button profileButton;
 
+    @FXML
+    private TextField searchNS;;
+
     private ObservableList<Nhansu> nhansuList = FXCollections.observableArrayList();
 
     @FXML
@@ -114,6 +120,10 @@ public class NHANSUController {
                 dienthoaiDisplay.setText(newSelection.getDT());
                 tendvDisplay.setText(newSelection.getDonvi().getTENDV());
             }
+        });
+
+        searchNS.textProperty().addListener((observable, oldValue, newValue) -> {
+            searchNhanSu(newValue);
         });
     }
 
@@ -291,5 +301,60 @@ public class NHANSUController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    private void searchNhanSu(String searchText) {
+        DataAccessLayer dal = null;
+        Connection conn = null;
+        CallableStatement cst = null;
+        ResultSet rs = null;
+        List<Nhansu> nhansuList = new ArrayList<>();
+    
+        try {
+            dal = DataAccessLayer.getInstance("your_username", "your_password");
+            conn = dal.connect();
+            
+            // Construct the wildcard pattern for partial matching
+            
+            cst = conn.prepareCall("{CALL C##QLK.SP_SEARCH_NHANSU(?, ?)}");
+            cst.registerOutParameter(1, OracleTypes.CURSOR);
+            cst.setString(2, searchText);
+            cst.execute();
+    
+            rs = (ResultSet) cst.getObject(1);
+    
+            while (rs.next()) {
+                Nhansu ns = new Nhansu();
+                ns.setHOTEN(rs.getString("HOTEN"));
+                ns.setPHAI(rs.getString("PHAI"));
+                ns.setNGSINH(rs.getDate("NGSINH").toLocalDate());
+                ns.setPHUCAP(rs.getInt("PHUCAP"));
+                ns.setDT(rs.getString("DT"));
+                ns.setVAITRO(rs.getString("VAITRO"));
+                String tendv = rs.getString("TENDV");
+                ns.setMANV(rs.getString("MANV"));
+    
+                Donvi dv = new Donvi();
+                dv.setTENDV(tendv);
+                ns.setDonvi(dv);
+    
+                nhansuList.add(ns);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            // Close the resources
+            try {
+                if (rs != null) rs.close();
+                if (cst != null) cst.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    
+        // Set the loaded users to the table view
+        nhansuTableView.setItems(FXCollections.observableArrayList(nhansuList));
+    }
+    
 
 }

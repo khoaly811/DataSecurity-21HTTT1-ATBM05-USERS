@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import oracle.jdbc.OracleTypes;
 
 import java.sql.CallableStatement;
@@ -50,6 +51,26 @@ public class DANGKYController {
     private TableColumn<Dangky, String> DIEMCK;
     @FXML
     private TableColumn<Dangky, String> DIEMTK;
+    @FXML
+    private TextField SVDisplay;
+    @FXML
+    private TextField GVDisplay;
+    @FXML
+    private TextField HPDisplay;
+    @FXML
+    private TextField HKDisplay;
+    @FXML
+    private TextField NamDisplay;
+    @FXML
+    private TextField DiemTHDisplay;
+    @FXML
+    private TextField DiemQTDisplay;
+    @FXML
+    private TextField DiemCKDisplay;
+    @FXML
+    private TextField DiemTKDisplay;
+    @FXML
+    private TextField CTDisplay;
 
     @FXML
     private void onAddClick_DANGKY() {
@@ -72,6 +93,22 @@ public class DANGKYController {
         DIEMTK.setCellValueFactory(cellData -> cellData.getValue().DIEMTKproperty().asString());
         dangkyList = FXCollections.observableArrayList();
         loadDangkyFromDatabase();
+
+        dangkyTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                SVDisplay.setText(newSelection.getSinhvien().getHOTEN());
+                GVDisplay.setText(newSelection.getNhansu().getHOTEN());
+                HPDisplay.setText(newSelection.getHocphan().getTENHP());
+                CTDisplay.setText(newSelection.getMACT());
+                HKDisplay.setText(String.valueOf(newSelection.getHK()));
+                NamDisplay.setText(String.valueOf(newSelection.getNAM()));
+                DiemTHDisplay.setText(String.valueOf(newSelection.getDIEMTH()));
+                DiemQTDisplay.setText(String.valueOf(newSelection.getDIEMQT()));
+                DiemCKDisplay.setText(String.valueOf(newSelection.getDIEMCK()));
+                DiemTKDisplay.setText(String.valueOf(newSelection.getDIEMTK()));
+                
+            }
+        });
     }
 
     private void loadDangkyFromDatabase() {
@@ -97,17 +134,17 @@ public class DANGKYController {
                 Nhansu ns = new Nhansu();
 
                 String tensv = rs.getString("HOTEN_SV");
-                System.out.println("TEN SINH VIEN: " + tensv);
+                //System.out.println("TEN SINH VIEN: " + tensv);
                 sv.setHOTEN(tensv);
                 dk.setSinhvien(sv);
 
                 String tengv = rs.getString("HOTEN_GV");
-                System.out.println("TEN GIANG VIEN: " + tengv);
+                //System.out.println("TEN GIANG VIEN: " + tengv);
                 ns.setHOTEN(tengv);
                 dk.setNhansu(ns);
 
                 String tenhp = rs.getString("TENHP");
-                System.out.println("TEN HOC PHAN: " + tenhp);
+                //System.out.println("TEN HOC PHAN: " + tenhp);
                 hp.setTENHP(tenhp);
                 dk.setHocphan(hp);
 
