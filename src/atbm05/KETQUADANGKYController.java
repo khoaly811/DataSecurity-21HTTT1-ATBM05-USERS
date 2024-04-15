@@ -21,7 +21,7 @@ import dto.Nhansu;
 import dto.Sinhvien;
 import dto.Hocphan;
 
-public class DANGKYController {
+public class KETQUADANGKYController {
     @FXML
     private TableView<Dangky> dangkyTableView;
 
@@ -52,25 +52,34 @@ public class DANGKYController {
     @FXML
     private TableColumn<Dangky, String> DIEMTK;
     @FXML
-    private TextField SVDisplay;
+    private TableColumn<Dangky, String> MASV;
     @FXML
-    private TextField GVDisplay;
+    private TableColumn<Dangky, String> MAGV;
+
     @FXML
-    private TextField HPDisplay;
+    private TextField hotensvDisplay;
     @FXML
-    private TextField HKDisplay;
+    private TextField hotengvDisplay;
     @FXML
-    private TextField NamDisplay;
+    private TextField tenhocphanDisplay;
     @FXML
-    private TextField DiemTHDisplay;
+    private TextField hkDisplay;
     @FXML
-    private TextField DiemQTDisplay;
+    private TextField namDisplay;
     @FXML
-    private TextField DiemCKDisplay;
+    private TextField diemthDisplay;
     @FXML
-    private TextField DiemTKDisplay;
+    private TextField diemqtDisplay;
     @FXML
-    private TextField CTDisplay;
+    private TextField diemckDisplay;
+    @FXML
+    private TextField diemtkDisplay;
+    @FXML
+    private TextField mactDisplay;
+    @FXML
+    private TextField masvDisplay;
+    @FXML
+    private TextField magvDisplay;
 
     @FXML
     private void onAddClick_DANGKY() {
@@ -91,21 +100,27 @@ public class DANGKYController {
         DIEMQT.setCellValueFactory(cellData -> cellData.getValue().DIEMQTproperty().asString());
         DIEMCK.setCellValueFactory(cellData -> cellData.getValue().DIEMCKproperty().asString());
         DIEMTK.setCellValueFactory(cellData -> cellData.getValue().DIEMTKproperty().asString());
+        MASV.setCellValueFactory(cellData -> cellData.getValue().MASVproperty());
+        MAGV.setCellValueFactory(cellData -> cellData.getValue().MAGVproperty());
+        MACT.setCellValueFactory(cellData -> cellData.getValue().MACTproperty());
         dangkyList = FXCollections.observableArrayList();
         loadDangkyFromDatabase();
 
         dangkyTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                SVDisplay.setText(newSelection.getSinhvien().getHOTEN());
-                GVDisplay.setText(newSelection.getNhansu().getHOTEN());
-                HPDisplay.setText(newSelection.getHocphan().getTENHP());
-                CTDisplay.setText(newSelection.getMACT());
-                HKDisplay.setText(String.valueOf(newSelection.getHK()));
-                NamDisplay.setText(String.valueOf(newSelection.getNAM()));
-                DiemTHDisplay.setText(String.valueOf(newSelection.getDIEMTH()));
-                DiemQTDisplay.setText(String.valueOf(newSelection.getDIEMQT()));
-                DiemCKDisplay.setText(String.valueOf(newSelection.getDIEMCK()));
-                DiemTKDisplay.setText(String.valueOf(newSelection.getDIEMTK()));
+                hotensvDisplay.setText(newSelection.getSinhvien().getHOTEN());
+                hotengvDisplay.setText(newSelection.getNhansu().getHOTEN());
+                tenhocphanDisplay.setText(newSelection.getHocphan().getTENHP());
+                mactDisplay.setText(newSelection.getMACT());
+                hkDisplay.setText(String.valueOf(newSelection.getHK()));
+                namDisplay.setText(String.valueOf(newSelection.getNAM()));
+                diemthDisplay.setText(String.valueOf(newSelection.getDIEMTH()));
+                diemqtDisplay.setText(String.valueOf(newSelection.getDIEMQT()));
+                diemckDisplay.setText(String.valueOf(newSelection.getDIEMCK()));
+                diemtkDisplay.setText(String.valueOf(newSelection.getDIEMTK()));
+                mactDisplay.setText(String.valueOf(newSelection.getMACT()));
+                masvDisplay.setText(newSelection.getSinhvien().getMASV());
+                magvDisplay.setText(newSelection.getNhansu().getMANV());
                 
             }
         });

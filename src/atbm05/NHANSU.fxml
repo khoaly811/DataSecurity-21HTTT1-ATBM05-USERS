@@ -14,13 +14,13 @@
     <TableView fx:id="nhansuTableView" layoutX="25.0" layoutY="85.0" prefHeight="480.0" prefWidth="864.0">
       <columns>
         <!-- <TableColumn fx:id="MANV" prefWidth="75.0" text="MANV" /> -->
-        <TableColumn fx:id="HOTEN" prefWidth="101.0" text="Ho ten" />
-        <TableColumn fx:id="PHAI" prefWidth="77.0" text="Phai" />
-        <TableColumn fx:id="NGSINH" prefWidth="82.0" text="Ngay sinh" />
-        <TableColumn fx:id="PHUCAP" prefWidth="72.0" text="Phu cap" />
-        <TableColumn fx:id="DT" prefWidth="130.0" text="Dien thoai" />
-        <TableColumn fx:id="VAITRO" prefWidth="116.0" text="Vai tro" />
-        <TableColumn fx:id="TENDV" prefWidth="239.0" text="TEN DV" />
+        <TableColumn fx:id="HOTEN" prefWidth="101.0" text="Họ và tên" />
+        <TableColumn fx:id="PHAI" prefWidth="77.0" text="Giới tính" />
+        <TableColumn fx:id="NGSINH" prefWidth="82.0" text="Ngày sinh" />
+        <TableColumn fx:id="PHUCAP" prefWidth="72.0" text="Tiền phụ cấp" />
+        <TableColumn fx:id="DT" prefWidth="130.0" text="Số điện thoại" />
+        <TableColumn fx:id="VAITRO" prefWidth="116.0" text="Chức vụ" />
+        <TableColumn fx:id="TENDV" prefWidth="239.0" text="Đơn vị hoạt động" />
         <!-- Set the visibility of this column to false -->
         <TableColumn fx:id="MANV" prefWidth="0.0" text="MANV" visible="false" />
       </columns>

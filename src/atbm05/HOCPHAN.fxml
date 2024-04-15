@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="765.0" prefWidth="1091.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="atbm05.HOCPHANController">
+  <children>
+    <TableView fx:id="hocphanTableView" layoutX="25.0" layoutY="85.0" prefHeight="480.0" prefWidth="875.0">
+      <columns>
+        <!-- <TableColumn fx:id="MANV" prefWidth="75.0" text="MANV" /> -->
+        <TableColumn fx:id="HOTENSV" prefWidth="103.0" text="Ho ten sinh vien" />
+         <TableColumn fx:id="HOTENGV" prefWidth="108.0" text="Ho ten giang vien" />
+        <TableColumn fx:id="TENHP" prefWidth="125.0" text="Ten hoc phan" />
+        <TableColumn fx:id="HK" prefWidth="54.0" text="Hoc ky" />
+        <TableColumn fx:id="NAM" prefWidth="45.0" text="Nam" />
+        <TableColumn fx:id="DIEMTH" prefWidth="98.0" text="Diem thuc hanh" />
+        <TableColumn fx:id="DIEMQT" prefWidth="93.0" text="Diem qua trinh" />
+        <TableColumn fx:id="DIEMCK" prefWidth="82.0" text="Diem cuoi ky" />
+        <TableColumn fx:id="DIEMTK" prefWidth="96.0" text="Diem tong ket" />
+            <TableColumn prefWidth="70.0" text="Ma CT" />
+      </columns>
+    </TableView>
+    <TextField layoutX="474.0" layoutY="42.0" prefHeight="26.0" prefWidth="292.0" promptText="Keywords..." />
+    <Button layoutX="929.0" layoutY="92.0" mnemonicParsing="false" onAction="#onAddClick_hocphan" prefHeight="26.0" prefWidth="106.0" text="Thêm Đăng ký" />
+    <Button layoutX="929.0" layoutY="142.0" mnemonicParsing="false" onAction="#updateDKClick" prefHeight="26.0" prefWidth="106.0" text="Cập nhật" />
+    <Button layoutX="930.0" layoutY="190.0" mnemonicParsing="false" onAction="#deleteDKClick" prefHeight="26.0" prefWidth="106.0" style="-fx-background-color: red;" text="Xóa đăng ký" textFill="WHITE" />
+      <TextField fx:id="SVDisplay" layoutX="103.0" layoutY="600.0" />
+      <Label layoutX="40.0" layoutY="604.0" text="Sinh viên" />
+      <TextField fx:id="GVDisplay" layoutX="103.0" layoutY="637.0" />
+      <Label layoutX="40.0" layoutY="641.0" text="Giáo viên" />
+      <TextField fx:id="HPDisplay" layoutX="103.0" layoutY="679.0" />
+      <Label layoutX="40.0" layoutY="683.0" text="Học phần" />
+      <TextField fx:id="HKDisplay" layoutX="325.0" layoutY="637.0" />
+      <Label layoutX="277.0" layoutY="641.0" text="Học kỳ" />
+      <TextField fx:id="NamDisplay" layoutX="325.0" layoutY="679.0" />
+      <Label layoutX="282.0" layoutY="683.0" text="Năm" />
+      <TextField fx:id="DiemTHDisplay" layoutX="559.0" layoutY="620.0" />
+      <TextField fx:id="DiemCKDisplay" layoutX="804.0" layoutY="620.0" />
+      <Label layoutX="501.0" layoutY="624.0" prefHeight="17.0" prefWidth="50.0" text="Điểm TH" />
+      <TextField fx:id="DiemQTDisplay" layoutX="559.0" layoutY="658.0" />
+      <Label layoutX="501.0" layoutY="662.0" prefHeight="17.0" prefWidth="50.0" text="Điểm QT" />
+      <Label layoutX="735.0" layoutY="624.0" prefHeight="17.0" prefWidth="50.0" text="Điểm CK" />
+      <TextField fx:id="DiemTKDisplay" layoutX="804.0" layoutY="658.0" />
+      <Label layoutX="735.0" layoutY="662.0" prefHeight="17.0" prefWidth="50.0" text="Điểm TK">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="277.0" layoutY="604.0" text="Mã CT" />
+      <TextField fx:id="CTDisplay" layoutX="325.0" layoutY="600.0" />
+      <Button layoutX="945.0" layoutY="49.0" mnemonicParsing="false" text="Thông báo" />
+      <Button layoutX="960.0" layoutY="642.0" mnemonicParsing="false" text="Làm mới">
+         <font>
+            <Font name="System Bold" size="19.0" />
+         </font>
+      </Button>
+  </children>
+</AnchorPane>
