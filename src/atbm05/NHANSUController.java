@@ -184,6 +184,7 @@ public class NHANSUController {
         int INP_PHUCAP = Integer.parseInt(phucapDisplay.getText().trim());
         String INP_DT = dienthoaiDisplay.getText().trim();
         String INP_MANV = manvDisplay.getText().trim();
+        String INP_TENDV = tendvDisplay.getText().trim();
         DataAccessLayer dal = null;
         Connection conn = null;
         CallableStatement cst = null;
@@ -192,13 +193,14 @@ public class NHANSUController {
             dal = DataAccessLayer.getInstance("your_username", "your_password");
             conn = dal.connect();
             System.out.println("khoa beo 1");
-            cst = conn.prepareCall("{CALL C##QLK.SP_ALL_UPDATE_NHANSU(?,?,?,?,?,?)}");
+            cst = conn.prepareCall("{CALL C##QLK.SP_ALL_UPDATE_NHANSU(?,?,?,?,?,?,?)}");
             cst.setString(1, INP_HOTEN);
             cst.setString(2, INP_PHAI);
             cst.setDate(3, java.sql.Date.valueOf(INP_NGSINH));
             cst.setInt(4, INP_PHUCAP);
             cst.setString(5, INP_DT);
             cst.setString(6, INP_MANV);
+            cst.setString(7, INP_TENDV);
             System.out.println("khoa beo 2");
             cst.executeUpdate();
             System.out.println("khoa beo 3");
@@ -260,7 +262,8 @@ public class NHANSUController {
         LocalDate INP_NGSINH = LocalDate.parse(ngsinhDisplay.getText().trim()); // Assuming your date format is parseable
         int INP_PHUCAP = Integer.parseInt(phucapDisplay.getText().trim());
         String INP_DT = dienthoaiDisplay.getText().trim();
-
+        String INP_VAITRO = vaitroDisplay.getText().trim();
+        String INP_TENDV = tendvDisplay.getText().trim();
         DataAccessLayer dal = null;
         Connection conn = null;
         CallableStatement cst = null;
@@ -268,12 +271,14 @@ public class NHANSUController {
         try {
             dal = DataAccessLayer.getInstance("your_username", "your_password");
             conn = dal.connect();
-            cst = conn.prepareCall("{CALL C##QLK.SP_INSERT_NHANSU(?,?,?,?,?)}");
+            cst = conn.prepareCall("{CALL C##QLK.SP_INSERT_NHANSU(?,?,?,?,?,?,?)}");
             cst.setString(1, INP_HOTEN);
             cst.setString(2, INP_PHAI);
             cst.setDate(3, java.sql.Date.valueOf(INP_NGSINH));
             cst.setInt(4, INP_PHUCAP);
             cst.setString(5, INP_DT);
+            cst.setString(6, INP_VAITRO);
+            cst.setString(7, INP_TENDV);
             int rowsAffected = cst.executeUpdate();
             if (rowsAffected > 0) {
                 System.out.println("Insert successfully.");
