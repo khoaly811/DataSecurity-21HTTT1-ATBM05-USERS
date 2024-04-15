@@ -5,7 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.MenuButton;
@@ -211,15 +211,69 @@ public class NHANSUController {
             cst.setString(5, INP_DT);
             cst.setString(6, INP_MANV);
             cst.setString(7, INP_TENDV);
-            System.out.println("khoa beo 2");
-            cst.executeUpdate();
-            System.out.println("khoa beo 3");
+            int rowsAffected = cst.executeUpdate();
+
+            String grantedRole = null;
+            PreparedStatement pst = null;
+            ResultSet rs = null;
+            pst = conn
+                    .prepareStatement(
+                            "SELECT GRANTED_ROLE FROM DBA_ROLE_PRIVS WHERE GRANTEE =(select user from dual)");
+
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+                grantedRole = rs.getString("GRANTED_ROLE");
+            }
+
+            if (grantedRole != null) {
+                System.out.println("Granted role: " + grantedRole);
+            } else {
+                System.out.println("No role found for the current user.");
+            }
+
+            if (grantedRole != "TKHOA" || grantedRole == null) {
+                System.out.println("No privileges (no grant).");
+                // Show an error alert
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Update failed due to lilited privileges");
+                alert.showAndWait();
+          
+            }else
+            if (rowsAffected > 0) {
+                System.out.println("Update successfully.");
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Success");
+                alert.setHeaderText(null);
+                alert.setContentText("Update successfully.");
+                alert.showAndWait();
+
+            } else{
+                System.out.println("Update unsuccessfully.");
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Update unsuccessfully due to unexpected error");
+                alert.showAndWait();
+
+            }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+            System.out.println("Failed to Update: " + e.getMessage());
+            //showAlert(Alert.AlertType.ERROR, "Error", "Failed to Update user: " + e.getMessage());
+            if (e.getMessage().contains("ORA-01031")) {
+                System.out.println("No privileges (no grant).");
+                // Show an error alert
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Update failed due to lilited privileges");
+                alert.showAndWait();
+            }
 
     }
-
+    }
     @FXML
     private void deleteNSClick(ActionEvent event) {
         System.out.println("Delete");
@@ -240,27 +294,65 @@ public class NHANSUController {
 
                 int rowsAffected = cst.executeUpdate();
 
-                if (rowsAffected > 0) {
-                    System.out.println("Deleted successfully.");
-                    // You can show a success message here if needed
+                String grantedRole = null;
+                PreparedStatement pst = null;
+                ResultSet rs = null;
+                pst = conn
+                        .prepareStatement(
+                                "SELECT GRANTED_ROLE FROM DBA_ROLE_PRIVS WHERE GRANTEE =(select user from dual)");
+
+                rs = pst.executeQuery();
+
+                if (rs.next()) {
+                    grantedRole = rs.getString("GRANTED_ROLE");
+                }
+
+                if (grantedRole != null) {
+                    System.out.println("Granted role: " + grantedRole);
                 } else {
-                    System.out.println("No rows deleted.");
-                    // You can show a message indicating that no rows were deleted if needed
+                    System.out.println("No role found for the current user.");
+                }
+
+                if (grantedRole != "TKHOA" || grantedRole == null) {
+                    System.out.println("No privileges (no grant).");
+                    // Show an error alert
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Delete failed due to lilited privileges");
+                    alert.showAndWait();
+              
+                }else
+                if (rowsAffected > 0) {
+                    System.out.println("Insert successfully.");
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Success");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Delete successfully.");
+                    alert.showAndWait();
+
+                } else{
+                    System.out.println("Delete unsuccessfully.");
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Delete unsuccessfully due to unexpected error");
+                    alert.showAndWait();
+
                 }
             } catch (SQLException e) {
                 System.out.println("Failed to delete: " + e.getMessage());
-                showAlert(Alert.AlertType.ERROR, "Error", "Failed to delete user: " + e.getMessage());
-            } finally {
-                // Close resources in a finally block to ensure they are always closed
-                try {
-                    if (cst != null)
-                        cst.close();
-                    if (conn != null)
-                        conn.close();
-                } catch (SQLException e) {
-                    System.out.println("Error closing resources: " + e.getMessage());
+                //showAlert(Alert.AlertType.ERROR, "Error", "Failed to delete user: " + e.getMessage());
+                if (e.getMessage().contains("ORA-01031")) {
+                    System.out.println("No privileges (no grant).");
+                    // Show an error alert
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Delete failed due to lilited privileges");
+                    alert.showAndWait();
                 }
-            }
+            } 
         } else {
             System.out.println("No row selected.");
         }
@@ -271,39 +363,104 @@ public class NHANSUController {
     private void insertNSClick(ActionEvent event) {
         String INP_HOTEN = hotenDisplay.getText().trim();
         String INP_PHAI = phaiDisplay.getText().trim();
-        LocalDate INP_NGSINH = LocalDate.parse(ngsinhDisplay.getText().trim()); // Assuming your date format is
-                                                                                // parseable
-        int INP_PHUCAP = Integer.parseInt(phucapDisplay.getText().trim());
+        LocalDate INP_NGSINH = null;
+        String ngsinhText = ngsinhDisplay.getText(); // Get the text from ngsinhDisplay
+        if (ngsinhText != null && !ngsinhText.isEmpty()) { // Assuming your date format is
+            INP_NGSINH = LocalDate.parse(ngsinhText.trim());
+        } // parseable
+
+        int INP_PHUCAP = 0; // Default value is 0
+        String phucapText = phucapDisplay.getText(); // Get the text from phucapDisplay
+        if (phucapText != null && !phucapText.isEmpty()) { // Check if the text is not null and not empty
+
+            INP_PHUCAP = Integer.parseInt(phucapText.trim());
+        }
+
         String INP_DT = dienthoaiDisplay.getText().trim();
         String INP_VAITRO = vaitroDisplay.getText().trim();
         String INP_TENDV = ((String) tendvDisplayDrop.getValue()).trim();
         DataAccessLayer dal = null;
         Connection conn = null;
         CallableStatement cst = null;
+        if (INP_HOTEN == null || INP_PHAI == null || INP_NGSINH == null || INP_DT == null || INP_VAITRO == null
+                || INP_TENDV == null) {
+            System.out.println("Nhap Thieu");
+            // Show an error alert
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please type full");
+            alert.showAndWait();
+        } else {
+            try {
+                System.out.println(INP_TENDV);
+                dal = DataAccessLayer.getInstance("your_username", "your_password");
+                conn = dal.connect();
+                cst = conn.prepareCall("{CALL C##QLK.SP_INSERT_NHANSU(?,?,?,?,?,?,?)}");
+                cst.setString(1, INP_HOTEN);
+                cst.setString(2, INP_PHAI);
+                cst.setDate(3, java.sql.Date.valueOf(INP_NGSINH));
+                cst.setInt(4, INP_PHUCAP);
+                cst.setString(5, INP_DT);
+                cst.setString(6, INP_VAITRO);
+                cst.setString(7, INP_TENDV);
+                int rowsAffected = cst.executeUpdate();
 
-        try {
-            dal = DataAccessLayer.getInstance("your_username", "your_password");
-            conn = dal.connect();
-            cst = conn.prepareCall("{CALL C##QLK.SP_INSERT_NHANSU(?,?,?,?,?,?,?)}");
-            cst.setString(1, INP_HOTEN);
-            cst.setString(2, INP_PHAI);
-            cst.setDate(3, java.sql.Date.valueOf(INP_NGSINH));
-            cst.setInt(4, INP_PHUCAP);
-            cst.setString(5, INP_DT);
-            cst.setString(6, INP_VAITRO);
-            cst.setString(7, INP_TENDV);
-            int rowsAffected = cst.executeUpdate();
-            if (rowsAffected > 0) {
-                System.out.println("Insert successfully.");
-                // You can show a success message here if needed
+                String grantedRole = null;
+                PreparedStatement pst = null;
+                ResultSet rs = null;
+                pst = conn
+                        .prepareStatement(
+                                "SELECT GRANTED_ROLE FROM DBA_ROLE_PRIVS WHERE GRANTEE =(select user from dual)");
 
-            } else {
-                System.out.println("No rows deleted.");
-                // You can show a message indicating that no rows were deleted if needed
+                rs = pst.executeQuery();
+
+                if (rs.next()) {
+                    grantedRole = rs.getString("GRANTED_ROLE");
+                }
+
+                if (grantedRole != null) {
+                    System.out.println("Granted role: " + grantedRole);
+                } else {
+                    System.out.println("No role found for the current user.");
+                }
+
+                if (grantedRole != "TKHOA" || grantedRole == null) {
+                    System.out.println("No privileges (no grant).");
+                    // Show an error alert
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Insert failed due to lilited privileges");
+                    alert.showAndWait();
+              
+                }else
+                if (rowsAffected > 0) {
+                    System.out.println("Insert successfully.");
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Success");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Insert successfully.");
+                    alert.showAndWait();
+
+                } else{
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Insert unsuccessfully due to unexpected error");
+                    alert.showAndWait();
+
+                }
+            } catch (SQLException e) {
+                System.out.println("Error: " + e.getMessage());
+                //showAlert(Alert.AlertType.ERROR, "Error", "Failed to add user: " + e.getMessage());
+                System.out.println("Insert unsuccessfully.");
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Insert unsuccessfully due to unexpected error");
+                    alert.showAndWait();
             }
-        } catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage());
-            showAlert(Alert.AlertType.ERROR, "Error", "Failed to add user: " + e.getMessage());
         }
     }
 
