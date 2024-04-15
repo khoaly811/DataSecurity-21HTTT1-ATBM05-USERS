@@ -128,6 +128,7 @@ public class NHANSUController {
         searchNS.textProperty().addListener((observable, oldValue, newValue) -> {
             searchNhanSu(newValue);
         });
+
     }
 
     private void loadNhansuFromDatabase() {
@@ -135,17 +136,16 @@ public class NHANSUController {
         Connection conn = null;
         CallableStatement cst = null;
         ResultSet rs = null;
-
         try {
             dal = DataAccessLayer.getInstance("your_username", "your_password");
             conn = dal.connect();
             cst = conn.prepareCall("{CALL C##QLK.SP_VIEW_NHANSU(?)}");
             cst.registerOutParameter(1, OracleTypes.CURSOR);
-            System.out.println("nhan beo 1");
+            System.out.println("minh beo 1");
             cst.execute();
-            System.out.println("nhan beo 2");
+            System.out.println("minh beo 2");
             rs = (ResultSet) cst.getObject(1);
-            System.out.println("Nhan beo 3");
+            System.out.println("minh beo 3");
             while (rs.next()) {
                 Nhansu ns = new Nhansu();
                 ns.setHOTEN((rs.getString("HOTEN")));
@@ -161,6 +161,7 @@ public class NHANSUController {
                 dv.setTENDV(tendv);
                 ns.setDonvi(dv);
                 nhansuList.add(ns);
+                
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -182,7 +183,6 @@ public class NHANSUController {
         DataAccessLayer dal = null;
         Connection conn = null;
         CallableStatement cst = null;
-        ResultSet rs = null;
 
         try {
             dal = DataAccessLayer.getInstance("your_username", "your_password");
@@ -200,22 +200,8 @@ public class NHANSUController {
             System.out.println("khoa beo 3");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-        } finally {
-            // Close resources
-            try {
-                if (rs != null) rs.close();
-                if (cst != null) cst.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
         }
-    }
 
-
-    @FXML
-    private void profileButtonclick(ActionEvent event) {
-        System.out.println("Profile");
     }
 
     @FXML
@@ -274,7 +260,6 @@ public class NHANSUController {
         DataAccessLayer dal = null;
         Connection conn = null;
         CallableStatement cst = null;
-        ResultSet rs = null;
 
         try {
             dal = DataAccessLayer.getInstance("your_username", "your_password");
@@ -289,6 +274,7 @@ public class NHANSUController {
             if (rowsAffected > 0) {
                 System.out.println("Insert successfully.");
                 // You can show a success message here if needed
+                
             } else {
                 System.out.println("No rows deleted.");
                 // You can show a message indicating that no rows were deleted if needed
@@ -350,6 +336,10 @@ public class NHANSUController {
         // Set the loaded users to the table view
         nhansuTableView.setItems(FXCollections.observableArrayList(nhansuList));
     }
-    
-
+    @FXML
+    private void refreshTable(ActionEvent event) {
+        nhansuList.clear();
+        loadNhansuFromDatabase();
+        nhansuTableView.refresh();
+    }
 }
