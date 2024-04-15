@@ -122,7 +122,7 @@ public class PHANCONGController {
                 pc.setNhansu(ns);
 
                 String tenhp = rs.getString("TENHP");
-                System.out.println("TEN HOC PHAN: " + tenhp);
+                //System.out.println("TEN HOC PHAN: " + tenhp);
                 hp.setTENHP(tenhp);
                 pc.setHocphan(hp);
 
