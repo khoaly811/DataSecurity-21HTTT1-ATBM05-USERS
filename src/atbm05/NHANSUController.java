@@ -95,7 +95,10 @@ public class NHANSUController {
     private Button profileButton;
 
     @FXML
-    private TextField searchNS;;
+    private TextField searchNS;
+
+    @FXML
+    private TextField vaitroDisplay;
 
     private ObservableList<Nhansu> nhansuList = FXCollections.observableArrayList();
 
@@ -122,6 +125,7 @@ public class NHANSUController {
                 dienthoaiDisplay.setText(newSelection.getDT());
                 tendvDisplay.setText(newSelection.getDonvi().getTENDV());
                 manvDisplay.setText(newSelection.getMANV());
+                vaitroDisplay.setText(newSelection.getVAITRO());
             }
         });
 
