@@ -120,7 +120,7 @@ public class ADDPHANCONGController {
                 int sotc = rs.getInt("SOTC");
                 int stlt = rs.getInt("STLT");
                 int stth = rs.getInt("STTH");
-                int sosvtd = rs.getInt("SOSVTOIDA");
+                int sosvtd = rs.getInt("SOSVTD");
                 hp.setSOTC(sotc);
                 hp.setSOTIETLT(stlt);
                 hp.setSOTIETTH(stth);
@@ -138,7 +138,7 @@ public class ADDPHANCONGController {
         addphancongTableView.setItems(addphancongList);
     }
     @FXML
-    private void insertPCClick(ActionEvent event){
+    private void addPhancongClick(ActionEvent event){
         String INP_HOTEN = giaovienDisplay.getText().trim();
     }
 

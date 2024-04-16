@@ -11,11 +11,17 @@
             <fx:include source="NHANSU.fxml" />
          </content>
       </Tab>
+      <Tab text="Thêm phân công">
+      <content>
+        <fx:include source="ADDPHANCONG.fxml" />
+      </content>
+    </Tab>
     <Tab text="PHANCONG">
       <content>
         <fx:include source="PHANCONG.fxml" />
       </content>
     </Tab>
+    
       <Tab text="HOCPHAN">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
