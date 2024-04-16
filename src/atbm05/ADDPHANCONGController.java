@@ -5,6 +5,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -85,13 +87,14 @@ public class ADDPHANCONGController {
         MAHP.setCellValueFactory(cellData -> cellData.getValue().MAHPproperty());
         loadPhancongFromDatabase();
 
+        // KHONG XAI O DAY
         //Add listener to the TableView selection model
-        addphancongTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                // Display the selected row's information in the corresponding TextFields
-                giaovienDisplay.setText(newSelection.getNhansu().getHOTEN());
-            }
-        });
+        // addphancongTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+        //     if (newSelection != null) {
+        //         // Display the selected row's information in the corresponding TextFields
+        //         giaovienDisplay.setText(newSelection.getNhansu().getHOTEN());
+        //     }
+        // });
     }
 
     private void loadPhancongFromDatabase() {
@@ -128,6 +131,8 @@ public class ADDPHANCONGController {
                 String tendv = rs.getString("TENDV");
                 dv.setTENDV(tendv);
                 kh.setMAHP((rs.getString("MAHP")));
+                kh.setHocphan(hp);
+                kh.setDonvi(dv);
                 addphancongList.add(kh);
             
             }
@@ -140,7 +145,37 @@ public class ADDPHANCONGController {
     }
     @FXML
     private void addPhancongClick(ActionEvent event){
+        System.out.println("na beo 1");
         String INP_HOTEN = giaovienDisplay.getText().trim();
+        System.out.println("na beo 1+");
+        KHmo selectedPhancong = addphancongTableView.getSelectionModel().getSelectedItem();
+        String TENHP = selectedPhancong.getHocphan().getTENHP();
+        String MACT_OLD = selectedPhancong.getMACT();
+        int HK_OLD = selectedPhancong.getHOCKY();
+        int NAM_OLD = selectedPhancong.getNAM();
+        System.out.println("na beo 2");
+        System.out.println(TENHP);
+        System.out.println(MACT_OLD);
+        System.out.println(HK_OLD);
+        System.out.println(NAM_OLD);
+        DataAccessLayer dal = null;
+        Connection conn = null;
+        CallableStatement cst = null;
+        // try {
+        //     dal = DataAccessLayer.getInstance("your_username", "your_password");
+        //     conn = dal.connect();
+        //     cst = conn.prepareCall("{CALL C##QLK.SP_INSERT_PHANCONG(?,?,?,?,?)}");
+        //     cst.setString(1, INP_HOTEN);
+        //     cst.setString(2, TENHP);
+        //     cst.setInt(3, HK_OLD);
+        //     cst.setInt(4, NAM_OLD);
+        //     cst.setString(5, MACT_OLD);
+        //     int rowsAffected = cst.executeUpdate();
+        // }catch (SQLException e) {
+        //     System.out.println("Error: " + e.getMessage());
+        //     //showAlert(Alert.AlertType.ERROR, "Error", "Failed to add user: " + e.getMessage());
+
+        // }
     }
 
 
