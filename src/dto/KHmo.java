@@ -8,12 +8,14 @@ import java.time.LocalDate;
 
 // DTO for KHMO table
 public class KHmo {
-    // private final SimpleStringProperty MAHP = new SimpleStringProperty();
+    private final SimpleStringProperty MAHP = new SimpleStringProperty();
     private final SimpleIntegerProperty HOCKY = new SimpleIntegerProperty();
     private final SimpleIntegerProperty NAM = new SimpleIntegerProperty();
     private final SimpleStringProperty MACT = new SimpleStringProperty();
     private final SimpleObjectProperty<LocalDate> NGAYBD = new SimpleObjectProperty<>();
     private final ObjectProperty<Hocphan> hocphanProperty = new SimpleObjectProperty<>();
+    private final ObjectProperty<Donvi> donviProperty = new SimpleObjectProperty<>();
+    private final ObjectProperty<Nhansu> nhansuProperty = new SimpleObjectProperty<>();
     public KHmo(){
 
     }
@@ -37,19 +39,40 @@ public class KHmo {
     public ObjectProperty<Hocphan> hocphanProperty() {
         return hocphanProperty;
     }
+    public Donvi getDonvi() {
+        return donviProperty.get();
+    }
 
-    // Getters and setters
-    // public String getMAHP(){
-    //     return MAHP.get();
-    // }
+    public void setDonvi(Donvi donvi) {
+        this.donviProperty.set(donvi);
+    }
 
-    // public void setMAHP(String MAHP){
-    //     this.MAHP.set(MAHP);
-    // }
+    public ObjectProperty<Donvi> donviProperty() {
+        return donviProperty;
+    }
+    public Nhansu getNhansu() {
+        return nhansuProperty.get();
+    }
 
-    // public SimpleStringProperty MAHPproperty(){
-    //     return MAHP;
-    // }
+    public void setNhansu(Nhansu nhansu) {
+        this.nhansuProperty.set(nhansu);
+    }
+
+    public ObjectProperty<Nhansu> nhansuProperty() {
+        return nhansuProperty;
+    }
+
+    public String getMAHP(){
+        return MAHP.get();
+    }
+
+    public void setMAHP(String MAHP){
+        this.MAHP.set(MAHP);
+    }
+
+    public SimpleStringProperty MAHPproperty(){
+        return MAHP;
+    }
 
     public int getHOCKY(){
         return HOCKY.get();

@@ -21,7 +21,7 @@ import dto.Nhansu;
 import dto.Sinhvien;
 import dto.Hocphan;
 
-public class KETQUADANGKYController {
+public class DANGKYController {
     @FXML
     private TableView<Dangky> dangkyTableView;
 

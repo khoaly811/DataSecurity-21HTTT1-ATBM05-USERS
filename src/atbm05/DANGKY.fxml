@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="765.0" prefWidth="1091.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="atbm05.KETQUADANGKYController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="765.0" prefWidth="1091.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="atbm05.DANGKYController">
   <children>
     <TableView fx:id="dangkyTableView" layoutX="25.0" layoutY="85.0" prefHeight="480.0" prefWidth="875.0">
       <columns>

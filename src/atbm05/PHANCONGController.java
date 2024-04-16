@@ -154,7 +154,6 @@ public class PHANCONGController {
        String MACT = chuongtrinhDisplay.getText().trim();
        int HK = Integer.parseInt(hockyDisplay.getText().trim());
        int NAM = Integer.parseInt(namDisplay.getText().trim());
-
        Phancong selectedPhancong = phancongTableView.getSelectionModel().getSelectedItem();
        String TENGV_OLD = selectedPhancong.getNhansu().getHOTEN();
        String TENHP_OLD = selectedPhancong.getHocphan().getTENHP();
@@ -171,7 +170,7 @@ public class PHANCONGController {
        try {
             dal = DataAccessLayer.getInstance("", "");
             conn = dal.connect();
-            cst = conn.prepareCall("{CALL C##QLK.SP_ALL_UPDATE_PHANCONG(?,?,?,?,?)}");
+            cst = conn.prepareCall("{CALL C##QLK.SP_ALL_UPDATE_PHANCONG(?,?,?,?,?,?,?,?,?,?)}");
             cst.setString(1, TENGV);
             cst.setString(2, TENHP);
             cst.setInt(3, HK);
@@ -215,14 +214,6 @@ public class PHANCONGController {
                 alert.setContentText("Lỗi");
                 alert.showAndWait();
             }
-            if (e.getErrorCode() == -20003) {
-                // Display error message in an alert box
-                showAlert(AlertType.ERROR, "Error", "Custom Error HP", e.getMessage());
-            }
-            if (e.getErrorCode() == -20002) {
-                // Display error message in an alert box
-                showAlert(AlertType.ERROR, "Error", "Custom Error NS", e.getMessage());
-            }
             else{
                 System.out.println("Unexpected error");
                 // Show an error alert
@@ -250,12 +241,4 @@ public class PHANCONGController {
         loadPhancongFromDatabase();
         phancongTableView.refresh();
     }
-    // Method to show alert
-private void showAlert(AlertType alertType, String title, String headerText, String contentText) {
-    Alert alert = new Alert(alertType);
-    alert.setTitle(title);
-    alert.setHeaderText(headerText);
-    alert.setContentText(contentText);
-    alert.showAndWait();
-}
 }
