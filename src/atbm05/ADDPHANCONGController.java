@@ -140,44 +140,44 @@ public class ADDPHANCONGController {
         addphancongTableView.setItems(addphancongList);
     }
     @FXML
-private void addPhancongClick(ActionEvent event) {
-    String INP_HOTEN = giaovienDisplay.getText().trim();
-    KHmo selectedPhancong = addphancongTableView.getSelectionModel().getSelectedItem();
-    if (selectedPhancong != null) {
-        String TENHP = selectedPhancong.getHocphan().getTENHP();
-        String MACT_OLD = selectedPhancong.getMACT();
-        int HK_OLD = selectedPhancong.getHOCKY();
-        int NAM_OLD = selectedPhancong.getNAM();
-        DataAccessLayer dal = null;
-        Connection conn = null;
-        CallableStatement cst = null;
-        try {
-            dal = DataAccessLayer.getInstance("your_username", "your_password");
-            conn = dal.connect();
-            cst = conn.prepareCall("{CALL C##QLK.SP_INSERT_PHANCONG(?,?,?,?,?)}");
-            cst.setString(1, INP_HOTEN);
-            cst.setString(2, TENHP);
-            cst.setInt(3, HK_OLD);
-            cst.setInt(4, NAM_OLD);
-            cst.setString(5, MACT_OLD);
-            int rowsAffected = cst.executeUpdate();
-            if (rowsAffected > 0) {
-                // Show success message
-                showAlert(Alert.AlertType.INFORMATION, "Success", "Thêm thành công!");
-            } else {
+    private void addPhancongClick(ActionEvent event) {
+        String INP_HOTEN = giaovienDisplay.getText().trim();
+        KHmo selectedPhancong = addphancongTableView.getSelectionModel().getSelectedItem();
+        if (selectedPhancong != null) {
+            String TENHP = selectedPhancong.getHocphan().getTENHP();
+            String MACT_OLD = selectedPhancong.getMACT();
+            int HK_OLD = selectedPhancong.getHOCKY();
+            int NAM_OLD = selectedPhancong.getNAM();
+            DataAccessLayer dal = null;
+            Connection conn = null;
+            CallableStatement cst = null;
+            try {
+                dal = DataAccessLayer.getInstance("your_username", "your_password");
+                conn = dal.connect();
+                cst = conn.prepareCall("{CALL C##QLK.SP_INSERT_PHANCONG(?,?,?,?,?)}");
+                cst.setString(1, INP_HOTEN);
+                cst.setString(2, TENHP);
+                cst.setInt(3, HK_OLD);
+                cst.setInt(4, NAM_OLD);
+                cst.setString(5, MACT_OLD);
+                int rowsAffected = cst.executeUpdate();
+                if (rowsAffected > 0) {
+                    // Show success message
+                    showAlert(Alert.AlertType.INFORMATION, "Success", "Thêm thành công!");
+                } else {
+                    // Show error message
+                    showAlert(Alert.AlertType.ERROR, "Error", "Lỗi!");
+                }
+            } catch (SQLException e) {
+                System.out.println("Error: " + e.getMessage());
                 // Show error message
-                showAlert(Alert.AlertType.ERROR, "Error", "Lỗi!");
+                showAlert(Alert.AlertType.ERROR, "Error", "Failed to add user: " + e.getMessage());
             }
-        } catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage());
-            // Show error message
-            showAlert(Alert.AlertType.ERROR, "Error", "Failed to add user: " + e.getMessage());
+        } else {
+            // Show error message indicating no item is selected
+            showAlert(Alert.AlertType.ERROR, "Error", "No item selected!");
         }
-    } else {
-        // Show error message indicating no item is selected
-        showAlert(Alert.AlertType.ERROR, "Error", "No item selected!");
     }
-}
 
 
 
