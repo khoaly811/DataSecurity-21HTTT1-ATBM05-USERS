@@ -125,15 +125,9 @@ public class ADDDANGKYController {
     }
 
     @FXML
-    private void deleteDKClick(ActionEvent event) {
+    private void addDangkyClick(ActionEvent event){
+        
     }
-
-    @FXML
-    private void updateDKClick(ActionEvent event) {
-    
-    }
-
-
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);

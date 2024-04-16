@@ -24,10 +24,11 @@ public class KHmo {
         this.MACT.set(MACT);
         this.NGAYBD.set(NGAYBD);
     }
-    public KHmo() {
-        hocphanProperty.set(new Hocphan());
-        donviProperty.set(new Donvi());
-    }
+    public KHmo(){}
+    // public KHmo() {
+    //     hocphanProperty.set(new Hocphan());
+    //     donviProperty.set(new Donvi());
+    // }
     public Hocphan getHocphan() {
         return hocphanProperty.get();
     }

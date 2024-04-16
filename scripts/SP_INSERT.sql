@@ -220,11 +220,6 @@ BEGIN
     SP_GRANT_EXECUTE('SP_INSERT_DANGKY', 'SV');
 END;
 /
-select * from c##qlk.phancong;
-select * from khmo;
-commit;
-delete from c##qlk.phancong where magv = 'Uyen94';
-commit;
 CREATE OR REPLACE PROCEDURE SP_INSERT_PHANCONG(
     INP_TENGV IN VARCHAR2,
     INP_TENHP IN VARCHAR2,
@@ -248,13 +243,7 @@ EXCEPTION
         DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
 END;
 /
-BEGIN
-    C##QLK.SP_INSERT_PHANCONG('Dang Tu Uyen', 'HOC PHAN 1', 1, 2024, 'CLC');
-END;
-/
-commit;
-select * from phancong;
-select * from hocphan;
+
 BEGIN
     SP_GRANT_EXECUTE('SP_INSERT_PHANCONG', 'TKHOA');
     SP_GRANT_EXECUTE('SP_INSERT_PHANCONG', 'TDV');

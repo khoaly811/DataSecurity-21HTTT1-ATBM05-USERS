@@ -33,6 +33,6 @@
       </Button>
       
       
-      <Button layoutX="941.0" layoutY="147.0" mnemonicParsing="false"  prefHeight="26.0" prefWidth="155.0" text="Đăng ký học phần" />
+      <Button layoutX="941.0" layoutY="147.0" mnemonicParsing="false" onAction="#addDangkyClick" prefHeight="26.0" prefWidth="155.0" text="Đăng ký học phần" />
   </children>
 </AnchorPane>
