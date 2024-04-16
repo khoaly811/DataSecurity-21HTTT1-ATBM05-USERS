@@ -161,21 +161,38 @@ public class ADDPHANCONGController {
         DataAccessLayer dal = null;
         Connection conn = null;
         CallableStatement cst = null;
-        // try {
-        //     dal = DataAccessLayer.getInstance("your_username", "your_password");
-        //     conn = dal.connect();
-        //     cst = conn.prepareCall("{CALL C##QLK.SP_INSERT_PHANCONG(?,?,?,?,?)}");
-        //     cst.setString(1, INP_HOTEN);
-        //     cst.setString(2, TENHP);
-        //     cst.setInt(3, HK_OLD);
-        //     cst.setInt(4, NAM_OLD);
-        //     cst.setString(5, MACT_OLD);
-        //     int rowsAffected = cst.executeUpdate();
-        // }catch (SQLException e) {
-        //     System.out.println("Error: " + e.getMessage());
-        //     //showAlert(Alert.AlertType.ERROR, "Error", "Failed to add user: " + e.getMessage());
+        try {
+            dal = DataAccessLayer.getInstance("your_username", "your_password");
+            conn = dal.connect();
+            cst = conn.prepareCall("{CALL C##QLK.SP_INSERT_PHANCONG(?,?,?,?,?)}");
+            cst.setString(1, INP_HOTEN);
+            cst.setString(2, TENHP);
+            cst.setInt(3, HK_OLD);
+            cst.setInt(4, NAM_OLD);
+            cst.setString(5, MACT_OLD);
+            int rowsAffected = cst.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Insert successfully.");
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Success");
+                alert.setHeaderText(null);
+                alert.setContentText("Thêm thành công!");
+                alert.showAndWait();
 
-        // }
+            } else{
+                System.out.println("Insert unsuccessfully.");
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Lỗi!");
+                alert.showAndWait();
+
+            }
+        }catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+            //showAlert(Alert.AlertType.ERROR, "Error", "Failed to add user: " + e.getMessage());
+
+        }
     }
 
 
