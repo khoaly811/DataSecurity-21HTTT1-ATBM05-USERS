@@ -8,8 +8,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -218,12 +216,12 @@ public class NHANSUController {
             ResultSet rs = null;
             pst = conn
                     .prepareStatement(
-                            "SELECT GRANTED_ROLE FROM DBA_ROLE_PRIVS WHERE GRANTEE =(select user from dual)");
+                            "SELECT * FROM SESSION_ROLES");
 
             rs = pst.executeQuery();
 
             if (rs.next()) {
-                grantedRole = rs.getString("GRANTED_ROLE");
+                grantedRole = rs.getString("ROLE");
             }
 
             if (grantedRole != null) {
@@ -232,13 +230,15 @@ public class NHANSUController {
                 System.out.println("No role found for the current user.");
             }
 
-            if (grantedRole != "TKHOA" || grantedRole == null) {
+            if (!"TKHOA".equals(grantedRole) || !("GV".equals(grantedRole) || !"GVU".equals(grantedRole) 
+            || !"SV".equals(grantedRole) || !"TDV".equals(grantedRole) 
+            || !"NVCB".equals(grantedRole)) || grantedRole == null) {
                 System.out.println("No privileges (no grant).");
                 // Show an error alert
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText(null);
-                alert.setContentText("Update failed due to lilited privileges");
+                alert.setContentText("Lỗi: không có quyền!");
                 alert.showAndWait();
           
             }else
@@ -247,7 +247,7 @@ public class NHANSUController {
                 Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setTitle("Success");
                 alert.setHeaderText(null);
-                alert.setContentText("Update successfully.");
+                alert.setContentText("Cập nhật thành công!");
                 alert.showAndWait();
 
             } else{
@@ -255,7 +255,7 @@ public class NHANSUController {
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText(null);
-                alert.setContentText("Update unsuccessfully due to unexpected error");
+                alert.setContentText("Lỗi!");
                 alert.showAndWait();
 
             }
@@ -268,7 +268,7 @@ public class NHANSUController {
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText(null);
-                alert.setContentText("Update failed due to lilited privileges");
+                alert.setContentText("Lỗi");
                 alert.showAndWait();
             }
 
@@ -299,27 +299,27 @@ public class NHANSUController {
                 ResultSet rs = null;
                 pst = conn
                         .prepareStatement(
-                                "SELECT GRANTED_ROLE FROM DBA_ROLE_PRIVS WHERE GRANTEE =(select user from dual)");
+                                "SELECT * FROM SESSION_ROLES");
 
                 rs = pst.executeQuery();
 
                 if (rs.next()) {
-                    grantedRole = rs.getString("GRANTED_ROLE");
+                    grantedRole = rs.getString("ROLE");
                 }
 
                 if (grantedRole != null) {
-                    System.out.println("Granted role: " + grantedRole);
+                    System.out.println("Role: " + grantedRole);
                 } else {
                     System.out.println("No role found for the current user.");
                 }
 
-                if (grantedRole != "TKHOA" || grantedRole == null) {
+                if (!"TKHOA".equals(grantedRole)|| grantedRole == null) {
                     System.out.println("No privileges (no grant).");
                     // Show an error alert
                     Alert alert = new Alert(AlertType.ERROR);
-                    alert.setTitle("Error");
+                    alert.setTitle("Lỗi");
                     alert.setHeaderText(null);
-                    alert.setContentText("Delete failed due to lilited privileges");
+                    alert.setContentText("Lỗi: không có quyền!");
                     alert.showAndWait();
               
                 }else
@@ -328,7 +328,7 @@ public class NHANSUController {
                     Alert alert = new Alert(AlertType.INFORMATION);
                     alert.setTitle("Success");
                     alert.setHeaderText(null);
-                    alert.setContentText("Delete successfully.");
+                    alert.setContentText("Xóa thành công!");
                     alert.showAndWait();
 
                 } else{
@@ -336,7 +336,7 @@ public class NHANSUController {
                     Alert alert = new Alert(AlertType.ERROR);
                     alert.setTitle("Error");
                     alert.setHeaderText(null);
-                    alert.setContentText("Delete unsuccessfully due to unexpected error");
+                    alert.setContentText("Lỗi!");
                     alert.showAndWait();
 
                 }
@@ -349,7 +349,7 @@ public class NHANSUController {
                     Alert alert = new Alert(AlertType.ERROR);
                     alert.setTitle("Error");
                     alert.setHeaderText(null);
-                    alert.setContentText("Delete failed due to lilited privileges");
+                    alert.setContentText("Lỗi!");
                     alert.showAndWait();
                 }
             } 
@@ -384,12 +384,12 @@ public class NHANSUController {
         CallableStatement cst = null;
         if (INP_HOTEN == null || INP_PHAI == null || INP_NGSINH == null || INP_DT == null || INP_VAITRO == null
                 || INP_TENDV == null) {
-            System.out.println("Nhap Thieu");
+            System.out.println("Nhap thieu");
             // Show an error alert
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(null);
-            alert.setContentText("Please type full");
+            alert.setContentText("Vui lòng nhập đủ!");
             alert.showAndWait();
         } else {
             try {
@@ -406,32 +406,32 @@ public class NHANSUController {
                 cst.setString(7, INP_TENDV);
                 int rowsAffected = cst.executeUpdate();
 
-                String grantedRole = null;
+                String role = null;
                 PreparedStatement pst = null;
                 ResultSet rs = null;
                 pst = conn
                         .prepareStatement(
-                                "SELECT GRANTED_ROLE FROM DBA_ROLE_PRIVS WHERE GRANTEE =(select user from dual)");
+                                "SELECT * FROM SESSION_ROLES");
 
                 rs = pst.executeQuery();
 
                 if (rs.next()) {
-                    grantedRole = rs.getString("GRANTED_ROLE");
+                    role = rs.getString("ROLE");
                 }
 
-                if (grantedRole != null) {
-                    System.out.println("Granted role: " + grantedRole);
+                if (role != null) {
+                    System.out.println("Role: " + role);
                 } else {
                     System.out.println("No role found for the current user.");
                 }
 
-                if (grantedRole != "TKHOA" || grantedRole == null) {
+                if (!"TKHOA".equals(role) || role == null) {
                     System.out.println("No privileges (no grant).");
                     // Show an error alert
                     Alert alert = new Alert(AlertType.ERROR);
                     alert.setTitle("Error");
                     alert.setHeaderText(null);
-                    alert.setContentText("Insert failed due to lilited privileges");
+                    alert.setContentText("Lỗi: không có quyền!");
                     alert.showAndWait();
               
                 }else
@@ -440,14 +440,14 @@ public class NHANSUController {
                     Alert alert = new Alert(AlertType.INFORMATION);
                     alert.setTitle("Success");
                     alert.setHeaderText(null);
-                    alert.setContentText("Insert successfully.");
+                    alert.setContentText("Thêm thành công!");
                     alert.showAndWait();
 
                 } else{
                     Alert alert = new Alert(AlertType.ERROR);
                     alert.setTitle("Error");
                     alert.setHeaderText(null);
-                    alert.setContentText("Insert unsuccessfully due to unexpected error");
+                    alert.setContentText("Lỗi!");
                     alert.showAndWait();
 
                 }
@@ -458,7 +458,7 @@ public class NHANSUController {
                     Alert alert = new Alert(AlertType.ERROR);
                     alert.setTitle("Error");
                     alert.setHeaderText(null);
-                    alert.setContentText("Insert unsuccessfully due to unexpected error");
+                    alert.setContentText("Lỗi!");
                     alert.showAndWait();
             }
         }
