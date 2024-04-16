@@ -155,6 +155,16 @@ public class PHANCONGController {
        int HK = Integer.parseInt(hockyDisplay.getText().trim());
        int NAM = Integer.parseInt(namDisplay.getText().trim());
 
+       Phancong selectedPhancong = phancongTableView.getSelectionModel().getSelectedItem();
+       String TENGV_OLD = selectedPhancong.getNhansu().getHOTEN();
+       String TENHP_OLD = selectedPhancong.getHocphan().getTENHP();
+       String MACT_OLD = selectedPhancong.getMACT();
+       int HK_OLD = selectedPhancong.getHK();
+       int NAM_OLD = selectedPhancong.getNAM();
+    //    System.out.println("TENHP: " + TENHP_OLD);
+    //    System.out.println("MACT: " + MACT_OLD);
+    //    System.out.println("HK: " + HK_OLD);
+    //    System.out.println("NAM: " + NAM_OLD);
        DataAccessLayer dal = null;
         Connection conn = null;
         CallableStatement cst = null;
@@ -163,12 +173,15 @@ public class PHANCONGController {
             conn = dal.connect();
             cst = conn.prepareCall("{CALL C##QLK.SP_ALL_UPDATE_PHANCONG(?,?,?,?,?)}");
             cst.setString(1, TENGV);
-            System.out.println(TENGV);
-            System.out.println(TENHP);
             cst.setString(2, TENHP);
             cst.setInt(3, HK);
             cst.setInt(4, NAM);
             cst.setString(5, MACT);
+            cst.setString(6, TENGV_OLD);
+            cst.setString(7, TENHP_OLD);
+            cst.setInt(8, HK_OLD);
+            cst.setInt(9, NAM_OLD);
+            cst.setString(10, MACT_OLD);
   
             int rowsAffected = cst.executeUpdate();
 
