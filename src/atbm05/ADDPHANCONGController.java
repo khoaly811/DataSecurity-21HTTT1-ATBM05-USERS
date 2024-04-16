@@ -53,10 +53,6 @@ public class ADDPHANCONGController {
     private TableColumn<KHmo, String> MAHP;
 
     @FXML
-    private Button updatePC;
-
-
-    @FXML
     private void onAddClick_PHANCONG() {
         System.out.println("Added");
     }
@@ -84,7 +80,7 @@ public class ADDPHANCONGController {
         STTH.setCellValueFactory(cellData -> cellData.getValue().getHocphan().SOTIETTHproperty().asString());
         SOSVTD.setCellValueFactory(cellData -> cellData.getValue().getHocphan().SOSVTOIDAproperty().asString());
         TENDV.setCellValueFactory(cellData -> cellData.getValue().getDonvi().TENDVproperty());
-        MAHP.setCellValueFactory(cellData -> cellData.getValue().MAHPproperty());
+        MAHP.setCellValueFactory(cellData -> cellData.getValue().MAHPproperty().asString());
         loadPhancongFromDatabase();
 
         // KHONG XAI O DAY
@@ -130,7 +126,7 @@ public class ADDPHANCONGController {
                 hp.setSOSVTOIDA(sosvtd);
                 String tendv = rs.getString("TENDV");
                 dv.setTENDV(tendv);
-                kh.setMAHP((rs.getString("MAHP")));
+                kh.setMAHP((rs.getInt("MAHP")));
                 kh.setHocphan(hp);
                 kh.setDonvi(dv);
                 addphancongList.add(kh);
@@ -144,20 +140,14 @@ public class ADDPHANCONGController {
         addphancongTableView.setItems(addphancongList);
     }
     @FXML
-    private void addPhancongClick(ActionEvent event){
-        System.out.println("na beo 1");
-        String INP_HOTEN = giaovienDisplay.getText().trim();
-        System.out.println("na beo 1+");
-        KHmo selectedPhancong = addphancongTableView.getSelectionModel().getSelectedItem();
+private void addPhancongClick(ActionEvent event) {
+    String INP_HOTEN = giaovienDisplay.getText().trim();
+    KHmo selectedPhancong = addphancongTableView.getSelectionModel().getSelectedItem();
+    if (selectedPhancong != null) {
         String TENHP = selectedPhancong.getHocphan().getTENHP();
         String MACT_OLD = selectedPhancong.getMACT();
         int HK_OLD = selectedPhancong.getHOCKY();
         int NAM_OLD = selectedPhancong.getNAM();
-        System.out.println("na beo 2");
-        System.out.println(TENHP);
-        System.out.println(MACT_OLD);
-        System.out.println(HK_OLD);
-        System.out.println(NAM_OLD);
         DataAccessLayer dal = null;
         Connection conn = null;
         CallableStatement cst = null;
@@ -172,28 +162,23 @@ public class ADDPHANCONGController {
             cst.setString(5, MACT_OLD);
             int rowsAffected = cst.executeUpdate();
             if (rowsAffected > 0) {
-                System.out.println("Insert successfully.");
-                Alert alert = new Alert(AlertType.INFORMATION);
-                alert.setTitle("Success");
-                alert.setHeaderText(null);
-                alert.setContentText("Thêm thành công!");
-                alert.showAndWait();
-
-            } else{
-                System.out.println("Insert unsuccessfully.");
-                Alert alert = new Alert(AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Lỗi!");
-                alert.showAndWait();
-
+                // Show success message
+                showAlert(Alert.AlertType.INFORMATION, "Success", "Thêm thành công!");
+            } else {
+                // Show error message
+                showAlert(Alert.AlertType.ERROR, "Error", "Lỗi!");
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
-            //showAlert(Alert.AlertType.ERROR, "Error", "Failed to add user: " + e.getMessage());
-
+            // Show error message
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to add user: " + e.getMessage());
         }
+    } else {
+        // Show error message indicating no item is selected
+        showAlert(Alert.AlertType.ERROR, "Error", "No item selected!");
     }
+}
+
 
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {

@@ -6,7 +6,7 @@ import javafx.beans.property.ObjectProperty;
 //doi ten file
 
 public class Hocphan {
-    private final SimpleStringProperty MAHP = new SimpleStringProperty();
+    private final SimpleIntegerProperty MAHP = new SimpleIntegerProperty();
     private final SimpleStringProperty TENHP = new SimpleStringProperty();
     private final SimpleIntegerProperty SOTC = new SimpleIntegerProperty();
     private final SimpleIntegerProperty SOTIETLT = new SimpleIntegerProperty();
@@ -19,7 +19,7 @@ public class Hocphan {
 
     }
 
-    public Hocphan(String MAHP, String TENHP, int SOTC, int SOTIETLT, int SOTIETTH, int SOSVTOIDA){
+    public Hocphan(int MAHP, String TENHP, int SOTC, int SOTIETLT, int SOTIETTH, int SOSVTOIDA){
         this.MAHP.set(MAHP);
         this.TENHP.set(TENHP);
         this.SOTC.set(SOTC);
@@ -30,15 +30,15 @@ public class Hocphan {
     }
 
     // Getters and setters
-   public String getMAHP(){
+   public int getMAHP(){
         return MAHP.get();
     }
 
-    public void setMAHP(String MAHP){
+    public void setMAHP(int MAHP){
         this.MAHP.set(MAHP);
     }
 
-    public SimpleStringProperty MAHPproperty(){
+    public SimpleIntegerProperty MAHPproperty(){
         return MAHP;
     }
 

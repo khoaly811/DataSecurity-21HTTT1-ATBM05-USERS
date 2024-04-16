@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 // DTO for KHMO table
 public class KHmo {
-    private final SimpleStringProperty MAHP = new SimpleStringProperty();
+    private final SimpleIntegerProperty MAHP = new SimpleIntegerProperty();
     private final SimpleIntegerProperty HOCKY = new SimpleIntegerProperty();
     private final SimpleIntegerProperty NAM = new SimpleIntegerProperty();
     private final SimpleStringProperty MACT = new SimpleStringProperty();
@@ -16,9 +16,6 @@ public class KHmo {
     private final ObjectProperty<Hocphan> hocphanProperty = new SimpleObjectProperty<>();
     private final ObjectProperty<Donvi> donviProperty = new SimpleObjectProperty<>();
     private final ObjectProperty<Nhansu> nhansuProperty = new SimpleObjectProperty<>();
-    public KHmo(){
-
-    }
 
     public KHmo(int HOCKY, int NAM, String MACT, LocalDate NGAYBD){
         // this.MAHP.set(MAHP);
@@ -27,7 +24,10 @@ public class KHmo {
         this.MACT.set(MACT);
         this.NGAYBD.set(NGAYBD);
     }
-
+    public KHmo() {
+        hocphanProperty.set(new Hocphan());
+        donviProperty.set(new Donvi());
+    }
     public Hocphan getHocphan() {
         return hocphanProperty.get();
     }
@@ -62,15 +62,15 @@ public class KHmo {
         return nhansuProperty;
     }
 
-    public String getMAHP(){
+    public int getMAHP(){
         return MAHP.get();
     }
 
-    public void setMAHP(String MAHP){
+    public void setMAHP(int MAHP){
         this.MAHP.set(MAHP);
     }
 
-    public SimpleStringProperty MAHPproperty(){
+    public SimpleIntegerProperty MAHPproperty(){
         return MAHP;
     }
 

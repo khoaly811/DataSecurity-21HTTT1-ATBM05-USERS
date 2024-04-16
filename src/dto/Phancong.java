@@ -7,7 +7,7 @@ import javafx.beans.property.ObjectProperty;
 
 public class Phancong {
     private final SimpleStringProperty MAGV = new SimpleStringProperty();
-    private final SimpleStringProperty MAHP = new SimpleStringProperty();
+    private final SimpleIntegerProperty MAHP = new SimpleIntegerProperty();
     private final SimpleIntegerProperty HK = new SimpleIntegerProperty();
     private final SimpleIntegerProperty NAM = new SimpleIntegerProperty();
     private final SimpleStringProperty MACT = new SimpleStringProperty();
@@ -18,7 +18,7 @@ public class Phancong {
 
     }
     
-    public Phancong(String MAGV, String MAHP, int HK, int NAM, String MACT){
+    public Phancong(String MAGV, int MAHP, int HK, int NAM, String MACT){
         this.MAGV.set(MAGV);
         this.MAHP.set(MAHP);
         this.HK.set(HK);
@@ -59,13 +59,13 @@ public class Phancong {
         return MAGV;
     }
 
-    public String getMAHP(){
+    public int getMAHP(){
         return MAHP.get();
     }
-    public void setMAHP(String MAHP){
+    public void setMAHP(int MAHP){
         this.MAHP.set(MAHP);
     }
-    public SimpleStringProperty MAHPproperty(){
+    public SimpleIntegerProperty MAHPproperty(){
         return MAHP;
     }
 

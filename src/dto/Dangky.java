@@ -8,7 +8,7 @@ import javafx.beans.property.SimpleFloatProperty;
 public class Dangky {
     private final SimpleStringProperty MASV = new SimpleStringProperty();
     private final SimpleStringProperty MAGV = new SimpleStringProperty();
-    private final SimpleStringProperty MAHP = new SimpleStringProperty();
+    private final SimpleIntegerProperty MAHP = new SimpleIntegerProperty();
     private final SimpleIntegerProperty HK = new SimpleIntegerProperty();
     private final SimpleIntegerProperty NAM = new SimpleIntegerProperty();
     private final SimpleStringProperty MACT = new SimpleStringProperty();
@@ -24,7 +24,7 @@ public class Dangky {
 
     }
     
-    public Dangky(String MASV, String MAGV, String MAHP, int HK, int NAM, String MACT, float DIEMTH, float DIEMQT, float DIEMCK, float DIEMTK){
+    public Dangky(String MASV, String MAGV, int MAHP, int HK, int NAM, String MACT, float DIEMTH, float DIEMQT, float DIEMCK, float DIEMTK){
         this.MASV.set(MASV);
         this.MAGV.set(MAGV);
         this.MAHP.set(MAHP);
@@ -89,13 +89,13 @@ public class Dangky {
         return MAGV;
     }
 
-    public String getMAHP(){
+    public int getMAHP(){
         return MAHP.get();
     }
-    public void setMAHP(String MAHP){
+    public void setMAHP(int MAHP){
         this.MAHP.set(MAHP);
     }
-    public SimpleStringProperty MAHPproperty(){
+    public SimpleIntegerProperty MAHPproperty(){
         return MAHP;
     }
 
