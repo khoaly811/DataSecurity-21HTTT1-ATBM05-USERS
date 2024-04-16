@@ -13,7 +13,7 @@ BEGIN
     IF USERNAME = 'C##QLK' THEN
         RETURN '';
     ELSE
-        SELECT COUNT(*) INTO USERROLE FROM DBA_ROLE_PRIVS WHERE GRANTEE = USERNAME AND (GRANTED_ROLE = 'TKHOA' OR GRANTED_ROLE = 'GVU');
+        SELECT COUNT(*) INTO USERROLE FROM DBA_ROLE_PRIVS WHERE GRANTEE = USERNAME AND (GRANTED_ROLE = 'TKHOA' OR GRANTED_ROLE = 'GVU'  OR GRANTED_ROLE = 'SV');
 
         IF USERROLE > 0 THEN
             RETURN '';
@@ -25,7 +25,7 @@ BEGIN
             ELSE
                  SELECT COUNT(*) INTO USERROLE FROM DBA_ROLE_PRIVS WHERE GRANTEE = USERNAME AND (GRANTED_ROLE = 'TDV');
                  IF USERROLE > 0 THEN
-                   PREDICATE := 'MADV = (select MADV from DONVI where TRGDV = ''' || USERNAME || ''')';
+                   PREDICATE := 'MADV = (select MADV from DONVI where upper(TRGDV) = ''' || USERNAME || ''')';
                  ELSE
                     PREDICATE := '1=0'; 
                 END IF;
@@ -173,8 +173,61 @@ BEGIN
         ENABLE                => TRUE);
 END;
 /
-SELECT * FROM NHANSU;
-GRANT SELECT ON NHANSU TO NVCB,GV,GVU,TDV;
+
+CREATE OR REPLACE FUNCTION F_CS_NHANSU_5(
+    P_SCHEMA IN VARCHAR2,
+    P_OBJECT IN VARCHAR2
+)
+RETURN VARCHAR2
+AS
+    USERNAME VARCHAR2(130);
+    USERROLE NUMBER;
+    PREDICATE VARCHAR2(1000); 
+BEGIN
+    USERNAME := SYS_CONTEXT('USERENV', 'SESSION_USER');
+    
+    IF USERNAME = 'C##QLK' THEN
+        RETURN '';
+    ELSE
+        SELECT COUNT(*) INTO USERROLE FROM DBA_ROLE_PRIVS WHERE GRANTEE = USERNAME AND GRANTED_ROLE = 'SV';
+
+        IF USERROLE > 0 THEN
+            PREDICATE := '1=0';
+        ELSE
+            PREDICATE := '';
+        END IF;
+    END IF;
+
+    RETURN PREDICATE;
+END;
+/
+select * from nhansu;
+
+BEGIN
+    DBMS_RLS.ADD_POLICY(
+        OBJECT_SCHEMA         => 'C##QLK',
+        OBJECT_NAME           => 'NHANSU',
+        POLICY_NAME           => 'NHANSU_POLICY_5',
+        FUNCTION_SCHEMA       => 'C##QLK',
+        POLICY_FUNCTION       => 'F_CS_NHANSU_5',
+        STATEMENT_TYPES       => 'SELECT',
+        SEC_RELEVANT_COLS     => 'PHUCAP, PHAI, NGSINH, DT,VAITRO,MADV', 
+        SEC_RELEVANT_COLS_OPT => DBMS_RLS.ALL_ROWS,
+        UPDATE_CHECK          => TRUE,
+        ENABLE                => TRUE);
+END;
+/
+
+
+SELECT * FROM C##QLK.NHANSU where MADV = (select MADV from DONVI where upper(TRGDV) ='TUAN101');
+GRANT SELECT ON NHANSU TO NVCB,GV,GVU,TDV,SV;
 GRANT UPDATE(DT) ON NHANSU TO NVCB,GV,GVU,TDV;
 GRANT SELECT, UPDATE, INSERT, DELETE ON NHANSU TO TKHOA;
 COMMIT;
+select user from dual;
+SELECT * FROM C##QLK.NHANSU;
+select * from C##QLK.SINHVIEN;
+create user tesst identified by student;
+grant create session to tesst;
+grant SV to tesst;
+

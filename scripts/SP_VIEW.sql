@@ -324,3 +324,12 @@ BEGIN
     SP_GRANT_EXECUTE('SP_VIEW_ADD_DANGKY', 'SV');
 END;
 /
+select * from KHMO;
+select * from HOCPHAN;
+select * from PHANCONG;
+--join pHANCONG voi KHMO nen them "and khmo.nam = pc.nam and khmo.mact = pc.mact" de tang tinh chinh xac
+create or replace view SP_VIEW_DANGKY_HOCPHAN as
+    select ns.HOTEN, hp.TENHP, khmo.HK,khmo.nam,khmo.ngaybd,hp.sotc
+    from C##QLK.KHMO khmo join C##QLK.HOCPHAN hp on hp.mahp = khmo.mahp
+    join C##QLK.PHANCONG pc on pc.mahp = khmo.mahp and khmo.hk = pc.hk --and khmo.nam = pc.nam and khmo.mact = pc.mact
+    join C##QLK.NHANSU ns on ns.manv = pc.magv; 
