@@ -144,8 +144,75 @@ public class PHANCONGController {
 
     @FXML
     private void deletePCClick(ActionEvent event) {
-        
-    }
+    
+        Phancong selectedPhancong = phancongTableView.getSelectionModel().getSelectedItem();
+        String TENGV_OLD = selectedPhancong.getNhansu().getHOTEN();
+        String TENHP_OLD = selectedPhancong.getHocphan().getTENHP();
+        String MACT_OLD = selectedPhancong.getMACT();
+        int HK_OLD = selectedPhancong.getHK();
+        int NAM_OLD = selectedPhancong.getNAM();
+        System.out.println("TENGV: " + TENGV_OLD);
+        System.out.println("TENHP: " + TENHP_OLD);
+        System.out.println("MACT: " + MACT_OLD);
+        System.out.println("HK: " + HK_OLD);
+        System.out.println("NAM: " + NAM_OLD);
+        DataAccessLayer dal = null;
+         Connection conn = null;
+         CallableStatement cst = null;
+        try {
+             dal = DataAccessLayer.getInstance("", "");
+             conn = dal.connect();
+             cst = conn.prepareCall("{CALL C##QLK.SP_DELETE_PHANCONG(?,?,?,?,?)}");
+         
+             cst.setString(1, TENGV_OLD);
+             cst.setString(2, TENHP_OLD);
+             cst.setInt(3, HK_OLD);
+             cst.setInt(4, NAM_OLD);
+             cst.setString(5, MACT_OLD);
+   
+             int rowsAffected = cst.executeUpdate();
+ 
+             
+             if (rowsAffected > 0) {
+                 System.out.println("Delete successfully.");
+                 Alert alert = new Alert(AlertType.INFORMATION);
+                 alert.setTitle("Success");
+                 alert.setHeaderText(null);
+                 alert.setContentText("Xóa thành công!");
+                 alert.showAndWait();
+ 
+             } else{
+                 System.out.println("Delete unsuccessfully.");
+                 Alert alert = new Alert(AlertType.ERROR);
+                 alert.setTitle("Error");
+                 alert.setHeaderText(null);
+                 alert.setContentText("Lỗi!");
+                 alert.showAndWait();
+ 
+             }
+         } catch (SQLException e) {
+             System.out.println("Failed to Delete: " + e.getMessage());
+             //showAlert(Alert.AlertType.ERROR, "Error", "Failed to Update user: " + e.getMessage());
+             if (e.getMessage().contains("ORA-01031")) {
+                 System.out.println("No privileges (no grant).");
+                 // Show an error alert
+                 Alert alert = new Alert(AlertType.ERROR);
+                 alert.setTitle("Error");
+                 alert.setHeaderText(null);
+                 alert.setContentText("Lỗi");
+                 alert.showAndWait();
+             }
+             else{
+                 System.out.println("Unexpected error");
+                 // Show an error alert
+                 Alert alert = new Alert(AlertType.ERROR);
+                 alert.setTitle("Error");
+                 alert.setHeaderText(null);
+                 alert.setContentText("Lỗi khi chạy !!!");
+                 alert.showAndWait();
+             }
+     }
+ }
 
     @FXML
     private void updatePCClick(ActionEvent event) {
@@ -225,6 +292,8 @@ public class PHANCONGController {
             }
     }
 }
+
+
 
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {

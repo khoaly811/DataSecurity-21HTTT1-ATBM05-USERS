@@ -211,7 +211,10 @@ BEGIN
     END IF;
 END;
 /
-
+select * from NHANSU;
+select * from DangKY;
+select* from PHANCONG;
+select* from HOCPHAN;
 BEGIN
     SP_GRANT_EXECUTE('SP_VIEW_PHANCONG', 'TKHOA');
     SP_GRANT_EXECUTE('SP_VIEW_PHANCONG', 'TDV');
@@ -277,7 +280,9 @@ BEGIN
     SP_GRANT_EXECUTE('SP_VIEW_THONGBAO', 'SV');
 END;
 /
-
+select * from donvi;
+select * from khmo join hocphan hp on hp.mahp=khmo.mahp JOIN DONVI DV ON DV.MADV = hp.MADV;
+select * from hocphan hp JOIN DONVI  dv ON dv.MADV = hp.MADV;
 CREATE OR REPLACE PROCEDURE SP_VIEW_ADD_PHANCONG(
     RESULT_CURSOR OUT SYS_REFCURSOR
 ) AS
