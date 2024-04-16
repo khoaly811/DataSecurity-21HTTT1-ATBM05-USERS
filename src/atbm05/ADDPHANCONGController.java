@@ -127,6 +127,7 @@ public class ADDPHANCONGController {
                 hp.setSOSVTOIDA(sosvtd);
                 String tendv = rs.getString("TENDV");
                 dv.setTENDV(tendv);
+                kh.setMAHP((rs.getString("MAHP")));
                 addphancongList.add(kh);
             
             }
@@ -149,5 +150,11 @@ public class ADDPHANCONGController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+    @FXML
+    private void refreshTable(ActionEvent event) {
+        addphancongList.clear();
+        loadPhancongFromDatabase();
+        addphancongTableView.refresh();
     }
 }
