@@ -12,7 +12,7 @@ public class Hocphan {
     private final SimpleIntegerProperty SOTIETLT = new SimpleIntegerProperty();
     private final SimpleIntegerProperty SOTIETTH = new SimpleIntegerProperty();
     private final SimpleIntegerProperty SOSVTOIDA = new SimpleIntegerProperty();
-    //  private final SimpleStringProperty MADV = new SimpleStringProperty();
+    private final SimpleStringProperty MADV = new SimpleStringProperty();
 
     private final ObjectProperty<Donvi> donviProperty = new SimpleObjectProperty<>();
     public Hocphan() {
@@ -102,15 +102,15 @@ public class Hocphan {
         return SOSVTOIDA;
     }
 
-    // public String getMADV(){
-    //     return MADV.get();
-    // }
-    // public void setMADV(String MADV){
-    //     this.MADV.set(MADV);
-    // }
-    // public SimpleStringProperty MADVproperty(){
-    //     return MADV;
-    // }
+    public String getMADV(){
+        return MADV.get();
+    }
+    public void setMADV(String MADV){
+        this.MADV.set(MADV);
+    }
+    public SimpleStringProperty MADVproperty(){
+        return MADV;
+    }
 
     public Donvi getDonvi() {
         return donviProperty.get();

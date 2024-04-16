@@ -6,51 +6,52 @@
 
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1076.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="atbm05.MainController">
   <tabs>
-      <Tab text="NHANSU">
+      <Tab text="Nhân sự">
          <content>
             <fx:include source="NHANSU.fxml" />
          </content>
       </Tab>
-      <Tab text="Thêm phân công">
+      <Tab text="Phân công">
       <content>
         <fx:include source="ADDPHANCONG.fxml" />
       </content>
     </Tab>
-    <Tab text="PHANCONG">
+    <Tab text="Kết quả phân công">
       <content>
         <fx:include source="PHANCONG.fxml" />
       </content>
     </Tab>
     
-      <Tab text="HOCPHAN">
+      <Tab text="Học phần">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
          </content>
       </Tab>
-      <Tab text="DANGKY">
+      <Tab text="Kế hoạch mở">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+         </content>
+      </Tab>
+      <Tab text="Đăng ký học phần">
+         <content>
+            <fx:include source="ADDDANGKY.fxml" />
+         </content>
+      </Tab>
+      <Tab text="Kết quả đăng ký học phần">
          <content>
             <fx:include source="DANGKY.fxml" />
          </content>
       </Tab>
-      <Tab text="KHMO">
+      
+      <Tab text="Sinh viên">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
          </content>
       </Tab>
-      <Tab text="SINHVIEN">
+      <Tab text="Đơn vị">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
          </content>
       </Tab>
-      <Tab text="DONVI">
-         <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-         </content>
-      </Tab>
-    <Tab text="PROFILE">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-      </content>
-    </Tab>
   </tabs>
 </TabPane>
