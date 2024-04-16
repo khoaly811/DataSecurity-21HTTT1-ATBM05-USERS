@@ -13,13 +13,13 @@
     <TableView fx:id="phancongTableView" layoutX="25.0" layoutY="85.0" prefHeight="480.0" prefWidth="857.0">
       <columns>
         <!-- <TableColumn fx:id="MANV" prefWidth="75.0" text="MANV" /> -->
-        <TableColumn fx:id="TENHP" prefWidth="150.0" text="Ten hoc phan" />
-        <TableColumn fx:id="HK" prefWidth="42.0" text="HK" />
-        <TableColumn fx:id="NAM" prefWidth="68.0" text="Nam" />
+        <TableColumn fx:id="TENHP" prefWidth="169.0" text="Ten hoc phan" />
+        <TableColumn fx:id="HK" prefWidth="37.0" text="HK" />
+        <TableColumn fx:id="NAM" prefWidth="54.0" text="Nam" />
         <!-- Set the visibility of this column to false -->
         <TableColumn fx:id="MAGV" prefWidth="0.0" text="MAGV" visible="false" />
-            <TableColumn fx:id="HOTENGV" prefWidth="169.0" text="Ten GV" />
-        <TableColumn fx:id="MACT" prefWidth="168.0" text="Ma chuong trinh" />
+            <TableColumn fx:id="HOTENGV" prefWidth="257.0" text="Ten GV" />
+        <TableColumn fx:id="MACT" prefWidth="258.0" text="Ma chuong trinh" />
       </columns>
     </TableView>
     <TextField layoutX="474.0" layoutY="42.0" prefHeight="26.0" prefWidth="292.0" promptText="Keywords..." />
@@ -31,7 +31,7 @@
       <Label layoutX="296.0" layoutY="621.0" text="Năm" />
       <Label layoutX="39.0" layoutY="621.0" text="Tên giáo viên" />
       <Button layoutX="941.0" layoutY="55.0" mnemonicParsing="false" text="Thông báo" />
-      <Button layoutX="941.0" layoutY="637.0" mnemonicParsing="false" text="Làm mới">
+      <Button layoutX="941.0" layoutY="637.0" mnemonicParsing="false" onAction="#refreshTable" text="Làm mới">
          <font>
             <Font name="System Bold" size="19.0" />
          </font>
@@ -41,7 +41,6 @@
       <TextField fx:id="chuongtrinhDisplay" layoutX="118.0" layoutY="651.0" />
       <TextField fx:id="hockyDisplay" layoutX="341.0" layoutY="579.0" />
       <TextField fx:id="namDisplay" layoutX="341.0" layoutY="626.0" />
-      <Button layoutX="925.0" layoutY="97.0" mnemonicParsing="false" onAction="#onAddClick_PHANCONG" prefHeight="26.0" prefWidth="106.0" text="Thêm Phân công" />
       <Button layoutX="925.0" layoutY="147.0" mnemonicParsing="false" onAction="#updatePCClick" prefHeight="26.0" prefWidth="106.0" text="Cập nhật" />
       <Button layoutX="926.0" layoutY="195.0" mnemonicParsing="false" onAction="#deletePCClick" prefHeight="26.0" prefWidth="106.0" style="-fx-background-color: red;" text="Xóa phân công" textFill="WHITE" />
   </children>

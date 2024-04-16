@@ -158,4 +158,11 @@ public class PHANCONGController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    @FXML
+    private void refreshTable(ActionEvent event) {
+        phancongList.clear();
+        loadPhancongFromDatabase();
+        phancongTableView.refresh();
+    }
 }
