@@ -2,10 +2,12 @@ package atbm05;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import oracle.jdbc.OracleTypes;
 
@@ -15,8 +17,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import DataAccessLayer.DataAccessLayer;
-import dto.Donvi;
-import dto.Sinhvien;
+import dto.*;
 
 
 public class SINHVIENController {
@@ -42,7 +43,7 @@ public class SINHVIENController {
     private TableColumn<Sinhvien, String> MACT;
 
     @FXML
-    private TableColumn<Sinhvien, String> TENDV;
+    private TableColumn<Sinhvien, String> MANGANH;
 
     @FXML
     private TableColumn<Sinhvien, String> SOTCTL;
@@ -84,7 +85,7 @@ public class SINHVIENController {
     private TextField chuongtrinhDisplay;
 
     @FXML
-    private TextField tendvDisplay;
+    private TextField nganhDisplay;
 
     @FXML
     private TextField sotctlDisplay;
@@ -93,10 +94,8 @@ public class SINHVIENController {
     private TextField diemtbtlDisplay;
 
     @FXML
-    private Button updateNS;
+    private Button updateSV;
 
-    @FXML
-    private Button profileButton;
 
     private ObservableList<Sinhvien> sinhvienList = FXCollections.observableArrayList();
 
@@ -108,7 +107,7 @@ public class SINHVIENController {
         DIACHI.setCellValueFactory(cellData -> cellData.getValue().DIACHIproperty());
         SDT.setCellValueFactory(cellData -> cellData.getValue().SDTproperty());
         MACT.setCellValueFactory(cellData -> cellData.getValue().MACTproperty());
-        TENDV.setCellValueFactory(cellData -> cellData.getValue().getDonvi().TENDVproperty());
+        MANGANH.setCellValueFactory(cellData->cellData.getValue().MANGANHproperty());
         SOTCTL.setCellValueFactory(cellData -> cellData.getValue().SOTCTLproperty().asString());
         DIEMTBTL.setCellValueFactory(cellData -> cellData.getValue().DIEMTBTLproperty().asString());
         sinhvienList = FXCollections.observableArrayList();
@@ -117,14 +116,13 @@ public class SINHVIENController {
         // Add listener to the TableView selection model
         sinhvienTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                // Display the selected row's information in the corresponding TextFields
                 hotenDisplay.setText(newSelection.getHOTEN());
                 phaiDisplay.setText(newSelection.getPHAI());
                 ngsinhDisplay.setText(newSelection.getNGSINH().toString());
                 diachiDisplay.setText(newSelection.getDIACHI());
                 dienthoaiDisplay.setText(newSelection.getSDT());
                 chuongtrinhDisplay.setText(newSelection.getMACT());
-                tendvDisplay.setText(newSelection.getDonvi().getTENDV());
+                nganhDisplay.setText(newSelection.getMANGANH());
                 sotctlDisplay.setText(String.valueOf(newSelection.getSOTCTL()));
                 diemtbtlDisplay.setText(String.valueOf(newSelection.getDIEMTBTL()));
             }
@@ -149,21 +147,15 @@ public class SINHVIENController {
             System.out.println("Nhan beo 3");
             while (rs.next()) {
                 Sinhvien sv = new Sinhvien();
-                Donvi dv = new Donvi();
                 sv.setHOTEN(rs.getString("HOTEN"));
                 sv.setPHAI(rs.getString("PHAI"));
                 sv.setNGSINH(rs.getDate("NGSINH").toLocalDate());
-                sv.setDIACHI((rs.getString("DIACHI")));
+                sv.setDIACHI((rs.getString("DCHI")));
                 sv.setSDT(rs.getString("DT"));
                 sv.setMACT(rs.getString("MACT"));
-                
-                String tendv = rs.getString("TENDV");
-                System.out.println("TENDV là: " + tendv);
-                dv.setTENDV(tendv);
-                sv.setDonvi(dv);
-
+                sv.setMANGANH(rs.getString("MANGANH"));
                 sv.setSOTCTL(rs.getInt("SOTCTL"));
-                sv.setDIEMTBTL(rs.getFloat("DIEMTBTL"));
+                sv.setDIEMTBTL(rs.getFloat("DTBTL"));
                 sinhvienList.add(sv);
             }
         } catch (SQLException e) {
@@ -172,5 +164,26 @@ public class SINHVIENController {
 
         // Set the loaded users to the table view
         sinhvienTableView.setItems(sinhvienList);
+    }
+    @FXML
+    private void updateSVClick(ActionEvent action){
+
+    }
+    @FXML
+    private void insertSVClick(ActionEvent action){
+
+    }
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    @FXML
+    private void refreshTable(ActionEvent event) {
+        sinhvienList.clear();
+        loadSinhvienFromDatabase();
+        sinhvienTableView.refresh();
     }
 }
