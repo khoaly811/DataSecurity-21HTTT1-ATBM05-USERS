@@ -16,6 +16,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import DataAccessLayer.DataAccessLayer;
 import dto.Dangky;
@@ -83,7 +85,8 @@ public class DANGKYController {
     private TextField masvDisplay;
     @FXML
     private TextField magvDisplay;
-
+    @FXML
+    private TextField searchKQDK;
     @FXML
     private void onAddClick_DANGKY() {
         System.out.println("Added");
@@ -125,6 +128,72 @@ public class DANGKYController {
                 
             }
         });
+
+        searchKQDK.textProperty().addListener((observable, oldValue, newValue) -> {
+            searchDangKy(newValue);
+        });
+
+        
+    }
+
+
+    private void searchDangKy(String searchText) {
+        DataAccessLayer dal = null;
+        Connection conn = null;
+        CallableStatement cst = null;
+        ResultSet rs = null;
+        List<Dangky>dangkyList  = new ArrayList<>();
+        try {
+            dal = DataAccessLayer.getInstance("your_username", "your_password");
+            conn = dal.connect();
+
+            // Construct the wildcard pattern for partial matching
+
+            cst = conn.prepareCall("{CALL C##QLK.SP_SEARCH_DANGKY(?, ?)}");
+            cst.registerOutParameter(1, OracleTypes.CURSOR);
+            cst.setString(2, searchText);
+            cst.execute();
+            System.out.println("nhan beo 2");
+            rs = (ResultSet) cst.getObject(1);
+            System.out.println("Nhan beo 3");
+            while (rs.next()) {
+                Dangky dk = new Dangky();
+                Sinhvien sv = new Sinhvien();
+                Hocphan hp = new Hocphan();
+                Nhansu ns = new Nhansu();
+
+                String tensv = rs.getString("HOTEN_SV");
+                //System.out.println("TEN SINH VIEN: " + tensv);
+                sv.setHOTEN(tensv);
+                dk.setSinhvien(sv);
+
+                String tengv = rs.getString("HOTEN_GV");
+                //System.out.println("TEN GIANG VIEN: " + tengv);
+                ns.setHOTEN(tengv);
+                dk.setNhansu(ns);
+
+                String tenhp = rs.getString("TENHP");
+                //System.out.println("TEN HOC PHAN: " + tenhp);
+                hp.setTENHP(tenhp);
+                dk.setHocphan(hp);
+
+                dk.setHK((rs.getInt("HK")));
+                dk.setNAM((rs.getInt("NAM")));
+                dk.setMACT((rs.getString("MACT")));
+                dk.setDIEMTH((rs.getFloat("DIEMTH")));
+                dk.setDIEMQT((rs.getFloat("DIEMQT")));
+                dk.setDIEMCK((rs.getFloat("DIEMCK")));
+                dk.setDIEMTK((rs.getFloat("DIEMTK")));
+
+                dangkyList.add(dk);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            
+        }
+
+        // Set the loaded users to the table view
+        dangkyTableView.setItems(FXCollections.observableArrayList(dangkyList));
     }
 
     private void loadDangkyFromDatabase() {
@@ -271,11 +340,24 @@ public class DANGKYController {
         String MACT_OLD = selectedDangky.getMACT();
         int HK_OLD = selectedDangky.getHK();
         int NAM_OLD = selectedDangky.getNAM();
-        System.out.println("TENSV: " + TENSV_OLD);
-        System.out.println("TENHP: " + TENHP_OLD);
-        System.out.println("MACT: " + MACT_OLD);
-        System.out.println("HK: " + HK_OLD);
-        System.out.println("NAM: " + NAM_OLD);
+        // System.out.println("TENSV: " + TENSV_OLD);
+        // System.out.println("TENHP: " + TENHP_OLD);
+        // System.out.println("MACT: " + MACT_OLD);
+        // System.out.println("HK: " + HK_OLD);
+        // System.out.println("NAM: " + NAM_OLD);
+        String hotensv = hotensvDisplay.getText().trim();
+        String hotengv = hotengvDisplay.getText().trim();
+        String tenhocphan = tenhocphanDisplay.getText().trim();
+        String mact = mactDisplay.getText().trim();
+        Integer hkStr = Integer.parseInt(hkDisplay.getText().trim());
+        Integer namStr = Integer.parseInt(namDisplay.getText().trim());
+        Integer diemthStr = Integer.parseInt(diemthDisplay.getText().trim());
+        Integer diemqtStr = Integer.parseInt(diemqtDisplay.getText().trim());
+        Integer diemckStr = Integer.parseInt(diemckDisplay.getText().trim());
+        Integer diemtkStr = Integer.parseInt(diemtkDisplay.getText().trim());
+        
+        
+
         DataAccessLayer dal = null;
          Connection conn = null;
          CallableStatement cst = null;
@@ -283,15 +365,39 @@ public class DANGKYController {
 
              dal = DataAccessLayer.getInstance("", "");
              conn = dal.connect();
-             cst = conn.prepareCall("{CALL C##QLK.SP_UPDATE_DANGKY(?,?,?,?,?,?)}");
+             cst = conn.prepareCall("{CALL C##QLK.SP_UPDATE_DANGKY(?,?,?,?,?,?,?,?,?,?)}");
              cst.setString(1, TENSV_OLD);
              cst.setString(2, TENGV_OLD);
              cst.setString(3, TENHP_OLD);
              cst.setInt(4, HK_OLD);
              cst.setInt(5, NAM_OLD);
              cst.setString(6, MACT_OLD);
+
+             cst.setInt(7,diemthStr);
+             cst.setInt(8, diemthStr);
+             cst.setInt(9, diemthStr);
+             cst.setInt(10, diemthStr);
    
-             cst.executeUpdate();
+             int rowsAffected = cst.executeUpdate();
+
+            
+             if (rowsAffected > 0) {
+                 System.out.println("Update successfully.");
+                 Alert alert = new Alert(AlertType.INFORMATION);
+                 alert.setTitle("Success");
+                 alert.setHeaderText(null);
+                 alert.setContentText("Cập nhật thành công!");
+                 alert.showAndWait();
+ 
+             } else{
+                 System.out.println("Update unsuccessfully.");
+                 Alert alert = new Alert(AlertType.ERROR);
+                 alert.setTitle("Error");
+                 alert.setHeaderText(null);
+                 alert.setContentText("Lỗi!");
+                 alert.showAndWait();
+ 
+             }
              
            
              

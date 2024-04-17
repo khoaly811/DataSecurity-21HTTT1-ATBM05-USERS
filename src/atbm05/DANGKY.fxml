@@ -23,12 +23,12 @@
       <TableColumn fx:id="DIEMQT" prefWidth="93.0" text="Điểm quá trình" />
       <TableColumn fx:id="DIEMCK" prefWidth="82.0" text="Điểm cuối kỳ" />
       <TableColumn fx:id="DIEMTK" prefWidth="96.0" text="Điểm tổng kết" />
-      <TableColumn fx:id="MASV" prefWidth="82.0" text="MASV" visible = "false" />
-      <TableColumn fx:id="MAGV" prefWidth="96.0" text="MAGV" visible = "false" />
+      <TableColumn fx:id="MASV" prefWidth="82.0" text="MASV" visible="false" />
+      <TableColumn fx:id="MAGV" prefWidth="96.0" text="MAGV" visible="false" />
       
       </columns>
     </TableView>
-    <TextField layoutX="474.0" layoutY="42.0" prefHeight="26.0" prefWidth="292.0" promptText="Keywords..." />
+    <TextField fx:id="searchKQDK" layoutX="474.0" layoutY="42.0" prefHeight="26.0" prefWidth="292.0" promptText="Keywords..." />
     <Button layoutX="929.0" layoutY="142.0" mnemonicParsing="false" onAction="#updateDKClick" prefHeight="26.0" prefWidth="106.0" text="Cập nhật" />
     <Button layoutX="930.0" layoutY="190.0" mnemonicParsing="false" onAction="#deleteDKClick" prefHeight="26.0" prefWidth="106.0" style="-fx-background-color: red;" text="Xóa đăng ký" textFill="WHITE" />
       <TextField fx:id="hotensvDisplay" layoutX="103.0" layoutY="600.0" />
