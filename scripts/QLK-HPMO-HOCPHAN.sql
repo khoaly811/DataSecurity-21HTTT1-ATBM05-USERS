@@ -78,7 +78,7 @@ BEGIN
             SELECT COUNT(*) INTO USERROLE FROM DBA_ROLE_PRIVS WHERE GRANTEE = USERNAME AND (GRANTED_ROLE = 'SV');
 
             IF USERROLE > 0 THEN
-            select mact into MACTSV from C##QLK.SINHVIEN where  MASV = USERNAME;
+            select mact into MACTSV from C##QLK.SINHVIEN where upper(MASV) = USERNAME;
                 IF MACTSV = 'CQ' then
                   PREDICATE := 'MACT = ''CQ''';
                 ELSIF MACTSV = 'CLC' then
