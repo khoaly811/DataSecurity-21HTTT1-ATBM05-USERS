@@ -123,7 +123,9 @@ public class NHANSUController {
             if (newSelection != null) {
                 hotenDisplay.setText(newSelection.getHOTEN());
                 phaiDisplay.setText(newSelection.getPHAI());
-                ngsinhDisplay.setText(newSelection.getNGSINH().toString());
+                LocalDate ngsinh = newSelection.getNGSINH();
+                ngsinhDisplay.setText(ngsinh != null ? ngsinh.toString() : "");
+
                 phucapDisplay.setText(String.valueOf(newSelection.getPHUCAP()));
                 dienthoaiDisplay.setText(newSelection.getDT());
                 // tendvDisplay.setText(newSelection.getDonvi().getTENDV());
@@ -159,7 +161,8 @@ public class NHANSUController {
                 Nhansu ns = new Nhansu();
                 ns.setHOTEN((rs.getString("HOTEN")));
                 ns.setPHAI((rs.getString("PHAI")));
-                ns.setNGSINH((rs.getDate("NGSINH").toLocalDate()));
+                java.sql.Date date = rs.getDate("NGSINH");
+                ns.setNGSINH(date != null ? date.toLocalDate() : null);
                 ns.setPHUCAP((rs.getInt("PHUCAP")));
                 ns.setDT((rs.getString("DT")));
                 ns.setVAITRO((rs.getString("VAITRO")));
@@ -230,9 +233,9 @@ public class NHANSUController {
                 System.out.println("No role found for the current user.");
             }
 
-            if (!"TKHOA".equals(grantedRole) || !("GV".equals(grantedRole) || !"GVU".equals(grantedRole) 
-            || !"SV".equals(grantedRole) || !"TDV".equals(grantedRole) 
-            || !"NVCB".equals(grantedRole)) || grantedRole == null) {
+            if (!"TKHOA".equals(grantedRole) || !("GV".equals(grantedRole) || !"GVU".equals(grantedRole)
+                    || !"SV".equals(grantedRole) || !"TDV".equals(grantedRole)
+                    || !"NVCB".equals(grantedRole)) || grantedRole == null) {
                 System.out.println("No privileges (no grant).");
                 // Show an error alert
                 Alert alert = new Alert(AlertType.ERROR);
@@ -240,9 +243,8 @@ public class NHANSUController {
                 alert.setHeaderText(null);
                 alert.setContentText("Lỗi: không có quyền!");
                 alert.showAndWait();
-          
-            }else
-            if (rowsAffected > 0) {
+
+            } else if (rowsAffected > 0) {
                 System.out.println("Update successfully.");
                 Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setTitle("Success");
@@ -250,7 +252,7 @@ public class NHANSUController {
                 alert.setContentText("Cập nhật thành công!");
                 alert.showAndWait();
 
-            } else{
+            } else {
                 System.out.println("Update unsuccessfully.");
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Error");
@@ -261,7 +263,8 @@ public class NHANSUController {
             }
         } catch (SQLException e) {
             System.out.println("Failed to Update: " + e.getMessage());
-            //showAlert(Alert.AlertType.ERROR, "Error", "Failed to Update user: " + e.getMessage());
+            // showAlert(Alert.AlertType.ERROR, "Error", "Failed to Update user: " +
+            // e.getMessage());
             if (e.getMessage().contains("ORA-01031")) {
                 System.out.println("No privileges (no grant).");
                 // Show an error alert
@@ -272,8 +275,9 @@ public class NHANSUController {
                 alert.showAndWait();
             }
 
+        }
     }
-    }
+
     @FXML
     private void deleteNSClick(ActionEvent event) {
         System.out.println("Delete");
@@ -313,7 +317,7 @@ public class NHANSUController {
                     System.out.println("No role found for the current user.");
                 }
 
-                if (!"TKHOA".equals(grantedRole)|| grantedRole == null) {
+                if (!"TKHOA".equals(grantedRole) || grantedRole == null) {
                     System.out.println("No privileges (no grant).");
                     // Show an error alert
                     Alert alert = new Alert(AlertType.ERROR);
@@ -321,9 +325,8 @@ public class NHANSUController {
                     alert.setHeaderText(null);
                     alert.setContentText("Lỗi: không có quyền!");
                     alert.showAndWait();
-              
-                }else
-                if (rowsAffected > 0) {
+
+                } else if (rowsAffected > 0) {
                     System.out.println("Insert successfully.");
                     Alert alert = new Alert(AlertType.INFORMATION);
                     alert.setTitle("Success");
@@ -331,7 +334,7 @@ public class NHANSUController {
                     alert.setContentText("Xóa thành công!");
                     alert.showAndWait();
 
-                } else{
+                } else {
                     System.out.println("Delete unsuccessfully.");
                     Alert alert = new Alert(AlertType.ERROR);
                     alert.setTitle("Error");
@@ -342,7 +345,8 @@ public class NHANSUController {
                 }
             } catch (SQLException e) {
                 System.out.println("Failed to delete: " + e.getMessage());
-                //showAlert(Alert.AlertType.ERROR, "Error", "Failed to delete user: " + e.getMessage());
+                // showAlert(Alert.AlertType.ERROR, "Error", "Failed to delete user: " +
+                // e.getMessage());
                 if (e.getMessage().contains("ORA-01031")) {
                     System.out.println("No privileges (no grant).");
                     // Show an error alert
@@ -352,7 +356,7 @@ public class NHANSUController {
                     alert.setContentText("Lỗi!");
                     alert.showAndWait();
                 }
-            } 
+            }
         } else {
             System.out.println("No row selected.");
         }
@@ -433,9 +437,8 @@ public class NHANSUController {
                     alert.setHeaderText(null);
                     alert.setContentText("Lỗi: không có quyền!");
                     alert.showAndWait();
-              
-                }else
-                if (rowsAffected > 0) {
+
+                } else if (rowsAffected > 0) {
                     System.out.println("Insert successfully.");
                     Alert alert = new Alert(AlertType.INFORMATION);
                     alert.setTitle("Success");
@@ -443,7 +446,7 @@ public class NHANSUController {
                     alert.setContentText("Thêm thành công!");
                     alert.showAndWait();
 
-                } else{
+                } else {
                     Alert alert = new Alert(AlertType.ERROR);
                     alert.setTitle("Error");
                     alert.setHeaderText(null);
@@ -453,13 +456,14 @@ public class NHANSUController {
                 }
             } catch (SQLException e) {
                 System.out.println("Error: " + e.getMessage());
-                //showAlert(Alert.AlertType.ERROR, "Error", "Failed to add user: " + e.getMessage());
+                // showAlert(Alert.AlertType.ERROR, "Error", "Failed to add user: " +
+                // e.getMessage());
                 System.out.println("Insert unsuccessfully.");
-                    Alert alert = new Alert(AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Lỗi!");
-                    alert.showAndWait();
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Lỗi!");
+                alert.showAndWait();
             }
         }
     }
