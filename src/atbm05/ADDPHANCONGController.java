@@ -11,6 +11,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import oracle.jdbc.OracleTypes;
+import java.sql.Statement;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -137,44 +138,64 @@ public class ADDPHANCONGController {
         addphancongTableView.setItems(addphancongList);
     }
     @FXML
-    private void addPhancongClick(ActionEvent event) {
-        String INP_HOTEN = giaovienDisplay.getText().trim();
-        KHmo selectedPhancong = addphancongTableView.getSelectionModel().getSelectedItem();
-        if (selectedPhancong != null) {
-            String TENHP = selectedPhancong.getHocphan().getTENHP();
-            String MACT_OLD = selectedPhancong.getMACT();
-            int HK_OLD = selectedPhancong.getHOCKY();
-            int NAM_OLD = selectedPhancong.getNAM();
-            DataAccessLayer dal = null;
-            Connection conn = null;
-            CallableStatement cst = null;
-            try {
-                dal = DataAccessLayer.getInstance("your_username", "your_password");
-                conn = dal.connect();
-                cst = conn.prepareCall("{CALL C##QLK.SP_INSERT_PHANCONG(?,?,?,?,?)}");
-                cst.setString(1, INP_HOTEN);
-                cst.setString(2, TENHP);
-                cst.setInt(3, HK_OLD);
-                cst.setInt(4, NAM_OLD);
-                cst.setString(5, MACT_OLD);
-                int rowsAffected = cst.executeUpdate();
-                if (rowsAffected > 0) {
-                    // Show success message
-                    showAlert(Alert.AlertType.INFORMATION, "Success", "Thêm thành công!");
-                } else {
-                    // Show error message
-                    showAlert(Alert.AlertType.ERROR, "Error", "Lỗi!");
-                }
-            } catch (SQLException e) {
-                System.out.println("Error: " + e.getMessage());
+private void addPhancongClick(ActionEvent event) {
+    String INP_HOTEN = giaovienDisplay.getText().trim();
+    KHmo selectedPhancong = addphancongTableView.getSelectionModel().getSelectedItem();
+    if (selectedPhancong != null) {
+        String TENHP = selectedPhancong.getHocphan().getTENHP();
+        String MACT_OLD = selectedPhancong.getMACT();
+        int HK_OLD = selectedPhancong.getHOCKY();
+        int NAM_OLD = selectedPhancong.getNAM();
+        DataAccessLayer dal = null;
+        Connection conn = null;
+        CallableStatement cst = null;
+        try {
+            dal = DataAccessLayer.getInstance("your_username", "your_password");
+            conn = dal.connect();
+            
+            // Count rows before
+            int rowCountBefore = getRowCount(conn);
+            
+            cst = conn.prepareCall("{CALL C##QLK.SP_INSERT_PHANCONG(?,?,?,?,?)}");
+            cst.setString(1, INP_HOTEN);
+            cst.setString(2, TENHP);
+            cst.setInt(3, HK_OLD);
+            cst.setInt(4, NAM_OLD);
+            cst.setString(5, MACT_OLD);
+            cst.executeUpdate();
+            
+            // Count rows after
+            int rowCountAfter = getRowCount(conn);
+            
+            if (rowCountAfter > rowCountBefore) {
+                // Show success message
+                showAlert(Alert.AlertType.INFORMATION, "Success", "Thêm thành công!");
+            } else {
                 // Show error message
-                showAlert(Alert.AlertType.ERROR, "Error", "Failed to add user: " + e.getMessage());
+                showAlert(Alert.AlertType.ERROR, "Error", "Lỗi!");
             }
-        } else {
-            // Show error message indicating no item is selected
-            showAlert(Alert.AlertType.ERROR, "Error", "No item selected!");
+            
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to add user: " + e.getMessage());
+        }
+    } else {
+        // Show error message indicating no item is selected
+        showAlert(Alert.AlertType.ERROR, "Error", "No item selected!");
+    }
+}
+
+private int getRowCount(Connection conn) throws SQLException {
+    int rowCount = 0;
+    try (Statement stmt = conn.createStatement();
+         ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM C##QLK.PHANCONG")) {
+        if (rs.next()) {
+            rowCount = rs.getInt(1);
         }
     }
+    return rowCount;
+}
+
 
 
 
