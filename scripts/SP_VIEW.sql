@@ -324,12 +324,31 @@ BEGIN
     SP_GRANT_EXECUTE('SP_VIEW_ADD_DANGKY', 'SV');
 END;
 /
-select * from KHMO;
-select * from HOCPHAN;
-select * from PHANCONG;
+--select * from C##QLK.KHMO; --no
+--select * from C##QLK.HOCPHAN; --no
+--select * from C##QLK.PHANCONG; --no
+--select * from C##QLK.NHANSU; --no
+--select * from C##QLK.SINHVIEN;
+--select * from C##QLK.SINHVIEN where masv = 'King1';
+--SELECT * FROM SESSION_ROLES;
+--grant SV to KING1;
+--alter user KING1 quota 5M on  system;
+--create role ruoi;
+--grant ruoi to King1;
+--create user King1 identified by king1;
+--grant create session to King1;
 --join pHANCONG voi KHMO nen them "and khmo.nam = pc.nam and khmo.mact = pc.mact" de tang tinh chinh xac
 create or replace view SP_VIEW_DANGKY_HOCPHAN as
     select ns.HOTEN, hp.TENHP, khmo.HK,khmo.nam,khmo.ngaybd,hp.sotc
     from C##QLK.KHMO khmo join C##QLK.HOCPHAN hp on hp.mahp = khmo.mahp
     join C##QLK.PHANCONG pc on pc.mahp = khmo.mahp and khmo.hk = pc.hk --and khmo.nam = pc.nam and khmo.mact = pc.mact
     join C##QLK.NHANSU ns on ns.manv = pc.magv; 
+    
+GRANT select ON SP_VIEW_DANGKY_HOCPHAN TO SV;
+GRANT select ON SP_VIEW_DANGKY_HOCPHAN TO TKHOA;
+GRANT select ON SP_VIEW_DANGKY_HOCPHAN TO TDV;
+GRANT select ON SP_VIEW_DANGKY_HOCPHAN TO GVU;
+GRANT select ON SP_VIEW_DANGKY_HOCPHAN TO GV;
+GRANT select ON SP_VIEW_DANGKY_HOCPHAN TO NVCB;
+select * from C##QLK.SP_VIEW_DANGKY_HOCPHAN;
+select user from dual;
