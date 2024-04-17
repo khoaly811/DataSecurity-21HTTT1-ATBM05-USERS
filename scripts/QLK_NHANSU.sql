@@ -224,10 +224,4 @@ GRANT SELECT ON NHANSU TO NVCB,GV,GVU,TDV,SV;
 GRANT UPDATE(DT) ON NHANSU TO NVCB,GV,GVU,TDV;
 GRANT SELECT, UPDATE, INSERT, DELETE ON NHANSU TO TKHOA;
 COMMIT;
-select user from dual;
-SELECT * FROM C##QLK.NHANSU;
-select * from C##QLK.SINHVIEN;
-create user tesst identified by student;
-grant create session to tesst;
-grant SV to tesst;
 

@@ -14,6 +14,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 import DataAccessLayer.DataAccessLayer;
 import dto.*;
@@ -24,6 +25,9 @@ public class ADDDANGKYController {
 
     @FXML
     private TableColumn<KHmo, String> TENHP;
+
+    @FXML
+    private TableColumn<KHmo, String> TENGV;
 
     @FXML
     private TableColumn<KHmo, String> NGAYBD;
@@ -61,6 +65,7 @@ public class ADDDANGKYController {
     public void initialize() {
         // Initialize table columns
         TENHP.setCellValueFactory(cellData -> cellData.getValue().getHocphan().TENHPproperty());
+        TENGV.setCellValueFactory(cellData -> cellData.getValue().getNhansu().HOTENproperty());
         HK.setCellValueFactory(cellData -> cellData.getValue().HOCKYproperty().asString());
         NAM.setCellValueFactory(cellData -> cellData.getValue().NAMproperty().asString());
         NGAYBD.setCellValueFactory(cellData -> cellData.getValue().NGAYBDproperty().asString());
@@ -96,12 +101,15 @@ public class ADDDANGKYController {
             while (rs.next()) {
                 KHmo kh = new KHmo();
                 Hocphan hp = new Hocphan();
+                Nhansu ns = new Nhansu();
                 kh.setMACT((rs.getString("MACT")));
                 kh.setHOCKY((rs.getInt("HK")));
                 kh.setNAM((rs.getInt("NAM")));
                 kh.setNGAYBD((rs.getDate("NGAYBD").toLocalDate()));
                 String tenhp = rs.getString("TENHP");
                 hp.setTENHP(tenhp);
+                String tengv = rs.getString("HOTEN");
+                ns.setHOTEN(tengv);
                 int sotc = rs.getInt("SOTC");
                 hp.setSOTC(sotc);
                 int stlt = rs.getInt("STLT");
@@ -113,6 +121,7 @@ public class ADDDANGKYController {
                 String madv = rs.getString("MADV");
                 hp.setMADV(madv);
                 kh.setHocphan(hp);
+                kh.setNhansu(ns);
                 adddangkyList.add(kh);
             }
         } catch (SQLException e) {
@@ -126,7 +135,42 @@ public class ADDDANGKYController {
 
     @FXML
     private void addDangkyClick(ActionEvent event){
-        
+        KHmo selectedDangky = adddangkyTableView.getSelectionModel().getSelectedItem();
+        if (selectedDangky != null){
+            String TENHP = selectedDangky.getHocphan().getTENHP();
+            String TENGV = selectedDangky.getNhansu().getHOTEN();
+            int HK = selectedDangky.getHOCKY();
+            int NAM = selectedDangky.getNAM();
+            String MACT = selectedDangky.getMACT();
+            DataAccessLayer dal = null;
+            Connection conn = null;
+            CallableStatement cst = null;
+            try {
+                dal = DataAccessLayer.getInstance("your_username", "your_password");
+                conn = dal.connect();
+                cst = conn.prepareCall("{CALL C##QLK.SP_INSERT_DANGKY(?,?,?,?,?)}");
+                cst.setString(1, TENHP);
+                cst.setString(2, TENGV);
+                cst.setInt(3, HK);
+                cst.setInt(4, NAM);
+                cst.setString(5, MACT);
+                int rowsAffected = cst.executeUpdate();
+                if (rowsAffected > 0) {
+                    // Show success message
+                    showAlert(Alert.AlertType.INFORMATION, "Success", "Thêm thành công!");
+                } else {
+                    // Show error message
+                    showAlert(Alert.AlertType.ERROR, "Error", "Lỗi!");
+                }
+            } catch (SQLException e) {
+                System.out.println("Error: " + e.getMessage());
+                // Show error message
+                showAlert(Alert.AlertType.ERROR, "Error", "Failed to add user: " + e.getMessage());
+            }
+        } else {
+            // Show error message indicating no item is selected
+            showAlert(Alert.AlertType.ERROR, "Error", "No item selected!");
+        }
     }
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
