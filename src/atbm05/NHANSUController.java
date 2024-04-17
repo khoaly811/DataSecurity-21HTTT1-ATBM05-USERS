@@ -536,8 +536,7 @@ public class NHANSUController {
             dal = DataAccessLayer.getInstance("your_username", "your_password");
             conn = dal.connect();
 
-            // SQL query to retrieve distinct TENDV values from DONVI table
-            String sql = "SELECT DISTINCT TENDV FROM C##QLK.DONVI";
+            String sql = "SELECT TENDV FROM C##QLK.DONVI";
 
             pst = conn.prepareStatement(sql);
 

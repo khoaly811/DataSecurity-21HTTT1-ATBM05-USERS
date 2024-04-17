@@ -22,7 +22,7 @@ BEGIN
             SELECT COUNT(*) INTO USERROLE FROM DBA_ROLE_PRIVS WHERE GRANTEE = USERNAME AND (GRANTED_ROLE = 'SV');
 
             IF USERROLE > 0 THEN
-                PREDICATE := 'MASV = ''' || USERNAME || '''';
+                PREDICATE := 'UPPER(MASV) = ''' || USERNAME || '''';
             ELSE
                 PREDICATE := '1=0'; 
             END IF;
