@@ -199,4 +199,10 @@ public class DANGKYController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+    @FXML
+    private void refreshTable(ActionEvent event) {
+        dangkyList.clear();
+        loadDangkyFromDatabase();
+        dangkyTableView.refresh();
+    }
 }

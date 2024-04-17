@@ -26,14 +26,14 @@
       </columns>
     </TableView>
     <TextField layoutX="474.0" layoutY="42.0" prefHeight="26.0" prefWidth="292.0" promptText="Keywords..." />
-      <Button layoutX="1003.0" layoutY="56.0" mnemonicParsing="false" text="Thông báo" />
-      <Button layoutX="988.0" layoutY="525.0" mnemonicParsing="false" onAction="#refreshTable" text="Làm mới">
+      <Button layoutX="1003.0" layoutY="43.0" mnemonicParsing="false" text="Thông báo" />
+      <Button layoutX="988.0" layoutY="658.0" mnemonicParsing="false" onAction="#refreshTable" text="Làm mới">
          <font>
             <Font name="System Bold" size="19.0" />
          </font>
       </Button>
       
       
-      <Button layoutX="983.0" layoutY="111.0" mnemonicParsing="false" onAction="#addDangkyClick" prefHeight="56.0" prefWidth="113.0" text="Đăng ký học phần" />
+      <Button layoutX="984.0" layoutY="111.0" mnemonicParsing="false" onAction="#addDangkyClick" prefHeight="56.0" prefWidth="113.0" text="Đăng ký học phần" />
   </children>
 </AnchorPane>
