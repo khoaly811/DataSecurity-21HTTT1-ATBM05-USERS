@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -14,10 +15,12 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import DataAccessLayer.DataAccessLayer;
 import dto.Dangky;
 import dto.Nhansu;
+import dto.Phancong;
 import dto.Sinhvien;
 import dto.Hocphan;
 
@@ -119,8 +122,6 @@ public class DANGKYController {
                 diemckDisplay.setText(String.valueOf(newSelection.getDIEMCK()));
                 diemtkDisplay.setText(String.valueOf(newSelection.getDIEMTK()));
                 mactDisplay.setText(String.valueOf(newSelection.getMACT()));
-                masvDisplay.setText(newSelection.getSinhvien().getMASV());
-                magvDisplay.setText(newSelection.getNhansu().getMANV());
                 
             }
         });
@@ -184,12 +185,141 @@ public class DANGKYController {
 
     @FXML
     private void deleteDKClick(ActionEvent event) {
+    
+        Dangky selectedDangky = dangkyTableView.getSelectionModel().getSelectedItem();
+        String TENSV_OLD = selectedDangky.getSinhvien().getHOTEN();
+        String TENGV_OLD = selectedDangky.getNhansu().getHOTEN();
+        String TENHP_OLD = selectedDangky.getHocphan().getTENHP();
+        String MACT_OLD = selectedDangky.getMACT();
+        int HK_OLD = selectedDangky.getHK();
+        int NAM_OLD = selectedDangky.getNAM();
+        System.out.println("TENSV: " + TENSV_OLD);
+        System.out.println("TENHP: " + TENHP_OLD);
+        System.out.println("MACT: " + MACT_OLD);
+        System.out.println("HK: " + HK_OLD);
+        System.out.println("NAM: " + NAM_OLD);
+        DataAccessLayer dal = null;
+         Connection conn = null;
+         CallableStatement cst = null;
+        try {
+
+             dal = DataAccessLayer.getInstance("", "");
+             conn = dal.connect();
+             int rowCountBefore = getRowCount(conn);
+             cst = conn.prepareCall("{CALL C##QLK.SP_DELETE_DANGKY(?,?,?,?,?,?)}");
+             cst.setString(1, TENSV_OLD);
+             cst.setString(2, TENGV_OLD);
+             cst.setString(3, TENHP_OLD);
+             cst.setInt(4, HK_OLD);
+             cst.setInt(5, NAM_OLD);
+             cst.setString(6, MACT_OLD);
+   
+             cst.executeUpdate();
+             int rowCountAfter = getRowCount(conn);
+             
+             if (rowCountAfter > rowCountBefore) {
+                // Show success message
+                showAlert(Alert.AlertType.INFORMATION, "Success", "Thêm thành công!");
+            } else {
+                // Show error message
+                showAlert(Alert.AlertType.ERROR, "Error", "Lỗi! SDGN");
+            }
+             
+ 
+             
+         } catch (SQLException e) {
+             System.out.println("Failed to Delete: " + e.getMessage());
+             //showAlert(Alert.AlertType.ERROR, "Error", "Failed to Update user: " + e.getMessage());
+             if (e.getMessage().contains("ORA-01031")) {
+                 System.out.println("No privileges (no grant).");
+                 // Show an error alert
+                 Alert alert = new Alert(AlertType.ERROR);
+                 alert.setTitle("Error");
+                 alert.setHeaderText(null);
+                 alert.setContentText("Lỗi");
+                 alert.showAndWait();
+             }
+             else{
+                 System.out.println("Unexpected error");
+                 // Show an error alert
+                 Alert alert = new Alert(AlertType.ERROR);
+                 alert.setTitle("Error");
+                 alert.setHeaderText(null);
+                 alert.setContentText("Lỗi khi chạy !!!");
+                 alert.showAndWait();
+             }
+     }
+ }
+
+ private int getRowCount(Connection conn) throws SQLException {
+    int rowCount = 0;
+    try (Statement stmt = conn.createStatement();
+         ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM C##QLK.DANGKY")) {
+        if (rs.next()) {
+            rowCount = rs.getInt(1);
+        }
     }
+    return rowCount;
+}
 
     @FXML
     private void updateDKClick(ActionEvent event) {
-    
-    }
+        Dangky selectedDangky = dangkyTableView.getSelectionModel().getSelectedItem();
+        String TENSV_OLD = selectedDangky.getSinhvien().getHOTEN();
+        String TENGV_OLD = selectedDangky.getNhansu().getHOTEN();
+        String TENHP_OLD = selectedDangky.getHocphan().getTENHP();
+        String MACT_OLD = selectedDangky.getMACT();
+        int HK_OLD = selectedDangky.getHK();
+        int NAM_OLD = selectedDangky.getNAM();
+        System.out.println("TENSV: " + TENSV_OLD);
+        System.out.println("TENHP: " + TENHP_OLD);
+        System.out.println("MACT: " + MACT_OLD);
+        System.out.println("HK: " + HK_OLD);
+        System.out.println("NAM: " + NAM_OLD);
+        DataAccessLayer dal = null;
+         Connection conn = null;
+         CallableStatement cst = null;
+        try {
+
+             dal = DataAccessLayer.getInstance("", "");
+             conn = dal.connect();
+             cst = conn.prepareCall("{CALL C##QLK.SP_UPDATE_DANGKY(?,?,?,?,?,?)}");
+             cst.setString(1, TENSV_OLD);
+             cst.setString(2, TENGV_OLD);
+             cst.setString(3, TENHP_OLD);
+             cst.setInt(4, HK_OLD);
+             cst.setInt(5, NAM_OLD);
+             cst.setString(6, MACT_OLD);
+   
+             cst.executeUpdate();
+             
+           
+             
+ 
+             
+         } catch (SQLException e) {
+             System.out.println("Failed to Delete: " + e.getMessage());
+             //showAlert(Alert.AlertType.ERROR, "Error", "Failed to Update user: " + e.getMessage());
+             if (e.getMessage().contains("ORA-01031")) {
+                 System.out.println("No privileges (no grant).");
+                 // Show an error alert
+                 Alert alert = new Alert(AlertType.ERROR);
+                 alert.setTitle("Error");
+                 alert.setHeaderText(null);
+                 alert.setContentText("Lỗi");
+                 alert.showAndWait();
+             }
+             else{
+                 System.out.println("Unexpected error");
+                 // Show an error alert
+                 Alert alert = new Alert(AlertType.ERROR);
+                 alert.setTitle("Error");
+                 alert.setHeaderText(null);
+                 alert.setContentText("Lỗi khi chạy !!!");
+                 alert.showAndWait();
+             }
+     }
+ }
 
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {

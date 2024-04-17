@@ -168,3 +168,4 @@ BEGIN
     SP_GRANT_EXECUTE('SP_SEARCH_SINHVIEN', 'SV');
 END;
 /
+select * from NHANSU;
