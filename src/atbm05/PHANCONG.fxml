@@ -22,7 +22,7 @@
         <TableColumn fx:id="MACT" prefWidth="258.0" text="Ma chuong trinh" />
       </columns>
     </TableView>
-    <TextField layoutX="474.0" layoutY="42.0" prefHeight="26.0" prefWidth="292.0" promptText="Keywords..." />
+    <TextField fx:id="searchPC" layoutX="474.0" layoutY="42.0" prefHeight="26.0" prefWidth="292.0" promptText="Keywords..." />
       <Label layoutX="38.0" layoutY="583.0" text="Tên học phần" />
       <!-- <TextField fx:id="hotenDisplay" layoutX="85.0" layoutY="579.0" />
       <TextField fx:id="phaiDisplay" layoutX="85.0" layoutY="661.0" /> -->

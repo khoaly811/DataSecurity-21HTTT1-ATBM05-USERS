@@ -24,7 +24,7 @@
         <TableColumn fx:id="DIEMTBTL" prefWidth="72.0" text="GPA" />
       </columns>
     </TableView>
-    <TextField fx:id="searchNS" layoutX="474.0" layoutY="42.0" prefHeight="26.0" prefWidth="292.0" promptText="Keywords..." />
+    <TextField fx:id="searchSV" layoutX="474.0" layoutY="42.0" prefHeight="26.0" prefWidth="292.0" promptText="Keywords..." />
     <Button layoutX="929.0" layoutY="97.0" mnemonicParsing="false" onAction="#insertSVClick" prefHeight="26.0" prefWidth="106.0" text="Thêm sinh viên" />
     <Button fx:id="updateSV" layoutX="929.0" layoutY="147.0" mnemonicParsing="false" onAction="#updateSVClick" prefHeight="26.0" prefWidth="106.0" text="Cập nhật" />
       <Label layoutX="38.0" layoutY="583.0" text="Họ tên" />

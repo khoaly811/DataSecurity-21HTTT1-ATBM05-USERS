@@ -15,6 +15,8 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import DataAccessLayer.DataAccessLayer;
 import dto.*;
@@ -96,6 +98,9 @@ public class SINHVIENController {
     @FXML
     private Button updateSV;
 
+    @FXML
+    private TextField searchSV;
+
 
     private ObservableList<Sinhvien> sinhvienList = FXCollections.observableArrayList();
 
@@ -127,6 +132,52 @@ public class SINHVIENController {
                 diemtbtlDisplay.setText(String.valueOf(newSelection.getDIEMTBTL()));
             }
         });
+
+        searchSV.textProperty().addListener((observable, oldValue, newValue) -> {
+            searcSinhvien(newValue);
+        });
+    }
+
+
+    private void searcSinhvien(String searchText) {
+        DataAccessLayer dal = null;
+        Connection conn = null;
+        CallableStatement cst = null;
+        ResultSet rs = null;
+        List<Sinhvien>  sinhvienList= new ArrayList<>();
+        try {
+            dal = DataAccessLayer.getInstance("your_username", "your_password");
+            conn = dal.connect();
+
+            // Construct the wildcard pattern for partial matching
+
+            cst = conn.prepareCall("{CALL C##QLK.SP_SEARCH_SINHVIEN(?, ?)}");
+            cst.registerOutParameter(1, OracleTypes.CURSOR);
+            cst.setString(2, searchText);
+            cst.execute();
+            System.out.println("nhan beo 2");
+            rs = (ResultSet) cst.getObject(1);
+            System.out.println("Nhan beo 3");
+            while (rs.next()) {
+                Sinhvien sv = new Sinhvien();
+                sv.setHOTEN(rs.getString("HOTEN"));
+                sv.setPHAI(rs.getString("PHAI"));
+                sv.setNGSINH(rs.getDate("NGSINH").toLocalDate());
+                sv.setDIACHI((rs.getString("DCHI")));
+                sv.setSDT(rs.getString("DT"));
+                sv.setMACT(rs.getString("MACT"));
+                sv.setMANGANH(rs.getString("MANGANH"));
+                sv.setSOTCTL(rs.getInt("SOTCTL"));
+                sv.setDIEMTBTL(rs.getFloat("DTBTL"));
+                sinhvienList.add(sv);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        // Set the loaded users to the table view
+        sinhvienTableView.setItems(FXCollections.observableArrayList(sinhvienList));
+
     }
 
     private void loadSinhvienFromDatabase() {

@@ -352,3 +352,5 @@ GRANT select ON SP_VIEW_DANGKY_HOCPHAN TO GV;
 GRANT select ON SP_VIEW_DANGKY_HOCPHAN TO NVCB;
 select * from C##QLK.SP_VIEW_DANGKY_HOCPHAN;
 select user from dual;
+
+

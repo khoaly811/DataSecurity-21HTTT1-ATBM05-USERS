@@ -17,6 +17,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import DataAccessLayer.DataAccessLayer;
 import dto.*;
@@ -74,6 +76,9 @@ public class PHANCONGController {
     @FXML
     private TextField chuongtrinhDisplay;
 
+    @FXML
+    private TextField searchPC;
+
 
     private ObservableList<Phancong> phancongList = FXCollections.observableArrayList();
 
@@ -98,14 +103,62 @@ public class PHANCONGController {
                 chuongtrinhDisplay.setText(newSelection.getMACT());
             }
         });
+        searchPC.textProperty().addListener((observable, oldValue, newValue) -> {
+            searcPhancong(newValue);
+        });
     }
 
+    private void searcPhancong(String searchText) {
+        DataAccessLayer dal = null;
+        Connection conn = null;
+        CallableStatement cst = null;
+        ResultSet rs = null;
+        List<Phancong>  phancongList= new ArrayList<>();
+        try {
+            dal = DataAccessLayer.getInstance("your_username", "your_password");
+            conn = dal.connect();
+
+            // Construct the wildcard pattern for partial matching
+
+            cst = conn.prepareCall("{CALL C##QLK.SP_SEARCH_PHANCONG(?, ?)}");
+            cst.registerOutParameter(1, OracleTypes.CURSOR);
+            cst.setString(2, searchText);
+            cst.execute();
+            rs = (ResultSet) cst.getObject(1);
+            while (rs.next()) {
+                Phancong pc = new Phancong();
+                Nhansu ns = new Nhansu();
+                Hocphan hp = new Hocphan();
+
+                String tengv = rs.getString("HOTEN");
+                //System.out.println("TEN GIANG VIEN: " + tengv);
+                ns.setHOTEN(tengv);
+                pc.setNhansu(ns);
+
+                String tenhp = rs.getString("TENHP");
+                //System.out.println("TEN HOC PHAN: " + tenhp);
+                hp.setTENHP(tenhp);
+                pc.setHocphan(hp);
+
+                pc.setHK((rs.getInt("HK")));
+                pc.setNAM((rs.getInt("NAM")));
+                pc.setMACT((rs.getString("MACT")));
+
+                phancongList.add(pc);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+
+        }
+
+        phancongTableView.setItems(FXCollections.observableArrayList(phancongList));
+    }
     private void loadPhancongFromDatabase() {
         DataAccessLayer dal = null;
         Connection conn = null;
         CallableStatement cst = null;
         ResultSet rs = null;
-
+        
         try {
             dal = DataAccessLayer.getInstance("your_username", "your_password");
             conn = dal.connect();
