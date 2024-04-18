@@ -168,10 +168,10 @@ private void addPhancongClick(ActionEvent event) {
             int rowCountAfter = getRowCount(conn);
             
             if (rowCountAfter > rowCountBefore) {
-                // Show success message
+            
                 showAlert(Alert.AlertType.INFORMATION, "Success", "Thêm thành công!");
             } else {
-                // Show error message
+           
                 showAlert(Alert.AlertType.ERROR, "Error", "Lỗi!");
             }
             
@@ -180,7 +180,7 @@ private void addPhancongClick(ActionEvent event) {
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to add user: " + e.getMessage());
         }
     } else {
-        // Show error message indicating no item is selected
+       
         showAlert(Alert.AlertType.ERROR, "Error", "No item selected!");
     }
 }
@@ -213,3 +213,4 @@ private int getRowCount(Connection conn) throws SQLException {
         addphancongTableView.refresh();
     }
 }
+
