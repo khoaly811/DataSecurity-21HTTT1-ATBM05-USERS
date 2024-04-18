@@ -24,12 +24,12 @@
     
       <Tab text="Học phần">
          <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+             <fx:include source="HOCPHAN.fxml" />
          </content>
       </Tab>
       <Tab text="Kế hoạch mở">
          <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            <fx:include source="KHMO.fxml" />
          </content>
       </Tab>
       <Tab text="Đăng ký học phần">

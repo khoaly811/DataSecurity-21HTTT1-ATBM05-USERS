@@ -113,7 +113,7 @@ public class KHMOController {
                 String tenhp = rs.getString("TENHP");
                 hp.setTENHP(tenhp);
                 kh.setHocphan(hp);
-                kh.setHOCKY(rs.getInt("HOCKY"));
+                kh.setHOCKY(rs.getInt("HK"));
                 kh.setNAM(rs.getInt("NAM"));
                 kh.setMACT(rs.getString("MACT"));
                 kh.setNGAYBD(rs.getDate("NGAYBD").toLocalDate());

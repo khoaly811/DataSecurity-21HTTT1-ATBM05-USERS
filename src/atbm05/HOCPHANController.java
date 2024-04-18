@@ -59,7 +59,7 @@ public class HOCPHANController {
     private TextField tenhpDisplay;
 
     @FXML
-    private TextField sotcDisPlay;
+    private TextField sotcDisplay;
 
     @FXML
     private TextField sotietltDisplay;
@@ -89,7 +89,7 @@ public class HOCPHANController {
         hocphanTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if(newSelection != null) {
                 tenhpDisplay.setText(newSelection.getTENHP());
-                sotcDisPlay.setText(String.valueOf(newSelection.getSOTC()));
+                sotcDisplay.setText(String.valueOf(newSelection.getSOTC()));
                 sotietltDisplay.setText(String.valueOf(newSelection.getSOTIETLT()));
                 sotietthDisplay.setText(String.valueOf(newSelection.getSOTIETTH()));
                 sosvtoidaDisplay.setText(String.valueOf(newSelection.getSOSVTOIDA()));
@@ -120,9 +120,9 @@ public class HOCPHANController {
 
                 hp.setTENHP(rs.getString("TENHP"));
                 hp.setSOTC(rs.getInt("SOTC"));
-                hp.setSOTIETLT(rs.getInt("SOTIETLT"));
-                hp.setSOTIETTH(rs.getInt("SOTIETTH"));
-                hp.setSOSVTOIDA(rs.getInt("SOSVTOIDA"));
+                hp.setSOTIETLT(rs.getInt("STLT"));
+                hp.setSOTIETTH(rs.getInt("STTH"));
+                hp.setSOSVTOIDA(rs.getInt("SOSVTD"));
 
                 String tendv = rs.getString("TENDV");
                 System.out.println("TENDV là: " + tendv);
@@ -138,84 +138,6 @@ public class HOCPHANController {
         hocphanTableView.setItems(hocphanList);
     }
 
-    // @FXML
-    // private void deleteHPClick(ActionEvent event) {
-        
-    //     Hocphan selectedHocphan = hocphanTableView.getSelectionModel().getSelectedItem();
-    //     String TENHP_OLD = selectedHocphan.getTENHP();
-    //     int SOTC_OLD = selectedHocphan.getSOTC();
-    //     int SOTIETLT_OLD = selectedHocphan.getSOTIETLT();
-    //     int SOTIETTH_OLD = selectedHocphan.getSOTIETTH();
-    //     int SOSVTOIDA_OLD =selectedHocphan.getSOSVTOIDA();
-    //     String TENDV_OLD = selectedHocphan.getDonvi().getTENDV();
-
-    //     System.out.println("TENHP: " + TENHP_OLD);
-    //     System.out.println("SOTC: " + SOTC_OLD);
-    //     System.out.println("SOTIETLT: " + SOTIETLT_OLD);
-    //     System.out.println("SOTIETTH: " + SOTIETTH_OLD);
-    //     System.out.println("SOSVTOIDA: " + SOSVTOIDA_OLD);
-    //     System.out.println("TENCT: " + TENDV_OLD);
-    //     DataAccessLayer dal = null;
-    //     Connection conn = null;
-    //     CallableStatement cst = null;
-    //     try {
-
-    //         dal = DataAccessLayer.getInstance("", "");
-    //         conn = dal.connect();
-    //         int rowCountBefore = getRowCount(conn);
-    //         cst = conn.prepareCall("{CALL C##QLK.SP_DELETE_HOCPHAN(?,?,?,?,?,?)}");
-    //          cst.setString(1, TENHP_OLD);
-    //          cst.setInt(2, SOTC_OLD);
-    //          cst.setInt(3, SOTIETLT_OLD);
-    //          cst.setInt(4, SOTIETTH_OLD);
-    //          cst.setInt(5, SOSVTOIDA_OLD);
-    //          cst.setString(6, TENDV_OLD);
-
-    //          cst.executeUpdate();
-    //          int rowCountAfter = getRowCount(conn);
-             
-    //          if (rowCountAfter > rowCountBefore) {
-    //             // Show success message
-    //             showAlert(Alert.AlertType.INFORMATION, "Success", "Thêm thành công!");
-    //         } else {
-    //             // Show error message
-    //             showAlert(Alert.AlertType.ERROR, "Error", "Lỗi! SDGN");
-    //         }
-
-    //     } catch (SQLException e) {
-    //         System.out.println("Failed to Delete: " + e.getMessage());
-    //         //showAlert(Alert.AlertType.ERROR, "Error", "Failed to Update user: " + e.getMessage());
-    //         if (e.getMessage().contains("ORA-01031")) {
-    //             System.out.println("No privileges (no grant).");
-    //             // Show an error alert
-    //             Alert alert = new Alert(AlertType.ERROR);
-    //             alert.setTitle("Error");
-    //             alert.setHeaderText(null);
-    //             alert.setContentText("Lỗi");
-    //             alert.showAndWait();
-    //         }
-    //         else{
-    //             System.out.println("Unexpected error");
-    //             // Show an error alert
-    //             Alert alert = new Alert(AlertType.ERROR);
-    //             alert.setTitle("Error");
-    //             alert.setHeaderText(null);
-    //             alert.setContentText("Lỗi khi chạy !!!");
-    //             alert.showAndWait();
-    //         }
-    //     }
-    // }
-
-    // private int getRowCount(Connection conn) throws SQLException {
-    //     int rowCount = 0;
-    //     try (Statement stmt = conn.createStatement();
-    //          ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM C##QLK.HOCPHAN")) {
-    //         if (rs.next()) {
-    //             rowCount = rs.getInt(1);
-    //         }
-    //     }
-    //     return rowCount;
-    // }
 
     @FXML
     private void updateHPClick(ActionEvent event) {
@@ -334,7 +256,7 @@ public class HOCPHANController {
     private void insertHPClick(ActionEvent event) {
         String INP_TENHP = tenhpDisplay.getText().trim();
         int INP_SOTC = 0;
-        String sotcText = sotcDisPlay.getText();
+        String sotcText = sotcDisplay.getText();
         if (sotcText != null && !sotcText.isEmpty()) {
             INP_SOTC = Integer.parseInt(sotcText.trim());
         }
