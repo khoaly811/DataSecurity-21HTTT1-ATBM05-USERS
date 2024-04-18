@@ -365,7 +365,7 @@ public class DANGKYController {
 
              dal = DataAccessLayer.getInstance("", "");
              conn = dal.connect();
-             cst = conn.prepareCall("{CALL C##QLK.SP_UPDATE_DANGKY(?,?,?,?,?,?,?,?,?,?)}");
+             cst = conn.prepareCall("{CALL C##QLK.SP_ALL_UPDATE_DANGKY(?,?,?,?,?,?,?,?,?,?)}");
              cst.setString(1, TENSV_OLD);
              cst.setString(2, TENGV_OLD);
              cst.setString(3, TENHP_OLD);
@@ -374,9 +374,9 @@ public class DANGKYController {
              cst.setString(6, MACT_OLD);
 
              cst.setInt(7,diemthStr);
-             cst.setInt(8, diemthStr);
-             cst.setInt(9, diemthStr);
-             cst.setInt(10, diemthStr);
+             cst.setInt(8, diemqtStr);
+             cst.setInt(9, diemckStr);
+             cst.setInt(10, diemtkStr);
    
              int rowsAffected = cst.executeUpdate();
 
