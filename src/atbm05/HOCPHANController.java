@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 // import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -13,7 +14,9 @@ import oracle.jdbc.OracleTypes;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+// import java.sql.Statement;
 
 import DataAccessLayer.DataAccessLayer;
 import dto.Hocphan;
@@ -44,6 +47,11 @@ public class HOCPHANController {
     @FXML
     private void onAddClick_HOCPHAN() {
         System.out.println("Added");
+    }
+
+    @FXML
+    private void onUpdateClick_HOCPHAN() {
+        System.out.println("Updated");
     }
 
 
@@ -130,22 +138,311 @@ public class HOCPHANController {
         hocphanTableView.setItems(hocphanList);
     }
 
-    @FXML
-    private void deleteHPClick(ActionEvent event) {
+    // @FXML
+    // private void deleteHPClick(ActionEvent event) {
         
-    }
+    //     Hocphan selectedHocphan = hocphanTableView.getSelectionModel().getSelectedItem();
+    //     String TENHP_OLD = selectedHocphan.getTENHP();
+    //     int SOTC_OLD = selectedHocphan.getSOTC();
+    //     int SOTIETLT_OLD = selectedHocphan.getSOTIETLT();
+    //     int SOTIETTH_OLD = selectedHocphan.getSOTIETTH();
+    //     int SOSVTOIDA_OLD =selectedHocphan.getSOSVTOIDA();
+    //     String TENDV_OLD = selectedHocphan.getDonvi().getTENDV();
+
+    //     System.out.println("TENHP: " + TENHP_OLD);
+    //     System.out.println("SOTC: " + SOTC_OLD);
+    //     System.out.println("SOTIETLT: " + SOTIETLT_OLD);
+    //     System.out.println("SOTIETTH: " + SOTIETTH_OLD);
+    //     System.out.println("SOSVTOIDA: " + SOSVTOIDA_OLD);
+    //     System.out.println("TENCT: " + TENDV_OLD);
+    //     DataAccessLayer dal = null;
+    //     Connection conn = null;
+    //     CallableStatement cst = null;
+    //     try {
+
+    //         dal = DataAccessLayer.getInstance("", "");
+    //         conn = dal.connect();
+    //         int rowCountBefore = getRowCount(conn);
+    //         cst = conn.prepareCall("{CALL C##QLK.SP_DELETE_HOCPHAN(?,?,?,?,?,?)}");
+    //          cst.setString(1, TENHP_OLD);
+    //          cst.setInt(2, SOTC_OLD);
+    //          cst.setInt(3, SOTIETLT_OLD);
+    //          cst.setInt(4, SOTIETTH_OLD);
+    //          cst.setInt(5, SOSVTOIDA_OLD);
+    //          cst.setString(6, TENDV_OLD);
+
+    //          cst.executeUpdate();
+    //          int rowCountAfter = getRowCount(conn);
+             
+    //          if (rowCountAfter > rowCountBefore) {
+    //             // Show success message
+    //             showAlert(Alert.AlertType.INFORMATION, "Success", "Thêm thành công!");
+    //         } else {
+    //             // Show error message
+    //             showAlert(Alert.AlertType.ERROR, "Error", "Lỗi! SDGN");
+    //         }
+
+    //     } catch (SQLException e) {
+    //         System.out.println("Failed to Delete: " + e.getMessage());
+    //         //showAlert(Alert.AlertType.ERROR, "Error", "Failed to Update user: " + e.getMessage());
+    //         if (e.getMessage().contains("ORA-01031")) {
+    //             System.out.println("No privileges (no grant).");
+    //             // Show an error alert
+    //             Alert alert = new Alert(AlertType.ERROR);
+    //             alert.setTitle("Error");
+    //             alert.setHeaderText(null);
+    //             alert.setContentText("Lỗi");
+    //             alert.showAndWait();
+    //         }
+    //         else{
+    //             System.out.println("Unexpected error");
+    //             // Show an error alert
+    //             Alert alert = new Alert(AlertType.ERROR);
+    //             alert.setTitle("Error");
+    //             alert.setHeaderText(null);
+    //             alert.setContentText("Lỗi khi chạy !!!");
+    //             alert.showAndWait();
+    //         }
+    //     }
+    // }
+
+    // private int getRowCount(Connection conn) throws SQLException {
+    //     int rowCount = 0;
+    //     try (Statement stmt = conn.createStatement();
+    //          ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM C##QLK.HOCPHAN")) {
+    //         if (rs.next()) {
+    //             rowCount = rs.getInt(1);
+    //         }
+    //     }
+    //     return rowCount;
+    // }
 
     @FXML
     private void updateHPClick(ActionEvent event) {
-        
+        Hocphan selectedHocphan = hocphanTableView.getSelectionModel().getSelectedItem();
+        String TENHP_OLD = selectedHocphan.getTENHP();
+        int SOTC_OLD = selectedHocphan.getSOTC();
+        int SOTIETLT_OLD = selectedHocphan.getSOTIETLT();
+        int SOTIETTH_OLD = selectedHocphan.getSOTIETTH();
+        int SOSVTOIDA_OLD =selectedHocphan.getSOSVTOIDA();
+        String TENDV_OLD = selectedHocphan.getDonvi().getTENDV();
+
+        System.out.println("TENHP: " + TENHP_OLD);
+        System.out.println("SOTC: " + SOTC_OLD);
+        System.out.println("SOTIETLT: " + SOTIETLT_OLD);
+        System.out.println("SOTIETTH: " + SOTIETTH_OLD);
+        System.out.println("SOSVTOIDA: " + SOSVTOIDA_OLD);
+        System.out.println("TENCT: " + TENDV_OLD);
+        DataAccessLayer dal = null;
+        Connection conn = null;
+        CallableStatement cst = null;
+
+        try {
+
+            dal = DataAccessLayer.getInstance("", "");
+            conn = dal.connect();
+            cst = conn.prepareCall("{CALL C##QLK.SP_ALL_UPDATE_HOCPHAN(?,?,?,?,?,?)}");
+            cst.setString(1, TENHP_OLD);
+            cst.setInt(2, SOTC_OLD);
+            cst.setInt(3, SOTIETLT_OLD);
+            cst.setInt(4, SOTIETTH_OLD);
+            cst.setInt(5, SOSVTOIDA_OLD);
+            cst.setString(6, TENDV_OLD);
+
+             int rowsAffected = cst.executeUpdate();
+
+            String grantedRole = null;
+            PreparedStatement pst = null;
+            ResultSet rs = null;
+            pst = conn
+                    .prepareStatement(
+                            "SELECT * FROM SESSION_ROLES");
+
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+                grantedRole = rs.getString("ROLE");
+            }
+
+            if (grantedRole != null) {
+                System.out.println("Granted role: " + grantedRole);
+            } else {
+                System.out.println("No role found for the current user.");
+            }
+
+            if (!"GVU".equals(grantedRole) || grantedRole == null) {
+                System.out.println("No privileges (no grant).");
+                // Show an error alert
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Lỗi: không có quyền!");
+                alert.showAndWait();
+
+            } else if (rowsAffected > 0) {
+                System.out.println("Update successfully.");
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Success");
+                alert.setHeaderText(null);
+                alert.setContentText("Cập nhật thành công!");
+                alert.showAndWait();
+
+            } else{
+                System.out.println("Update unsuccessfully.");
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Lỗi!");
+                alert.showAndWait();
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Failed to Delete: " + e.getMessage());
+            //showAlert(Alert.AlertType.ERROR, "Error", "Failed to Update user: " + e.getMessage());
+            if (e.getMessage().contains("ORA-01031")) {
+                System.out.println("No privileges (no grant).");
+                // Show an error alert
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Lỗi");
+                alert.showAndWait();
+            }
+            else{
+                System.out.println("Unexpected error");
+                // Show an error alert
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Lỗi khi chạy !!!");
+                alert.showAndWait();
+            }
+        }
     }
 
 
-    private void showAlert(Alert.AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+    // private void showAlert(Alert.AlertType alertType, String title, String message) {
+    //     Alert alert = new Alert(alertType);
+    //     alert.setTitle(title);
+    //     alert.setHeaderText(null);
+    //     alert.setContentText(message);
+    //     alert.showAndWait();
+    // }
+
+    @FXML 
+    private void insertHPClick(ActionEvent event) {
+        String INP_TENHP = tenhpDisplay.getText().trim();
+        int INP_SOTC = 0;
+        String sotcText = sotcDisPlay.getText();
+        if (sotcText != null && !sotcText.isEmpty()) {
+            INP_SOTC = Integer.parseInt(sotcText.trim());
+        }
+        int INP_SOTIETLT = 0;
+        String sotietltText = sotietltDisplay.getText();
+        if (sotietltText != null && !sotietltText.isEmpty()) {
+            INP_SOTIETLT = Integer.parseInt(sotietltText.trim());
+        }
+        int INP_SOTIETTH = 0;
+        String sotietthText = sotietthDisplay.getText();
+        if (sotietthText != null && !sotietthText.isEmpty()) {
+            INP_SOTIETTH = Integer.parseInt(sotietthText.trim());
+        }
+        int INP_SOSVTOIDA = 0;
+        String sosvtoidaText = sosvtoidaDisplay.getText();
+        if (sosvtoidaText != null && !sosvtoidaText.isEmpty()) {
+            INP_SOSVTOIDA = Integer.parseInt(sosvtoidaText.trim());
+        }
+        String INP_TENDV = tendvDisplay.getText().trim();
+
+        DataAccessLayer dal = null;
+        Connection conn = null;
+        CallableStatement cst = null;
+        if (INP_TENHP == null ||  INP_TENDV == null) {
+            System.out.println("Nhap thieu");
+            // Show an error alert
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Vui lòng nhập đủ!");
+            alert.showAndWait();
+        } else {
+            try {
+                System.out.println(INP_TENHP);
+                dal = DataAccessLayer.getInstance("your_username", "your_password");
+                conn = dal.connect();
+                cst = conn.prepareCall("{CALL C##QLK.SP_INSERT_HOCPHAN(?,?,?,?,?,?)}");
+                cst.setString(1,INP_TENHP);
+                cst.setInt(2, INP_SOTC);
+                cst.setInt(3, INP_SOTIETLT);
+                cst.setInt(4, INP_SOTIETTH);
+                cst.setInt(5, INP_SOSVTOIDA);
+                cst.setString(6, INP_TENDV);
+
+                int rowsAffected = cst.executeUpdate();
+
+                String role = null;
+                PreparedStatement pst = null;
+                ResultSet rs = null;
+                pst = conn
+                        .prepareStatement(
+                                "SELECT * FROM SESSION_ROLES");
+
+                rs = pst.executeQuery();
+
+                if (rs.next()) {
+                    role = rs.getString("ROLE");
+                }
+
+                if (role != null) {
+                    System.out.println("Role: " + role);
+                } else {
+                    System.out.println("No role found for the current user.");
+                }
+
+                if (!"GVU".equals(role) || role == null) {
+                    System.out.println("No privileges (no grant).");
+                    // Show an error alert
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Lỗi: không có quyền!");
+                    alert.showAndWait();
+
+                } else if (rowsAffected > 0) {
+                    System.out.println("Insert successfully.");
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Success");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Thêm thành công!");
+                    alert.showAndWait();
+
+                } else {
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Lỗi!");
+                    alert.showAndWait();
+
+                }
+            } catch (SQLException e) {
+                System.out.println("Error: " + e.getMessage());
+                // showAlert(Alert.AlertType.ERROR, "Error", "Failed to add user: " +
+                // e.getMessage());
+                System.out.println("Insert unsuccessfully.");
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Lỗi!");
+                alert.showAndWait();
+            }
+        }
+
+    }
+    @FXML
+    private void refreshTable(ActionEvent event) {
+        hocphanList.clear();
+        loadHocphanFromDatabase();
+        hocphanTableView.refresh();
     }
 }
