@@ -4,17 +4,20 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import oracle.jdbc.OracleTypes;
 
 import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -218,19 +221,199 @@ public class SINHVIENController {
     }
     @FXML
     private void updateSVClick(ActionEvent action){
+        String INP_HOTEN = hotenDisplay.getText().trim();
+        String INP_PHAI = phaiDisplay.getText().trim();
+        LocalDate INP_NGSINH = LocalDate.parse(ngsinhDisplay.getText().trim()); // Assuming your date format is
+                                                                                // parseable
+        String INP_DCHI = diachiDisplay.getText().trim();
+        String INP_DT = dienthoaiDisplay.getText().trim();
+        String INP_MACT = chuongtrinhDisplay.getText().trim();
+        String INP_MANGANH = nganhDisplay.getText().trim();
+        int INP_SOTCTL = Integer.parseInt(sotctlDisplay.getText().trim());
+        Float INP_DTBTL = Float.parseFloat(diemtbtlDisplay.getText().trim());
 
+        System.out.println(INP_HOTEN);
+
+        DataAccessLayer dal = null;
+        Connection conn = null;
+        CallableStatement cst = null;
+
+        try {
+            dal = DataAccessLayer.getInstance("your_username", "your_password");
+            conn = dal.connect();
+            System.out.println("khoa beo 1");
+            cst = conn.prepareCall("{CALL C##QLK.SP_ALL_UPDATE_SINHVIEN(?,?,?,?,?,?,?,?,?)}");
+            cst.setString(1, INP_HOTEN);
+            cst.setString(2, INP_PHAI);
+            cst.setDate(3, java.sql.Date.valueOf(INP_NGSINH));
+            cst.setString(4, INP_DCHI);
+            cst.setString(5, INP_DT);
+            cst.setString(6, INP_MACT);
+            cst.setString(7, INP_MANGANH);
+            cst.setInt(8, INP_SOTCTL);
+            cst.setFloat(9, INP_DTBTL);
+            int rowsAffected = cst.executeUpdate();
+
+            String grantedRole = null;
+            PreparedStatement pst = null;
+            ResultSet rs = null;
+            pst = conn
+                    .prepareStatement(
+                            "SELECT * FROM SESSION_ROLES");
+
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+                grantedRole = rs.getString("ROLE");
+            }
+
+            if (grantedRole != null) {
+                System.out.println("Granted role: " + grantedRole);
+            } else {
+                System.out.println("No role found for the current user.");
+            }
+
+            if ( !(!"GVU".equals(grantedRole) || !"SV".equals(grantedRole)) || grantedRole == null) {
+                System.out.println("No privileges (no grant).");
+                // Show an error alert
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Lỗi: không có quyền!");
+                alert.showAndWait();
+
+            } else if (rowsAffected > 0) {
+                System.out.println("Update successfully.");
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Success");
+                alert.setHeaderText(null);
+                alert.setContentText("Cập nhật thành công!");
+                alert.showAndWait();
+
+            } else {
+                System.out.println("Update unsuccessfully.");
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Lỗi!");
+                alert.showAndWait();
+
+            }
+        } catch (SQLException e) {
+            System.out.println("Failed to Update: " + e.getMessage());
+            // showAlert(Alert.AlertType.ERROR, "Error", "Failed to Update user: " +
+            // e.getMessage());
+            if (e.getMessage().contains("ORA-01031")) {
+                System.out.println("No privileges (no grant).");
+                // Show an error alert
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Lỗi");
+                alert.showAndWait();
+            }
+
+        }
     }
     @FXML
     private void insertSVClick(ActionEvent action){
+        String INP_HOTEN = hotenDisplay.getText().trim();
+        String INP_PHAI = phaiDisplay.getText().trim();
+        LocalDate INP_NGSINH = LocalDate.parse(ngsinhDisplay.getText().trim()); // Assuming your date format is
+                                                                                // parseable
+        String INP_DCHI = diachiDisplay.getText().trim();
+        String INP_DT = dienthoaiDisplay.getText().trim();
+        String INP_MACT = chuongtrinhDisplay.getText().trim();
+        String INP_MANGANH = nganhDisplay.getText().trim();
+        System.out.println(INP_HOTEN);
 
+        DataAccessLayer dal = null;
+        Connection conn = null;
+        CallableStatement cst = null;
+
+        try {
+            dal = DataAccessLayer.getInstance("your_username", "your_password");
+            conn = dal.connect();
+            System.out.println("khoa beo 1");
+            cst = conn.prepareCall("{CALL C##QLK.SP_INSERT_SINHVIEN(?,?,?,?,?,?,?,?,?)}");
+            cst.setString(1, INP_HOTEN);
+            cst.setString(2, INP_PHAI);
+            cst.setDate(3, java.sql.Date.valueOf(INP_NGSINH));
+            cst.setString(4, INP_DCHI);
+            cst.setString(5, INP_DT);
+            cst.setString(6, INP_MACT);
+            cst.setString(7, INP_MANGANH);
+
+            int rowsAffected = cst.executeUpdate();
+
+            String grantedRole = null;
+            PreparedStatement pst = null;
+            ResultSet rs = null;
+            pst = conn
+                    .prepareStatement(
+                            "SELECT * FROM SESSION_ROLES");
+
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+                grantedRole = rs.getString("ROLE");
+            }
+
+            if (grantedRole != null) {
+                System.out.println("Granted role: " + grantedRole);
+            } else {
+                System.out.println("No role found for the current user.");
+            }
+
+            if (!"GVU".equals(grantedRole) || grantedRole == null) {
+                System.out.println("No privileges (no grant).");
+                // Show an error alert
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Lỗi: không có quyền!");
+                alert.showAndWait();
+
+            } else if (rowsAffected > 0) {
+                System.out.println("Update successfully.");
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Success");
+                alert.setHeaderText(null);
+                alert.setContentText("Cập nhật thành công!");
+                alert.showAndWait();
+
+            } else {
+                System.out.println("Update unsuccessfully.");
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Lỗi!");
+                alert.showAndWait();
+
+            }
+        } catch (SQLException e) {
+            System.out.println("Failed to Update: " + e.getMessage());
+            // showAlert(Alert.AlertType.ERROR, "Error", "Failed to Update user: " +
+            // e.getMessage());
+            if (e.getMessage().contains("ORA-01031")) {
+                System.out.println("No privileges (no grant).");
+                // Show an error alert
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Lỗi");
+                alert.showAndWait();
+            }
+
+        }
     }
-    private void showAlert(Alert.AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
+    // private void showAlert(Alert.AlertType alertType, String title, String message) {
+    //     Alert alert = new Alert(alertType);
+    //     alert.setTitle(title);
+    //     alert.setHeaderText(null);
+    //     alert.setContentText(message);
+    //     alert.showAndWait();
+    // }
     @FXML
     private void refreshTable(ActionEvent event) {
         sinhvienList.clear();
