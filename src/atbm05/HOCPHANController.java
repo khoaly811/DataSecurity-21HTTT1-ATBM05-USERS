@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Alert.AlertType;
 // import javafx.scene.control.Tab;
@@ -76,6 +77,12 @@ public class HOCPHANController {
     @FXML
     private ChoiceBox tendvDisplayDrop;
 
+    @FXML
+    private Button updateHP;
+
+    @FXML
+    private TextField searchHP;
+
     private ObservableList<Hocphan> hocphanList = FXCollections.observableArrayList();
 
     @FXML
@@ -99,6 +106,10 @@ public class HOCPHANController {
                 sosvtoidaDisplay.setText(String.valueOf(newSelection.getSOSVTOIDA()));
                 tendvDisplayDrop.getSelectionModel().select(newSelection.getDonvi().getTENDV());
             }
+        });
+
+        searchHP.textProperty().addListener((observable, oldValue, newValue) -> {
+            searchHocphan(newValue);
         });
     }
 
@@ -411,6 +422,50 @@ public class HOCPHANController {
             }
         }
 
+    }
+
+    private void searchHocphan(String searchText) {
+        DataAccessLayer dal = null;
+        Connection conn = null;
+        CallableStatement cst = null;
+        ResultSet rs = null;
+        List<Hocphan> hocphanList = new ArrayList<>();
+
+        try {
+            dal = DataAccessLayer.getInstance("your_username", "your_password");
+            conn = dal.connect();
+
+            // Construct the wildcard pattern for partial matching
+
+            cst = conn.prepareCall("{CALL C##QLK.SP_SEARCH_HOCPHAN(?, ?)}");
+            cst.registerOutParameter(1, OracleTypes.CURSOR);
+            cst.setString(2, searchText);
+            cst.execute();
+
+            rs = (ResultSet) cst.getObject(1);
+
+            while (rs.next()) {
+                Hocphan hp = new Hocphan();
+                Donvi dv = new Donvi();
+
+                hp.setTENHP(rs.getString("TENHP"));
+                hp.setSOTC(rs.getInt("SOTC"));
+                hp.setSOTIETLT(rs.getInt("STLT"));
+                hp.setSOTIETTH(rs.getInt("STTH"));
+                hp.setSOSVTOIDA(rs.getInt("SOSVTD"));
+
+                String tendv = rs.getString("TENDV");
+                System.out.println("TENDV là: " + tendv);
+                dv.setTENDV(tendv);
+                hp.setDonvi(dv);
+
+                hocphanList.add(hp);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        hocphanTableView.setItems(FXCollections.observableArrayList(hocphanList));
     }
     @FXML
     private void refreshTable(ActionEvent event) {
