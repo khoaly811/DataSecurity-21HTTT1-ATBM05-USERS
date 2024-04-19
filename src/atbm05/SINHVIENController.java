@@ -137,12 +137,12 @@ public class SINHVIENController {
         });
 
         searchSV.textProperty().addListener((observable, oldValue, newValue) -> {
-            searcSinhvien(newValue);
+            searchSinhvien(newValue);
         });
     }
 
 
-    private void searcSinhvien(String searchText) {
+    private void searchSinhvien(String searchText) {
         DataAccessLayer dal = null;
         Connection conn = null;
         CallableStatement cst = null;
@@ -325,8 +325,13 @@ public class SINHVIENController {
         String INP_DT = dienthoaiDisplay.getText().trim();
         String INP_MACT = chuongtrinhDisplay.getText().trim();
         String INP_MANGANH = nganhDisplay.getText().trim();
-        System.out.println(INP_HOTEN);
-
+        int INP_SOTCTL = 0;
+        String sotcText = sotctlDisplay.getText();
+        INP_SOTCTL = Integer.parseInt(sotcText.trim());
+        Double INP_DTBTL = 0.0;
+        String dtbText = diemtbtlDisplay.getText();
+        INP_DTBTL = Double.parseDouble(dtbText.trim());
+        System.out.println(INP_DTBTL);
         DataAccessLayer dal = null;
         Connection conn = null;
         CallableStatement cst = null;
@@ -343,6 +348,8 @@ public class SINHVIENController {
             cst.setString(5, INP_DT);
             cst.setString(6, INP_MACT);
             cst.setString(7, INP_MANGANH);
+            cst.setInt(8, INP_SOTCTL);
+            cst.setDouble(9, INP_DTBTL);
 
             int rowsAffected = cst.executeUpdate();
 

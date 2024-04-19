@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="712.0" prefWidth="1088.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="atbm05.SINHVIENController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="712.0" prefWidth="1088.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="atbm05.SINHVIENController">
   <children>
     <TableView fx:id="sinhvienTableView" layoutX="25.0" layoutY="85.0" prefHeight="480.0" prefWidth="864.0">
       <columns>
@@ -31,21 +31,25 @@
       <TextField fx:id="hotenDisplay" layoutX="87.0" layoutY="580.0" />
       <TextField fx:id="phaiDisplay" layoutX="87.0" layoutY="662.0" />
       <Label layoutX="38.0" layoutY="665.0" text="Phái" />
-      <Label layoutX="297.0" layoutY="607.0" text="Ngày sinh" />
-      <Label layoutX="319.0" layoutY="656.0" text="Địa chỉ" />
+      <Label layoutX="266.0" layoutY="584.0" text="Ngày sinh" />
+      <Label layoutX="275.0" layoutY="622.0" text="Địa chỉ" />
       <Label layoutX="14.0" layoutY="622.0" text="Điện thoại" />
-      <TextField fx:id="diachiDisplay" layoutX="381.0" layoutY="651.0" />
-      <TextField fx:id="ngsinhDisplay" layoutX="381.0" layoutY="595.0" />
-      <TextField fx:id="dienthoaiDisplay" layoutX="87.0" layoutY="617.0" />
-      <TextField fx:id="chuongtrinhDisplay" layoutX="676.0" layoutY="595.0" prefHeight="25.0" prefWidth="149.0" />
-      <Label layoutX="573.0" layoutY="600.0" text="Chương trình" />
+      <TextField fx:id="diachiDisplay" layoutX="331.0" layoutY="618.0" />
+      <TextField fx:id="ngsinhDisplay" layoutX="331.0" layoutY="580.0" />
+      <TextField fx:id="dienthoaiDisplay" layoutX="87.0" layoutY="618.0" />
+      <TextField fx:id="chuongtrinhDisplay" layoutX="602.0" layoutY="580.0" prefHeight="25.0" prefWidth="149.0" />
+      <Label layoutX="509.0" layoutY="584.0" text="Chương trình" />
       <Button layoutX="945.0" layoutY="55.0" mnemonicParsing="false" text="Thông báo" />
       <Button layoutX="945.0" layoutY="645.0" mnemonicParsing="false" onAction="#refreshTable" text="Làm mới">
         <font>
             <Font name="System Bold" size="19.0" />
         </font>
       </Button>
-      <Label layoutX="617.0" layoutY="656.0" text="Ngành" />
-      <TextField fx:id="nganhDisplay" layoutX="676.0" layoutY="650.0" prefHeight="25.0" prefWidth="149.0" />
+      <Label layoutX="275.0" layoutY="666.0" text="Ngành" />
+      <TextField fx:id="nganhDisplay" layoutX="331.0" layoutY="661.0" prefHeight="25.0" prefWidth="149.0" />
+      <TextField fx:id="sotctlDisplay" layoutX="602.0" layoutY="618.0" prefHeight="25.0" prefWidth="149.0" />
+      <TextField fx:id="diemtbtlDisplay" layoutX="602.0" layoutY="661.0" prefHeight="25.0" prefWidth="149.0" />
+      <Label layoutX="509.0" layoutY="622.0" text="Số tín tích lũy" />
+      <Label layoutX="522.0" layoutY="666.0" text="GPA" />
   </children>
 </AnchorPane>

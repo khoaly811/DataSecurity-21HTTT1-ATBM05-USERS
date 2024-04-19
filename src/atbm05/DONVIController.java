@@ -84,10 +84,10 @@ public class DONVIController {
                 Donvi dv = new Donvi();
                 Nhansu ns = new Nhansu();
 
-                dv.setMADV(rs.getString("MADV"));
+                dv.setMADV(rs.getString("MDV"));
                 dv.setTENDV(rs.getString("TENDV"));
 
-                String tentdv = rs.getString("HOTEN_TDV");
+                String tentdv = rs.getString("HOTEN");
                 System.out.println("TEN TRUONG DON VI: " + tentdv);
                 ns.setHOTEN(tentdv);
                 dv.setNhansu(ns);

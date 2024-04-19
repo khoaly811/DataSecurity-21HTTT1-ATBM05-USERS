@@ -50,7 +50,7 @@
       </Tab>
       <Tab text="Đơn vị">
          <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            <fx:include source="DONVI.fxml" />
          </content>
       </Tab>
   </tabs>
