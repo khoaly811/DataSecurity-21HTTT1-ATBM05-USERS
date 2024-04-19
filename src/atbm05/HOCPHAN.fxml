@@ -30,7 +30,7 @@
       <Label layoutX="352.0" layoutY="693.0" text="Số tiết thực hành" />
       <TextField fx:id="sosvtoidaDisplay" layoutX="702.0" layoutY="632.0" />
       <Label layoutX="615.0" layoutY="637.0" text="Số SV tối đa" />
-      <TextField fx:id="tendvDisplay" layoutX="702.0" layoutY="688.0" />
+      <TextField fx:id="tendvDisplayDrop" layoutX="702.0" layoutY="688.0" />
       <Label layoutX="620.0" layoutY="693.0" text="Tên đơn vị" />
       <Label layoutX="362.0" layoutY="637.0" text="Số tiết lý thuyết" />
       <TextField fx:id="sotietltDisplay" layoutX="473.0" layoutY="632.0" prefHeight="31.0" prefWidth="129.0" />
