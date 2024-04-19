@@ -219,6 +219,7 @@ public class SINHVIENController {
         // Set the loaded users to the table view
         sinhvienTableView.setItems(sinhvienList);
     }
+    
     @FXML
     private void updateSVClick(ActionEvent action){
         String INP_HOTEN = hotenDisplay.getText().trim();
@@ -315,6 +316,7 @@ public class SINHVIENController {
 
         }
     }
+
     @FXML
     private void insertSVClick(ActionEvent action){
         String INP_HOTEN = hotenDisplay.getText().trim();
