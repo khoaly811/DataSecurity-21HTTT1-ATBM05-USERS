@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Alert.AlertType;
 // import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
@@ -16,6 +17,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 // import java.sql.Statement;
 
 import DataAccessLayer.DataAccessLayer;
@@ -71,7 +74,7 @@ public class HOCPHANController {
     private TextField sosvtoidaDisplay;
 
     @FXML
-    private TextField tendvDisplay;
+    private ChoiceBox tendvDisplayDrop;
 
     private ObservableList<Hocphan> hocphanList = FXCollections.observableArrayList();
 
@@ -85,6 +88,7 @@ public class HOCPHANController {
         TENDV.setCellValueFactory(cellData -> cellData.getValue().getDonvi().TENDVproperty());
         hocphanList = FXCollections.observableArrayList();
         loadHocphanFromDatabase();
+        populateChoiceBox();
 
         hocphanTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if(newSelection != null) {
@@ -93,7 +97,7 @@ public class HOCPHANController {
                 sotietltDisplay.setText(String.valueOf(newSelection.getSOTIETLT()));
                 sotietthDisplay.setText(String.valueOf(newSelection.getSOTIETTH()));
                 sosvtoidaDisplay.setText(String.valueOf(newSelection.getSOSVTOIDA()));
-                tendvDisplay.setText(newSelection.getDonvi().getTENDV());
+                tendvDisplayDrop.getSelectionModel().select(newSelection.getDonvi().getTENDV());
             }
         });
     }
@@ -136,6 +140,53 @@ public class HOCPHANController {
         }
 
         hocphanTableView.setItems(hocphanList);
+    }
+
+    private List<String> loadDistinctTENDVFromDatabase(){
+        List<String> tendvList = new ArrayList<>();
+
+        DataAccessLayer dal = null;
+        Connection conn = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+
+        try {
+            dal = DataAccessLayer.getInstance("your_username", "your_password");
+            conn = dal.connect();
+
+            String sql = "SELECT TENDV FROM C##QLK.DONVI";
+
+            pst = conn.prepareStatement(sql);
+
+            rs = pst.executeQuery();
+
+            while (rs.next()) {
+                String tendv = rs.getString("TENDV");
+                tendvList.add(tendv);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error Message: " + e.getMessage());
+            e.printStackTrace();
+
+        }
+
+        return tendvList;
+    }
+
+    private void populateChoiceBox() {
+        List<String> tendvList = loadDistinctTENDVFromDatabase();
+
+        // Clear existing items in ChoiceBox
+        tendvDisplayDrop.getItems().clear();
+
+        // Populate ChoiceBox with distinct TENDV values
+        tendvDisplayDrop.getItems().addAll(tendvList);
+
+        // Set the first item as the default selected item (Optional)
+        if (!tendvList.isEmpty()) {
+            tendvDisplayDrop.getSelectionModel().selectFirst();
+        }
     }
 
 
@@ -275,7 +326,7 @@ public class HOCPHANController {
         if (sosvtoidaText != null && !sosvtoidaText.isEmpty()) {
             INP_SOSVTOIDA = Integer.parseInt(sosvtoidaText.trim());
         }
-        String INP_TENDV = tendvDisplay.getText().trim();
+        String INP_TENDV = ((String) tendvDisplayDrop.getValue()).trim();
 
         DataAccessLayer dal = null;
         Connection conn = null;
