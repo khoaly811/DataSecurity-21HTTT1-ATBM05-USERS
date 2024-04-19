@@ -94,7 +94,7 @@ BEGIN
 END;
 /
 
-CREATE SEQUENCE hp_sequence
+CREATE SEQUENCE c##qlk.hp_sequence
   START WITH 34
   INCREMENT BY 1
   NOCACHE;
