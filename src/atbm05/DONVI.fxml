@@ -18,8 +18,7 @@
         <TableColumn fx:id="HOTEN_TDV" prefWidth="159.0" text="Trưởng đơn vị" />
       </columns>
     </TableView>
-    <TextField layoutX="474.0" layoutY="42.0" prefHeight="26.0" prefWidth="292.0" promptText="Keywords..." />
-    <Button layoutX="785.0" layoutY="42.0" mnemonicParsing="false" text="Search" />
+    <TextField fx:id="searchDV" layoutX="483.0" layoutY="42.0" prefHeight="26.0" prefWidth="292.0" promptText="Keywords..." />
       <Label layoutX="62.0" layoutY="657.0" text="Họ tên trưởng đơn vị" />
       <!-- <TextField fx:id="hotenDisplay" layoutX="85.0" layoutY="579.0" />
       <TextField fx:id="phaiDisplay" layoutX="85.0" layoutY="661.0" />
@@ -43,5 +42,6 @@
       <TextField fx:id="tendvDisplay" layoutX="216.0" layoutY="612.0" />
       <TextField fx:id="madvDisplay" layoutX="216.0" layoutY="573.0" />
       <Label layoutX="134.0" layoutY="578.0" text="Mã đơn vị" />
+      <Button fx:id="updateDV" layoutX="935.0" layoutY="204.0" mnemonicParsing="false" onAction="#updateDVClick" text="Cập nhật" />
   </children>
 </AnchorPane>
