@@ -4,12 +4,14 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import oracle.jdbc.OracleTypes;
 
 import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,6 +24,8 @@ public class DONVIController {
     @FXML
     private TableView<Donvi> donviTableView;
 
+    @FXML
+    private TableColumn<Donvi, String> MADV;
     @FXML 
     private TableColumn<Donvi, String> TENDV;
 
@@ -34,6 +38,9 @@ public class DONVIController {
     }
 
     @FXML
+    private TextField madvDisplay;
+
+    @FXML
     private TextField tendvDisplay;
 
     @FXML
@@ -42,6 +49,7 @@ public class DONVIController {
     private ObservableList<Donvi> donviList = FXCollections.observableArrayList();
 
     public void initialize(){
+        MADV.setCellValueFactory(cellData -> cellData.getValue().MADVproperty());
         TENDV.setCellValueFactory(cellData -> cellData.getValue().TENDVproperty());
         HOTEN_TDV.setCellValueFactory(cellData -> cellData.getValue().getNhansu().HOTENproperty());
         donviList = FXCollections.observableArrayList();
@@ -49,6 +57,7 @@ public class DONVIController {
 
         donviTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if(newSelection != null){
+                madvDisplay.setText(newSelection.getMADV());
                 tendvDisplay.setText(newSelection.getTENDV());
                 truongdvDisPlay.setText(newSelection.getNhansu().getHOTEN());
             }
@@ -75,6 +84,7 @@ public class DONVIController {
                 Donvi dv = new Donvi();
                 Nhansu ns = new Nhansu();
 
+                dv.setMADV(rs.getString("MADV"));
                 dv.setTENDV(rs.getString("TENDV"));
 
                 String tentdv = rs.getString("HOTEN_TDV");
@@ -92,21 +102,101 @@ public class DONVIController {
         donviTableView.setItems(donviList);
     }
 
-    @FXML
-    private void deleteDVClick(ActionEvent event) {
+    // @FXML
+    // private void deleteDVClick(ActionEvent event) {
        
+    // }
+
+
+    @FXML void insertDVClick(ActionEvent event) {
+        String INP_MADV = madvDisplay.getText().trim();
+        String INP_TENDV = tendvDisplay.getText().trim();
+        String INP_TRUONGDV = truongdvDisPlay.getText().trim();
+
+        DataAccessLayer dal = null;
+        Connection conn = null;
+        CallableStatement cst = null;
+
+        try {
+            dal = DataAccessLayer.getInstance("your_username", "your_password");
+            conn = dal.connect();
+            System.out.println("khoa beo 1");
+            cst = conn.prepareCall("{CALL C##QLK.SP_INSERT_DONVI(?,?,?)}");
+            cst.setString(1, INP_MADV);
+            cst.setString(2, INP_TENDV);
+            cst.setString(3, INP_TRUONGDV);
+
+            int rowsAffected = cst.executeUpdate();
+
+            String grantedRole = null;
+            PreparedStatement pst = null;
+            ResultSet rs = null;
+            pst = conn
+                    .prepareStatement(
+                            "SELECT * FROM SESSION_ROLES");
+
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
+                grantedRole = rs.getString("ROLE");
+            }
+
+            if (grantedRole != null) {
+                System.out.println("Granted role: " + grantedRole);
+            } else {
+                System.out.println("No role found for the current user.");
+            }
+
+            if (!"GVU".equals(grantedRole) || grantedRole == null) {
+                System.out.println("No privileges (no grant).");
+                // Show an error alert
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Lỗi: không có quyền!");
+                alert.showAndWait();
+
+            } else if (rowsAffected > 0) {
+                System.out.println("Update successfully.");
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Success");
+                alert.setHeaderText(null);
+                alert.setContentText("Cập nhật thành công!");
+                alert.showAndWait();
+
+            } else {
+                System.out.println("Update unsuccessfully.");
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Lỗi!");
+                alert.showAndWait();
+
+            }
+        } catch (SQLException e) {
+            System.out.println("Failed to Update: " + e.getMessage());
+            // showAlert(Alert.AlertType.ERROR, "Error", "Failed to Update user: " +
+            // e.getMessage());
+            if (e.getMessage().contains("ORA-01031")) {
+                System.out.println("No privileges (no grant).");
+                // Show an error alert
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Lỗi");
+                alert.showAndWait();
+            }
+
+        }
     }
 
-    @FXML
-    private void updateDVClick(ActionEvent event) {
-        
-    }
+    // private void showAlert(Alert.AlertType alertType, String title, String message) {
+    //     Alert alert = new Alert(alertType);
+    //     alert.setTitle(title);
+    //     alert.setHeaderText(null);
+    //     alert.setContentText(message);
+    //     alert.showAndWait();
+    // }
 
-    private void showAlert(Alert.AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
+
 }
