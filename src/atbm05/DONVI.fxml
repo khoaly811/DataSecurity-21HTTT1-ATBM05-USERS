@@ -15,7 +15,7 @@
             <TableColumn fx:id="MADV" prefWidth="136.0" text="Ma don vi" />
         <!-- <TableColumn fx:id="MANV" prefWidth="75.0" text="MANV" /> -->
         <TableColumn fx:id="TENDV" prefWidth="95.0" text="Ten don vi" />
-        <TableColumn fx:id="TRUONGDV" prefWidth="159.0" text="Truong don vi" />
+        <TableColumn fx:id="HOTEN_TDV" prefWidth="159.0" text="Truong don vi" />
       </columns>
     </TableView>
     <TextField layoutX="474.0" layoutY="42.0" prefHeight="26.0" prefWidth="292.0" promptText="Keywords..." />
