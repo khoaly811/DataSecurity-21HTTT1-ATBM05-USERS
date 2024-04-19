@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -66,6 +67,12 @@ public class KHMOController {
     @FXML
     private TextField ngaybdDisplay;
 
+    @FXML 
+    private TextField searchKHMO;
+
+    @FXML
+    private Button updateKHMO;
+
     private ObservableList<KHmo> khmoList = FXCollections.observableArrayList();
 
     @FXML
@@ -87,6 +94,10 @@ public class KHMOController {
                 chuongtrinhDisplay.setText(newSelection.getMACT());
                 ngaybdDisplay.setText(newSelection.getNGAYBD().toString());
             }
+        });
+
+        searchKHMO.textProperty().addListener((observable, oldValue, newValue) -> {
+            searchKhmo(newValue);
         });
     }
 
@@ -400,6 +411,45 @@ public class KHMOController {
         }
     } 
 
+    private void searchKhmo(String searchText){
+        DataAccessLayer dal = null;
+        Connection conn = null;
+        CallableStatement cst = null;
+        ResultSet rs = null;
+        List<KHmo> khmoList = new ArrayList<>();
+
+        try {
+            dal = DataAccessLayer.getInstance("your_username", "your_password");
+            conn = dal.connect();
+
+            // Construct the wildcard pattern for partial matching
+
+            cst = conn.prepareCall("{CALL C##QLK.SP_SEARCH_KHMO(?, ?)}");
+            cst.registerOutParameter(1, OracleTypes.CURSOR);
+            cst.setString(2, searchText);
+            cst.execute();
+
+            rs = (ResultSet) cst.getObject(1);
+
+            while (rs.next()) {
+                KHmo kh = new KHmo();
+                Hocphan hp = new Hocphan();
+
+                String tenhp = rs.getString("TENHP");
+                hp.setTENHP(tenhp);
+                kh.setHocphan(hp);
+                kh.setHOCKY(rs.getInt("HK"));
+                kh.setNAM(rs.getInt("NAM"));
+                kh.setMACT(rs.getString("MACT"));
+                kh.setNGAYBD(rs.getDate("NGAYBD").toLocalDate());
+                khmoList.add(kh);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        khmoTableView.setItems(FXCollections.observableArrayList(khmoList));
+    }
 
     @FXML
     private void refreshTable(ActionEvent event) {
