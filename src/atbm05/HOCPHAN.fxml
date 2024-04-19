@@ -21,7 +21,7 @@
          <TableColumn fx:id="TENDV" prefWidth="124.0" text="Tên đơn vị" />
         </columns>
       </TableView>
-      <Button layoutX="916.0" layoutY="152.0" mnemonicParsing="false" onAction="#updateHPClick" prefHeight="31.0" prefWidth="129.0" text="Cập nhật" />
+      <Button fx:id="updateHP" layoutX="916.0" layoutY="152.0" mnemonicParsing="false" onAction="#updateHPClick" prefHeight="31.0" prefWidth="129.0" text="Cập nhật" />
       <!-- <Button layoutX="932.0" layoutY="200.0" mnemonicParsing="false" onAction="#deleteHPClick" prefHeight="31.0" prefWidth="114.0" style="-fx-background-color: red;" text="Xóa học phần" textFill="WHITE" /> -->
       <TextField fx:id="tenhpDisplay" layoutX="113.0" layoutY="632.0" />
       <Label layoutX="14.0" layoutY="637.0" text="Tên học phần" />
@@ -42,5 +42,6 @@
          </font>
       </Button>
       <Button layoutX="916.0" layoutY="107.0" mnemonicParsing="false" onAction="#insertHPClick" prefHeight="31.0" prefWidth="129.0" text="Thêm Học phần" />
+      <TextField fx:id="searchHP" layoutX="484.0" layoutY="52.0" prefHeight="26.0" prefWidth="292.0" promptText="Keywords..." />
    </children>
 </AnchorPane>
