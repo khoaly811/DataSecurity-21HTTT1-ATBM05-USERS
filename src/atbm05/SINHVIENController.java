@@ -137,12 +137,12 @@ public class SINHVIENController {
         });
 
         searchSV.textProperty().addListener((observable, oldValue, newValue) -> {
-            searcSinhvien(newValue);
+            searchSinhvien(newValue);
         });
     }
 
 
-    private void searcSinhvien(String searchText) {
+    private void searchSinhvien(String searchText) {
         DataAccessLayer dal = null;
         Connection conn = null;
         CallableStatement cst = null;
