@@ -329,11 +329,17 @@ public class SINHVIENController {
         String INP_MANGANH = nganhDisplay.getText().trim();
         int INP_SOTCTL = 0;
         String sotcText = sotctlDisplay.getText();
-        INP_SOTCTL = Integer.parseInt(sotcText.trim());
+        if (sotcText != null && !sotcText.isEmpty()) { // Check if the text is not null and not empty
+
+            INP_SOTCTL = Integer.parseInt(sotcText.trim());
+        }
+        
         Double INP_DTBTL = 0.0;
         String dtbText = diemtbtlDisplay.getText();
-        INP_DTBTL = Double.parseDouble(dtbText.trim());
-        System.out.println(INP_DTBTL);
+        if (dtbText != null && !dtbText.isEmpty()) { // Check if the text is not null and not empty
+
+            INP_DTBTL = Double.parseDouble(dtbText.trim());
+        }
         DataAccessLayer dal = null;
         Connection conn = null;
         CallableStatement cst = null;
