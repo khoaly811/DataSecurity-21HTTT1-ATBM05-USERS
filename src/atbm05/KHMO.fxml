@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1091.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="atbm05.KHMOController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1091.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="atbm05.KHMOController">
    <children>
       <TableView fx:id="khmoTableView" layoutX="24.0" layoutY="116.0" prefHeight="480.0" prefWidth="875.0">
          <columns>
@@ -31,7 +31,7 @@
       <Label layoutX="349.0" layoutY="647.0" text="Năm" />
       <TextField fx:id="namDisplay" layoutX="410.0" layoutY="642.0" prefHeight="31.0" prefWidth="129.0" />
       <Button layoutX="965.0" layoutY="69.0" mnemonicParsing="false" text="Thông báo" />
-      <Button layoutX="951.0" layoutY="682.0" mnemonicParsing="false" onAction="#refreshTable" text="Làm mới">
+      <Button layoutX="922.0" layoutY="653.0" mnemonicParsing="false" onAction="#refreshTable" text="Làm mới">
          <font>
             <Font name="System Bold" size="19.0" />
          </font>
