@@ -112,11 +112,8 @@ public class KHMOController {
             conn = dal.connect();
             cst = conn.prepareCall("{CALL C##QLK.SP_VIEW_KHMO(?)}");
             cst.registerOutParameter(1, OracleTypes.CURSOR);
-            System.out.println("nhan beo 1");
             cst.execute();
-            System.out.println("nhan beo 2");
             rs = (ResultSet) cst.getObject(1);
-            System.out.println("Nhan beo 3");
             while (rs.next()) {
                 KHmo kh = new KHmo();
                 Hocphan hp = new Hocphan();
@@ -207,13 +204,6 @@ public class KHMOController {
         int NAM_OLD = selectedKhmo.getNAM();
         String MACT_OLD = selectedKhmo.getMACT();
 
-        // System.out.println("TENHP: " + TENHP_OLD);
-        // System.out.println("HOCKY: " + HK_OLD);
-        // System.out.println("NAM: " + NAM_OLD);
-        // System.out.println("MACT: " + MACT_OLD);
-
-        
-        
         DataAccessLayer dal = null;
         Connection conn = null;
         CallableStatement cst = null;
@@ -334,7 +324,6 @@ public class KHMOController {
         CallableStatement cst = null;
 
         if (INP_TENHP == null ||  INP_MACT == null){
-            System.out.println("Nhap thieu");
             // Show an error alert
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Error");
@@ -343,7 +332,6 @@ public class KHMOController {
             alert.showAndWait();
         } else {
             try {
-                System.out.println(INP_TENHP);
                 dal = DataAccessLayer.getInstance("your_username", "your_password");
                 conn = dal.connect();
                 cst = conn.prepareCall("{CALL C##QLK.SP_INSERT_KHMO(?,?,?,?)}");

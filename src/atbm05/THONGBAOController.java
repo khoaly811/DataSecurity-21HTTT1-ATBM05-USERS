@@ -75,11 +75,8 @@ public class THONGBAOController {
             conn = dal.connect();
             cst = conn.prepareCall("{CALL C##QLK.SP_VIEW_THONGBAO(?)}");
             cst.registerOutParameter(1, OracleTypes.CURSOR);
-            System.out.println("nhan beo 1");
             cst.execute();
-            System.out.println("nhan beo 2");
             rs = (ResultSet) cst.getObject(1);
-            System.out.println("Nhan beo 3");
             while (rs.next()) {
                 Thongbao tb = new Thongbao();
 

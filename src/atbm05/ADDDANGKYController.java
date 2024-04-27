@@ -56,7 +56,7 @@ public class ADDDANGKYController {
 
     @FXML
     private void onAddClick_DANGKY() {
-        System.out.println("Added");
+       
     }
 
     private ObservableList<KHmo> adddangkyList = FXCollections.observableArrayList();
@@ -125,7 +125,7 @@ public class ADDDANGKYController {
                 adddangkyList.add(kh);
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+           
             
         }
 

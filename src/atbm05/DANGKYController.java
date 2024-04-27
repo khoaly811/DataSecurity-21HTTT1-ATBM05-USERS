@@ -153,9 +153,7 @@ public class DANGKYController {
             cst.registerOutParameter(1, OracleTypes.CURSOR);
             cst.setString(2, searchText);
             cst.execute();
-            System.out.println("nhan beo 2");
             rs = (ResultSet) cst.getObject(1);
-            System.out.println("Nhan beo 3");
             while (rs.next()) {
                 Dangky dk = new Dangky();
                 Sinhvien sv = new Sinhvien();
@@ -163,17 +161,14 @@ public class DANGKYController {
                 Nhansu ns = new Nhansu();
 
                 String tensv = rs.getString("HOTEN_SV");
-                //System.out.println("TEN SINH VIEN: " + tensv);
                 sv.setHOTEN(tensv);
                 dk.setSinhvien(sv);
 
                 String tengv = rs.getString("HOTEN_GV");
-                //System.out.println("TEN GIANG VIEN: " + tengv);
                 ns.setHOTEN(tengv);
                 dk.setNhansu(ns);
 
                 String tenhp = rs.getString("TENHP");
-                //System.out.println("TEN HOC PHAN: " + tenhp);
                 hp.setTENHP(tenhp);
                 dk.setHocphan(hp);
 
@@ -207,11 +202,8 @@ public class DANGKYController {
             conn = dal.connect();
             cst = conn.prepareCall("{CALL C##QLK.SP_VIEW_DANGKY(?)}");
             cst.registerOutParameter(1, OracleTypes.CURSOR);
-            System.out.println("nhan beo 1");
             cst.execute();
-            System.out.println("nhan beo 2");
             rs = (ResultSet) cst.getObject(1);
-            System.out.println("Nhan beo 3");
             while (rs.next()) {
                 Dangky dk = new Dangky();
                 Sinhvien sv = new Sinhvien();
@@ -262,11 +254,7 @@ public class DANGKYController {
         String MACT_OLD = selectedDangky.getMACT();
         int HK_OLD = selectedDangky.getHK();
         int NAM_OLD = selectedDangky.getNAM();
-        System.out.println("TENSV: " + TENSV_OLD);
-        System.out.println("TENHP: " + TENHP_OLD);
-        System.out.println("MACT: " + MACT_OLD);
-        System.out.println("HK: " + HK_OLD);
-        System.out.println("NAM: " + NAM_OLD);
+
         DataAccessLayer dal = null;
          Connection conn = null;
          CallableStatement cst = null;
@@ -340,11 +328,6 @@ public class DANGKYController {
         String MACT_OLD = selectedDangky.getMACT();
         int HK_OLD = selectedDangky.getHK();
         int NAM_OLD = selectedDangky.getNAM();
-        // System.out.println("TENSV: " + TENSV_OLD);
-        // System.out.println("TENHP: " + TENHP_OLD);
-        // System.out.println("MACT: " + MACT_OLD);
-        // System.out.println("HK: " + HK_OLD);
-        // System.out.println("NAM: " + NAM_OLD);
         String hotensv = hotensvDisplay.getText().trim();
         String hotengv = hotengvDisplay.getText().trim();
         String tenhocphan = tenhocphanDisplay.getText().trim();

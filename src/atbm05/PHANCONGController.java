@@ -204,11 +204,7 @@ public class PHANCONGController {
         String MACT_OLD = selectedPhancong.getMACT();
         int HK_OLD = selectedPhancong.getHK();
         int NAM_OLD = selectedPhancong.getNAM();
-        System.out.println("TENGV: " + TENGV_OLD);
-        System.out.println("TENHP: " + TENHP_OLD);
-        System.out.println("MACT: " + MACT_OLD);
-        System.out.println("HK: " + HK_OLD);
-        System.out.println("NAM: " + NAM_OLD);
+
         DataAccessLayer dal = null;
          Connection conn = null;
          CallableStatement cst = null;

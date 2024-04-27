@@ -152,11 +152,8 @@ public class NHANSUController {
             conn = dal.connect();
             cst = conn.prepareCall("{CALL C##QLK.SP_VIEW_NHANSU(?)}");
             cst.registerOutParameter(1, OracleTypes.CURSOR);
-            System.out.println("minh beo 1");
             cst.execute();
-            System.out.println("minh beo 2");
             rs = (ResultSet) cst.getObject(1);
-            System.out.println("minh beo 3");
             while (rs.next()) {
                 Nhansu ns = new Nhansu();
                 ns.setHOTEN((rs.getString("HOTEN")));
@@ -194,7 +191,6 @@ public class NHANSUController {
         String INP_DT = dienthoaiDisplay.getText().trim();
         String INP_MANV = manvDisplay.getText().trim();
         String INP_TENDV = ((String) tendvDisplayDrop.getValue()).trim();
-        System.out.println(INP_TENDV);
 
         DataAccessLayer dal = null;
         Connection conn = null;
@@ -203,7 +199,6 @@ public class NHANSUController {
         try {
             dal = DataAccessLayer.getInstance("your_username", "your_password");
             conn = dal.connect();
-            System.out.println("khoa beo 1");
             cst = conn.prepareCall("{CALL C##QLK.SP_ALL_UPDATE_NHANSU(?,?,?,?,?,?,?)}");
             cst.setString(1, INP_HOTEN);
             cst.setString(2, INP_PHAI);
@@ -397,7 +392,6 @@ public class NHANSUController {
             alert.showAndWait();
         } else {
             try {
-                System.out.println(INP_TENDV);
                 dal = DataAccessLayer.getInstance("your_username", "your_password");
                 conn = dal.connect();
                 cst = conn.prepareCall("{CALL C##QLK.SP_INSERT_NHANSU(?,?,?,?,?,?,?)}");

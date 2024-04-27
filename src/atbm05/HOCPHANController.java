@@ -124,11 +124,8 @@ public class HOCPHANController {
             conn = dal.connect();
             cst = conn.prepareCall("{CALL C##QLK.SP_VIEW_HOCPHAN(?)}");
             cst.registerOutParameter(1, OracleTypes.CURSOR);
-            System.out.println("nhan beo 1");
             cst.execute();
-            System.out.println("nhan beo 2");
             rs = (ResultSet) cst.getObject(1);
-            System.out.println("Nhan beo 3");
             while (rs.next()) {
                 Hocphan hp = new Hocphan();
                 Donvi dv = new Donvi();
@@ -140,7 +137,6 @@ public class HOCPHANController {
                 hp.setSOSVTOIDA(rs.getInt("SOSVTD"));
 
                 String tendv = rs.getString("TENDV");
-                System.out.println("TENDV là: " + tendv);
                 dv.setTENDV(tendv);
                 hp.setDonvi(dv);
 
@@ -210,13 +206,6 @@ public class HOCPHANController {
         int SOTIETTH_OLD = selectedHocphan.getSOTIETTH();
         int SOSVTOIDA_OLD =selectedHocphan.getSOSVTOIDA();
         String TENDV_OLD = selectedHocphan.getDonvi().getTENDV();
-
-        System.out.println("TENHP: " + TENHP_OLD);
-        System.out.println("SOTC: " + SOTC_OLD);
-        System.out.println("SOTIETLT: " + SOTIETLT_OLD);
-        System.out.println("SOTIETTH: " + SOTIETTH_OLD);
-        System.out.println("SOSVTOIDA: " + SOSVTOIDA_OLD);
-        System.out.println("TENCT: " + TENDV_OLD);
         DataAccessLayer dal = null;
         Connection conn = null;
         CallableStatement cst = null;
@@ -352,7 +341,6 @@ public class HOCPHANController {
             alert.showAndWait();
         } else {
             try {
-                System.out.println(INP_TENHP);
                 dal = DataAccessLayer.getInstance("your_username", "your_password");
                 conn = dal.connect();
                 cst = conn.prepareCall("{CALL C##QLK.SP_INSERT_HOCPHAN(?,?,?,?,?,?)}");
@@ -455,7 +443,6 @@ public class HOCPHANController {
                 hp.setSOSVTOIDA(rs.getInt("SOSVTD"));
 
                 String tendv = rs.getString("TENDV");
-                System.out.println("TENDV là: " + tendv);
                 dv.setTENDV(tendv);
                 hp.setDonvi(dv);
 

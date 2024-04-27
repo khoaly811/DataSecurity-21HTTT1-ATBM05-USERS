@@ -158,9 +158,7 @@ public class SINHVIENController {
             cst.registerOutParameter(1, OracleTypes.CURSOR);
             cst.setString(2, searchText);
             cst.execute();
-            System.out.println("nhan beo 2");
             rs = (ResultSet) cst.getObject(1);
-            System.out.println("Nhan beo 3");
             while (rs.next()) {
                 Sinhvien sv = new Sinhvien();
                 sv.setHOTEN(rs.getString("HOTEN"));
@@ -194,11 +192,8 @@ public class SINHVIENController {
             conn = dal.connect();
             cst = conn.prepareCall("{CALL C##QLK.SP_VIEW_SINHVIEN(?)}");
             cst.registerOutParameter(1, OracleTypes.CURSOR);
-            System.out.println("nhan beo 1");
             cst.execute();
-            System.out.println("nhan beo 2");
             rs = (ResultSet) cst.getObject(1);
-            System.out.println("Nhan beo 3");
             while (rs.next()) {
                 Sinhvien sv = new Sinhvien();
                 sv.setHOTEN(rs.getString("HOTEN"));
@@ -233,7 +228,6 @@ public class SINHVIENController {
         int INP_SOTCTL = Integer.parseInt(sotctlDisplay.getText().trim());
         Float INP_DTBTL = Float.parseFloat(diemtbtlDisplay.getText().trim());
 
-        System.out.println(INP_HOTEN);
 
         DataAccessLayer dal = null;
         Connection conn = null;
@@ -242,7 +236,6 @@ public class SINHVIENController {
         try {
             dal = DataAccessLayer.getInstance("your_username", "your_password");
             conn = dal.connect();
-            System.out.println("khoa beo 1");
             cst = conn.prepareCall("{CALL C##QLK.SP_ALL_UPDATE_SINHVIEN(?,?,?,?,?,?,?,?,?)}");
             cst.setString(1, INP_HOTEN);
             cst.setString(2, INP_PHAI);
@@ -347,7 +340,6 @@ public class SINHVIENController {
         try {
             dal = DataAccessLayer.getInstance("your_username", "your_password");
             conn = dal.connect();
-            System.out.println("khoa beo 1");
             cst = conn.prepareCall("{CALL C##QLK.SP_INSERT_SINHVIEN(?,?,?,?,?,?,?,?,?)}");
             cst.setString(1, INP_HOTEN);
             cst.setString(2, INP_PHAI);
