@@ -1,7 +1,8 @@
 package atbm05;
-
+import java.sql.Timestamp;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -26,20 +27,7 @@ public class THONGBAOController {
     @FXML
     private TableColumn<Thongbao, String> THOIGIAN;
 
-    @FXML
-    private void onAddClick_THONGBAO() {
-        System.out.println("Added");
-    }
 
-    @FXML
-    private void onUpdateClick_THONGBAO() {
-        System.out.println("Updated");
-    }
-
-    @FXML
-    private void onDeleteClick_THONGBAO() {
-        System.out.println("Delete");
-    }
 
     // @FXML
     // private TextField noidungDisplay;
@@ -81,7 +69,7 @@ public class THONGBAOController {
                 Thongbao tb = new Thongbao();
 
                 tb.setNOIDUNG((rs.getString("NOIDUNG")));
-                tb.setTHOIGIAN((rs.getTime("THOIGIAN")));
+                tb.setTHOIGIAN((rs.getTimestamp("THOIGIAN")));
 
                 thongbaoList.add(tb);
             }
@@ -91,4 +79,11 @@ public class THONGBAOController {
 
         thongbaoTableView.setItems(thongbaoList);
     }
+    @FXML
+    private void refreshTable(ActionEvent event) {
+        thongbaoList.clear();
+        loadThongbaoFromDatabase();
+        thongbaoTableView.refresh();
+    }
+       
 }

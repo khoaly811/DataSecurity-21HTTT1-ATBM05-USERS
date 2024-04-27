@@ -2,20 +2,20 @@ package dto;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
-import java.sql.Time;
+import java.sql.Timestamp;
 //doi ten file
 
 //DTO for THONGBAO table
 public class Thongbao {
     private final SimpleStringProperty MATB = new SimpleStringProperty();
     private final SimpleStringProperty NOIDUNG= new SimpleStringProperty();
-    private final SimpleObjectProperty<Time> THOIGIAN = new SimpleObjectProperty<>();
+    private final SimpleObjectProperty<Timestamp> THOIGIAN = new SimpleObjectProperty<>();
 
     public Thongbao(){
 
     }
 
-    public Thongbao(String MATB, String NOIDUNG,Time THOIGIAN){
+    public Thongbao(String MATB, String NOIDUNG,Timestamp THOIGIAN){
         this.MATB.set(MATB);
         this.NOIDUNG.set(NOIDUNG);
         this.THOIGIAN.set(THOIGIAN);
@@ -45,15 +45,15 @@ public class Thongbao {
         return NOIDUNG;
     }
 
-    public Time getTHOIGIAN(){
+    public Timestamp getTHOIGIAN(){
         return THOIGIAN.get();
     }
 
-    public void setTHOIGIAN(Time THOIGIAN){
+    public void setTHOIGIAN(Timestamp THOIGIAN){
         this.THOIGIAN.set(THOIGIAN);
     }
 
-    public SimpleObjectProperty<Time> THOIGIANproperty(){
+    public SimpleObjectProperty<Timestamp> THOIGIANproperty(){
         return THOIGIAN;
     }
 }
