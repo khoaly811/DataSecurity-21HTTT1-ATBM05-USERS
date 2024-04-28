@@ -64,8 +64,6 @@ public class KHMOController {
     @FXML
     private TextField chuongtrinhDisplay;
 
-    @FXML
-    private TextField ngaybdDisplay;
 
     @FXML 
     private TextField searchKHMO;
@@ -92,7 +90,6 @@ public class KHMOController {
                 hockyDisplay.setText(String.valueOf(newSelection.getHOCKY()));
                 namDisplay.setText(String.valueOf(newSelection.getNAM()));
                 chuongtrinhDisplay.setText(newSelection.getMACT());
-                ngaybdDisplay.setText(newSelection.getNGAYBD().toString());
             }
         });
 

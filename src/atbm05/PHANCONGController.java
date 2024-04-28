@@ -248,7 +248,7 @@ public class PHANCONGController {
                  Alert alert = new Alert(AlertType.ERROR);
                  alert.setTitle("Error");
                  alert.setHeaderText(null);
-                 alert.setContentText("Lỗi");
+                 alert.setContentText("Bạn không có quyền!!!");
                  alert.showAndWait();
              }
              else{
@@ -257,7 +257,7 @@ public class PHANCONGController {
                  Alert alert = new Alert(AlertType.ERROR);
                  alert.setTitle("Error");
                  alert.setHeaderText(null);
-                 alert.setContentText("Lỗi khi chạy !!!");
+                 alert.setContentText("Bạn không có quyền!!!");
                  alert.showAndWait();
              }
      }
@@ -327,7 +327,7 @@ public class PHANCONGController {
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText(null);
-                alert.setContentText("Lỗi");
+                alert.setContentText("Bạn không có quyền!!!");
                 alert.showAndWait();
             }
             else{
@@ -336,7 +336,7 @@ public class PHANCONGController {
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText(null);
-                alert.setContentText("Lỗi khi chạy !!!");
+                alert.setContentText("Bạn không có quyền!!!");
                 alert.showAndWait();
             }
     }

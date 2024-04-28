@@ -228,9 +228,7 @@ public class NHANSUController {
                 System.out.println("No role found for the current user.");
             }
 
-            if (!"TKHOA".equals(grantedRole) || !("GV".equals(grantedRole) || !"GVU".equals(grantedRole)
-                    || !"SV".equals(grantedRole) || !"TDV".equals(grantedRole)
-                    || !"NVCB".equals(grantedRole)) || grantedRole == null) {
+            if ("SV".equals(grantedRole) || grantedRole == null) {
                 System.out.println("No privileges (no grant).");
                 // Show an error alert
                 Alert alert = new Alert(AlertType.ERROR);
@@ -312,7 +310,7 @@ public class NHANSUController {
                     System.out.println("No role found for the current user.");
                 }
 
-                if (!"TKHOA".equals(grantedRole) || grantedRole == null) {
+                if ("SV".equals(grantedRole) || grantedRole == null) {
                     System.out.println("No privileges (no grant).");
                     // Show an error alert
                     Alert alert = new Alert(AlertType.ERROR);
@@ -423,7 +421,7 @@ public class NHANSUController {
                     System.out.println("No role found for the current user.");
                 }
 
-                if (!"TKHOA".equals(role) || role == null) {
+                if ("SV".equals(role) || role == null) {
                     System.out.println("No privileges (no grant).");
                     // Show an error alert
                     Alert alert = new Alert(AlertType.ERROR);

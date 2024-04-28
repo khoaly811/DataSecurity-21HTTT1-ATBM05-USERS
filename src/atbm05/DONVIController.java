@@ -324,6 +324,11 @@ public class DONVIController {
     //     alert.setContentText(message);
     //     alert.showAndWait();
     // }
-
+    @FXML
+    private void refreshTable(ActionEvent event) {
+        donviList.clear();
+        loadDonviFromDatabase();
+        donviTableView.refresh();
+    }
 
 }
