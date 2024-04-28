@@ -35,7 +35,6 @@
       <Label layoutX="620.0" layoutY="670.0" text="Tên đơn vị" />
       <Label layoutX="362.0" layoutY="614.0" text="Số tiết lý thuyết" />
       <TextField fx:id="sotietltDisplay" layoutX="473.0" layoutY="609.0" prefHeight="31.0" prefWidth="129.0" />
-      <Button layoutX="955.0" layoutY="59.0" mnemonicParsing="false" text="Thông báo" />
       <Button layoutX="955.0" layoutY="640.0" mnemonicParsing="false" onAction="#refreshTable" text="Làm mới">
          <font>
             <Font name="System Bold" size="19.0" />

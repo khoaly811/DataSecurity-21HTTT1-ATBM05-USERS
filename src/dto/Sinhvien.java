@@ -1,7 +1,6 @@
 package dto;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import java.time.LocalDate;
@@ -18,13 +17,13 @@ public class Sinhvien {
     private final SimpleStringProperty MANGANH = new SimpleStringProperty();
     private final ObjectProperty<Donvi> donviProperty = new SimpleObjectProperty<>();
     private final SimpleIntegerProperty SOTCTL = new SimpleIntegerProperty();
-    private final SimpleFloatProperty DIEMTBTL = new SimpleFloatProperty();
+    private final SimpleIntegerProperty DIEMTBTL = new SimpleIntegerProperty();
     
     public Sinhvien(){
 
     }
 
-    public Sinhvien(String MASV, String HOTEN, String PHAI, LocalDate NGSINH, String DIACHI, String SDT, String MACT,String MANGANH, int SOTCTL, float DIEMTBTL){
+    public Sinhvien(String MASV, String HOTEN, String PHAI, LocalDate NGSINH, String DIACHI, String SDT, String MACT,String MANGANH, int SOTCTL, int DIEMTBTL){
         this.MASV.set(MASV);
         this.HOTEN.set(HOTEN);
         this.PHAI.set(PHAI);
@@ -145,15 +144,15 @@ public class Sinhvien {
         return SOTCTL;
     }
 
-    public float getDIEMTBTL() {
+    public int getDIEMTBTL() {
         return DIEMTBTL.get();
     }
     
-    public void setDIEMTBTL(float DIEMTBTL) {
+    public void setDIEMTBTL(int DIEMTBTL) {
         this.DIEMTBTL.set(DIEMTBTL);
     }
 
-    public SimpleFloatProperty DIEMTBTLproperty(){
+    public SimpleIntegerProperty DIEMTBTLproperty(){
         return DIEMTBTL;
     }
 

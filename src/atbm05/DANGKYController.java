@@ -13,6 +13,7 @@ import oracle.jdbc.OracleTypes;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -20,11 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DataAccessLayer.DataAccessLayer;
-import dto.Dangky;
-import dto.Nhansu;
-import dto.Phancong;
-import dto.Sinhvien;
-import dto.Hocphan;
+import dto.*;
 
 public class DANGKYController {
     @FXML
@@ -175,10 +172,10 @@ public class DANGKYController {
                 dk.setHK((rs.getInt("HK")));
                 dk.setNAM((rs.getInt("NAM")));
                 dk.setMACT((rs.getString("MACT")));
-                dk.setDIEMTH((rs.getFloat("DIEMTH")));
-                dk.setDIEMQT((rs.getFloat("DIEMQT")));
-                dk.setDIEMCK((rs.getFloat("DIEMCK")));
-                dk.setDIEMTK((rs.getFloat("DIEMTK")));
+                dk.setDIEMTH((rs.getInt("DIEMTH")));
+                dk.setDIEMQT((rs.getInt("DIEMQT")));
+                dk.setDIEMCK((rs.getInt("DIEMCK")));
+                dk.setDIEMTK((rs.getInt("DIEMTK")));
 
                 dangkyList.add(dk);
             }
@@ -228,10 +225,10 @@ public class DANGKYController {
                 dk.setHK((rs.getInt("HK")));
                 dk.setNAM((rs.getInt("NAM")));
                 dk.setMACT((rs.getString("MACT")));
-                dk.setDIEMTH((rs.getFloat("DIEMTH")));
-                dk.setDIEMQT((rs.getFloat("DIEMQT")));
-                dk.setDIEMCK((rs.getFloat("DIEMCK")));
-                dk.setDIEMTK((rs.getFloat("DIEMTK")));
+                dk.setDIEMTH((rs.getInt("DIEMTH")));
+                dk.setDIEMQT((rs.getInt("DIEMQT")));
+                dk.setDIEMCK((rs.getInt("DIEMCK")));
+                dk.setDIEMTK((rs.getInt("DIEMTK")));
 
                 dangkyList.add(dk);
             }
@@ -243,7 +240,127 @@ public class DANGKYController {
         // Set the loaded users to the table view
         dangkyTableView.setItems(dangkyList);
     }
+    @FXML
+    private void insertDKClick(ActionEvent event){
+        String HOTENSV = hotensvDisplay.getText().trim();
+        String HOTENGV = hotengvDisplay.getText().trim();
+        String TENHP = tenhocphanDisplay.getText().trim();
+        int HK = 0;
+        String hkText=hkDisplay.getText();
+        if (hkText != null && hkText.isEmpty()){
+            HK=Integer.parseInt(hkText.trim());
+        }
+        int NAM=0;
+        String namText=namDisplay.getText();
+        if (namText != null && namText.isEmpty()){
+            NAM=Integer.parseInt(namText.trim());
+        }
+        String MACT = mactDisplay.getText().trim();
+        Integer DIEMTH=0;
+        String thText=diemthDisplay.getText();
+        if (thText != null && thText.isEmpty()){
+            DIEMTH=Integer.parseInt(thText.trim());
+        }
+        Integer DIEMQT=0;
+        String qtText=diemqtDisplay.getText();
+        if (qtText != null && qtText.isEmpty()){
+            DIEMQT=Integer.parseInt(qtText.trim());
+        }
+        Integer DIEMCK=0;
+        String ckText=diemckDisplay.getText();
+        if (ckText != null && ckText.isEmpty()){
+            DIEMCK=Integer.parseInt(ckText.trim());
+        }
+        Integer DIEMTK=0;
+        String tkText=diemtkDisplay.getText();
+        if (tkText != null && tkText.isEmpty()){
+            DIEMTK=Integer.parseInt(tkText.trim());
+        }
+        DataAccessLayer dal = null;
+        Connection conn = null;
+        CallableStatement cst = null;
+        try {
+            dal = DataAccessLayer.getInstance("your_username", "your_password");
+            conn = dal.connect();
+            String role = null;
+            PreparedStatement pst = null;
+            ResultSet rs = null;
+            pst = conn
+                    .prepareStatement(
+                            "SELECT * FROM SESSION_ROLES");
 
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                role = rs.getString("ROLE");
+            }   
+            System.out.println("test 1");
+            if ("GVU".equals(role)){
+                cst = conn.prepareCall("{CALL C##QLK.SP_GVU_INSERT_DANGKY(?,?,?,?,?,?,?,?,?,?)}");
+                cst.setString(1, HOTENSV);
+                cst.setString(2, TENHP);
+                cst.setString(3, HOTENGV);
+                cst.setInt(4, HK);
+                cst.setInt(5, NAM);
+                cst.setString(6, MACT);
+                cst.setInt(7, DIEMTH);
+                cst.setInt(8, DIEMQT);
+                cst.setInt(9, DIEMCK);
+                cst.setInt(10, DIEMTK);
+                System.out.println("test 2");
+                
+            }
+            int rowsAffected = cst.executeUpdate();
+            System.out.println("test 3");
+            if (rs.next()) {
+                role = rs.getString("ROLE");
+            }
+
+            if (role != null) {
+                System.out.println("Role: " + role);
+            } else {
+                System.out.println("No role found for the current user.");
+            }
+
+            if ("TKHOA".equals(role) || "SV".equals(role) || "TDV".equals(role) ||
+            "GV".equals(role) || "NVCB".equals(role) || role == null) {
+                System.out.println("No privileges (no grant).");
+                System.out.println("khoa");
+                // Show an error alert
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Lỗi: không có quyền!");
+                
+                alert.showAndWait();
+
+            } else if (rowsAffected > 0) {
+                System.out.println("Insert successfully.");
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Success");
+                alert.setHeaderText(null);
+                alert.setContentText("Thêm thành công!");
+                alert.showAndWait();
+
+            } else {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Lỗi!");
+                alert.showAndWait();
+
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+            // showAlert(Alert.AlertType.ERROR, "Error", "Failed to add user: " +
+            // e.getMessage());
+            System.out.println("Insert unsuccessfully.");
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Lỗi!");
+            alert.showAndWait();
+        }
+    }
     @FXML
     private void deleteDKClick(ActionEvent event) {
     
@@ -328,12 +445,12 @@ public class DANGKYController {
         String MACT_OLD = selectedDangky.getMACT();
         int HK_OLD = selectedDangky.getHK();
         int NAM_OLD = selectedDangky.getNAM();
-        String hotensv = hotensvDisplay.getText().trim();
-        String hotengv = hotengvDisplay.getText().trim();
-        String tenhocphan = tenhocphanDisplay.getText().trim();
-        String mact = mactDisplay.getText().trim();
-        Integer hkStr = Integer.parseInt(hkDisplay.getText().trim());
-        Integer namStr = Integer.parseInt(namDisplay.getText().trim());
+        // String hotensv = hotensvDisplay.getText().trim();
+        // String hotengv = hotengvDisplay.getText().trim();
+        // String tenhocphan = tenhocphanDisplay.getText().trim();
+        // String mact = mactDisplay.getText().trim();
+        // Integer hkStr = Integer.parseInt(hkDisplay.getText().trim());
+        // Integer namStr = Integer.parseInt(namDisplay.getText().trim());
         Integer diemthStr = Integer.parseInt(diemthDisplay.getText().trim());
         Integer diemqtStr = Integer.parseInt(diemqtDisplay.getText().trim());
         Integer diemckStr = Integer.parseInt(diemckDisplay.getText().trim());

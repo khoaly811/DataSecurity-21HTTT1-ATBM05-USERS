@@ -3,7 +3,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleFloatProperty;
+
 //doi ten file
 public class Dangky {
     private final SimpleStringProperty MASV = new SimpleStringProperty();
@@ -12,10 +12,10 @@ public class Dangky {
     private final SimpleIntegerProperty HK = new SimpleIntegerProperty();
     private final SimpleIntegerProperty NAM = new SimpleIntegerProperty();
     private final SimpleStringProperty MACT = new SimpleStringProperty();
-    private final SimpleFloatProperty DIEMTH = new SimpleFloatProperty();
-    private final SimpleFloatProperty DIEMQT = new SimpleFloatProperty();
-    private final SimpleFloatProperty DIEMCK = new SimpleFloatProperty();
-    private final SimpleFloatProperty DIEMTK = new SimpleFloatProperty();
+    private final SimpleIntegerProperty DIEMTH = new SimpleIntegerProperty();
+    private final SimpleIntegerProperty DIEMQT = new SimpleIntegerProperty();
+    private final SimpleIntegerProperty DIEMCK = new SimpleIntegerProperty();
+    private final SimpleIntegerProperty DIEMTK = new SimpleIntegerProperty();
     private final ObjectProperty<Sinhvien> sinhvienProperty = new SimpleObjectProperty<>();
     private final ObjectProperty<Nhansu> nhansuProperty = new SimpleObjectProperty<>();
     private final ObjectProperty<Hocphan> hocphanProperty = new SimpleObjectProperty<>();
@@ -24,7 +24,7 @@ public class Dangky {
 
     }
     
-    public Dangky(String MASV, String MAGV, int MAHP, int HK, int NAM, String MACT, float DIEMTH, float DIEMQT, float DIEMCK, float DIEMTK){
+    public Dangky(String MASV, String MAGV, int MAHP, int HK, int NAM, String MACT, int DIEMTH, int DIEMQT, int DIEMCK, int DIEMTK){
         this.MASV.set(MASV);
         this.MAGV.set(MAGV);
         this.MAHP.set(MAHP);
@@ -128,48 +128,48 @@ public class Dangky {
     public SimpleStringProperty MACTproperty(){
         return MACT;
     }
-    public float getDIEMTH() {
+    public int getDIEMTH() {
         return DIEMTH.get();
     }
     
-    public void setDIEMTH(float DIEMTH) {
+    public void setDIEMTH(int DIEMTH) {
         this.DIEMTH.set(DIEMTH);
     }
 
-    public SimpleFloatProperty DIEMTHproperty(){
+    public SimpleIntegerProperty DIEMTHproperty(){
         return DIEMTH;
     }
-    public float getDIEMQT() {
+    public int getDIEMQT() {
         return DIEMQT.get();
     }
     
-    public void setDIEMQT(float DIEMQT) {
+    public void setDIEMQT(int DIEMQT) {
         this.DIEMQT.set(DIEMQT);
     }
 
-    public SimpleFloatProperty DIEMQTproperty(){
+    public SimpleIntegerProperty DIEMQTproperty(){
         return DIEMQT;
     }
-    public float getDIEMCK() {
+    public int getDIEMCK() {
         return DIEMCK.get();
     }
     
-    public void setDIEMCK(float DIEMCK) {
+    public void setDIEMCK(int DIEMCK) {
         this.DIEMCK.set(DIEMCK);
     }
 
-    public SimpleFloatProperty DIEMCKproperty(){
+    public SimpleIntegerProperty DIEMCKproperty(){
         return DIEMCK;
     }
-    public float getDIEMTK() {
+    public int getDIEMTK() {
         return DIEMTK.get();
     }
     
-    public void setDIEMTK(float DIEMTK) {
+    public void setDIEMTK(int DIEMTK) {
         this.DIEMTK.set(DIEMTK);
     }
 
-    public SimpleFloatProperty DIEMTKproperty(){
+    public SimpleIntegerProperty DIEMTKproperty(){
         return DIEMTK;
     }
 }

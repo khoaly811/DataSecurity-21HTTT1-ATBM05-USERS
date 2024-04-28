@@ -30,7 +30,6 @@
       <Label layoutX="291.0" layoutY="583.0" text="Học kỳ" />
       <Label layoutX="296.0" layoutY="621.0" text="Năm" />
       <Label layoutX="39.0" layoutY="621.0" text="Tên giáo viên" />
-      <Button layoutX="941.0" layoutY="55.0" mnemonicParsing="false" text="Thông báo" />
       <Button layoutX="941.0" layoutY="637.0" mnemonicParsing="false" onAction="#refreshTable" text="Làm mới">
          <font>
             <Font name="System Bold" size="19.0" />

@@ -42,7 +42,6 @@
       <TextField fx:id="vaitroDisplay" layoutX="341.0" layoutY="661.0" prefHeight="25.0" prefWidth="209.0" />
       <TextField fx:id="manvDisplay" layoutX="341.0" layoutY="661.0" prefHeight="25.0" prefWidth="209.0" visible="false" />
       <Label layoutX="278.0" layoutY="665.0" text="Vai trò" />
-      <Button layoutX="945.0" layoutY="55.0" mnemonicParsing="false" text="Thông báo" />
       <Button layoutX="945.0" layoutY="645.0" mnemonicParsing="false" onAction="#refreshTable" text="Làm mới">
         <font>
             <Font name="System Bold" size="19.0" />

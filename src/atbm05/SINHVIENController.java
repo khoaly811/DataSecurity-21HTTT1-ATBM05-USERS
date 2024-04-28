@@ -169,7 +169,7 @@ public class SINHVIENController {
                 sv.setMACT(rs.getString("MACT"));
                 sv.setMANGANH(rs.getString("MANGANH"));
                 sv.setSOTCTL(rs.getInt("SOTCTL"));
-                sv.setDIEMTBTL(rs.getFloat("DTBTL"));
+                sv.setDIEMTBTL(rs.getint("DTBTL"));
                 sinhvienList.add(sv);
             }
         } catch (SQLException e) {
@@ -204,7 +204,7 @@ public class SINHVIENController {
                 sv.setMACT(rs.getString("MACT"));
                 sv.setMANGANH(rs.getString("MANGANH"));
                 sv.setSOTCTL(rs.getInt("SOTCTL"));
-                sv.setDIEMTBTL(rs.getFloat("DTBTL"));
+                sv.setDIEMTBTL(rs.getint("DTBTL"));
                 sinhvienList.add(sv);
             }
         } catch (SQLException e) {
@@ -226,7 +226,7 @@ public class SINHVIENController {
         String INP_MACT = chuongtrinhDisplay.getText().trim();
         String INP_MANGANH = nganhDisplay.getText().trim();
         int INP_SOTCTL = Integer.parseInt(sotctlDisplay.getText().trim());
-        Float INP_DTBTL = Float.parseFloat(diemtbtlDisplay.getText().trim());
+        int INP_DTBTL = int.parseint(diemtbtlDisplay.getText().trim());
 
 
         DataAccessLayer dal = null;
@@ -245,7 +245,7 @@ public class SINHVIENController {
             cst.setString(6, INP_MACT);
             cst.setString(7, INP_MANGANH);
             cst.setInt(8, INP_SOTCTL);
-            cst.setFloat(9, INP_DTBTL);
+            cst.setint(9, INP_DTBTL);
             int rowsAffected = cst.executeUpdate();
 
             String grantedRole = null;

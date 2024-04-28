@@ -12,6 +12,7 @@ import oracle.jdbc.OracleTypes;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -90,12 +91,25 @@ public class ADDDANGKYController {
         Connection conn = null;
         CallableStatement cst = null;
         ResultSet rs = null;
+        String role = null;
+        PreparedStatement pst = null;
 
         try {
             dal = DataAccessLayer.getInstance("your_username", "your_password");
             conn = dal.connect();
-            cst = conn.prepareCall("{CALL C##QLK.SP_VIEW_ADD_DANGKY(?)}");
+            pst = conn.prepareStatement("SELECT * FROM SESSION_ROLES");
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                role = rs.getString("ROLE");
+            }   
+            if ("SV".equals(role)){
+            cst = conn.prepareCall("{CALL C##QLK.SP_SV_VIEW_ADD_DANGKY(?)}");
             cst.registerOutParameter(1, OracleTypes.CURSOR);
+            }
+            else{
+                cst = conn.prepareCall("{CALL C##QLK.SP_VIEW_ADD_DANGKY(?)}");
+                cst.registerOutParameter(1, OracleTypes.CURSOR);
+            }
             cst.execute();
             rs = (ResultSet) cst.getObject(1);
             while (rs.next()) {
