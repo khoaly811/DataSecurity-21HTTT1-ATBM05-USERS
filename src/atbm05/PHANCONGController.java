@@ -220,9 +220,34 @@ public class PHANCONGController {
              cst.setString(5, MACT_OLD);
    
              int rowsAffected = cst.executeUpdate();
+             String grantedRole = null;
+             PreparedStatement pst = null;
+             ResultSet rs = null;
+             pst = conn
+                     .prepareStatement(
+                             "SELECT * FROM SESSION_ROLES");
  
+             rs = pst.executeQuery();
+             if (rs.next()) {
+                 grantedRole = rs.getString("ROLE");
+             }
+ 
+             if (grantedRole != null) {
+                 System.out.println("Granted role: " + grantedRole);
+             } else {
+                 System.out.println("No role found for the current user.");
+             }
              
-             if (rowsAffected > 0) {
+             if ("SV".equals(grantedRole) || grantedRole == null|| "NVCB".equals(grantedRole) || "GV".equals(grantedRole) || "GVU".equals(grantedRole)) {
+                 System.out.println("No privileges (no grant).");
+                 // Show an error alert
+                 Alert alert = new Alert(AlertType.ERROR);
+                 alert.setTitle("Error");
+                 alert.setHeaderText(null);
+                 alert.setContentText("Lỗi: không có quyền!");
+                 alert.showAndWait();
+ 
+             } else if (rowsAffected > 0) {
                  System.out.println("Delete successfully.");
                  Alert alert = new Alert(AlertType.INFORMATION);
                  alert.setTitle("Success");
@@ -230,8 +255,8 @@ public class PHANCONGController {
                  alert.setContentText("Xóa thành công!");
                  alert.showAndWait();
  
-             } else{
-                 System.out.println("Delete unsuccessfully.");
+             } else {
+                 System.out.println("Update unsuccessfully.");
                  Alert alert = new Alert(AlertType.ERROR);
                  alert.setTitle("Error");
                  alert.setHeaderText(null);
@@ -240,27 +265,20 @@ public class PHANCONGController {
  
              }
          } catch (SQLException e) {
-             System.out.println("Failed to Delete: " + e.getMessage());
-             //showAlert(Alert.AlertType.ERROR, "Error", "Failed to Update user: " + e.getMessage());
+             System.out.println("Failed to Update: " + e.getMessage());
+             // showAlert(Alert.AlertType.ERROR, "Error", "Failed to Update user: " +
+             // e.getMessage());
              if (e.getMessage().contains("ORA-01031")) {
                  System.out.println("No privileges (no grant).");
                  // Show an error alert
                  Alert alert = new Alert(AlertType.ERROR);
                  alert.setTitle("Error");
                  alert.setHeaderText(null);
-                 alert.setContentText("Bạn không có quyền!!!");
+                 alert.setContentText("Lỗi");
                  alert.showAndWait();
              }
-             else{
-                 System.out.println("Unexpected error");
-                 // Show an error alert
-                 Alert alert = new Alert(AlertType.ERROR);
-                 alert.setTitle("Error");
-                 alert.setHeaderText(null);
-                 alert.setContentText("Bạn không có quyền!!!");
-                 alert.showAndWait();
-             }
-     }
+ 
+         }
  }
 
     @FXML
@@ -276,13 +294,9 @@ public class PHANCONGController {
        String MACT_OLD = selectedPhancong.getMACT();
        int HK_OLD = selectedPhancong.getHK();
        int NAM_OLD = selectedPhancong.getNAM();
-    //    System.out.println("TENHP: " + TENHP_OLD);
-    //    System.out.println("MACT: " + MACT_OLD);
-    //    System.out.println("HK: " + HK_OLD);
-    //    System.out.println("NAM: " + NAM_OLD);
        DataAccessLayer dal = null;
-        Connection conn = null;
-        CallableStatement cst = null;
+       Connection conn = null;
+       CallableStatement cst = null;
        try {
             dal = DataAccessLayer.getInstance("", "");
             conn = dal.connect();
@@ -299,9 +313,34 @@ public class PHANCONGController {
             cst.setString(10, MACT_OLD);
   
             int rowsAffected = cst.executeUpdate();
+            String grantedRole = null;
+            PreparedStatement pst = null;
+            ResultSet rs = null;
+            pst = conn
+                    .prepareStatement(
+                            "SELECT * FROM SESSION_ROLES");
 
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                grantedRole = rs.getString("ROLE");
+            }
+
+            if (grantedRole != null) {
+                System.out.println("Granted role: " + grantedRole);
+            } else {
+                System.out.println("No role found for the current user.");
+            }
             
-            if (rowsAffected > 0) {
+            if ("SV".equals(grantedRole) || grantedRole == null|| "NVCB".equals(grantedRole) || "GV".equals(grantedRole)) {
+                System.out.println("No privileges (no grant).");
+                // Show an error alert
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Lỗi: không có quyền!");
+                alert.showAndWait();
+
+            } else if (rowsAffected > 0) {
                 System.out.println("Update successfully.");
                 Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setTitle("Success");
@@ -309,7 +348,7 @@ public class PHANCONGController {
                 alert.setContentText("Cập nhật thành công!");
                 alert.showAndWait();
 
-            } else{
+            } else {
                 System.out.println("Update unsuccessfully.");
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Error");
@@ -320,26 +359,19 @@ public class PHANCONGController {
             }
         } catch (SQLException e) {
             System.out.println("Failed to Update: " + e.getMessage());
-            //showAlert(Alert.AlertType.ERROR, "Error", "Failed to Update user: " + e.getMessage());
+            // showAlert(Alert.AlertType.ERROR, "Error", "Failed to Update user: " +
+            // e.getMessage());
             if (e.getMessage().contains("ORA-01031")) {
                 System.out.println("No privileges (no grant).");
                 // Show an error alert
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText(null);
-                alert.setContentText("Bạn không có quyền!!!");
+                alert.setContentText("Lỗi");
                 alert.showAndWait();
             }
-            else{
-                System.out.println("Unexpected error");
-                // Show an error alert
-                Alert alert = new Alert(AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText("Bạn không có quyền!!!");
-                alert.showAndWait();
-            }
-    }
+
+        }
 }
 
 

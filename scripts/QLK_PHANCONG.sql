@@ -26,6 +26,8 @@ BEGIN
                 SELECT COUNT(*) INTO USERROLE FROM DBA_ROLE_PRIVS WHERE GRANTEE = USERNAME AND (GRANTED_ROLE = 'TDV');
                 IF USERROLE > 0 THEN
                     PREDICATE:= 'MAHP IN (SELECT MAHP FROM HOCPHAN JOIN DONVI ON DONVI.MADV = HOCPHAN.MADV WHERE UPPER(DONVI.TRGDV) = ''' || USERNAME || ''')';
+                ELSE
+                    PREDICATE:= '1=0';
                 END IF;
             END IF;
         END IF;
@@ -69,7 +71,7 @@ BEGIN
             SELECT COUNT(*) INTO USERROLE FROM DBA_ROLE_PRIVS WHERE GRANTEE = USERNAME AND (GRANTED_ROLE = 'GV');
 
             IF USERROLE > 0 THEN
-                PREDICATE := 'MAGV = ''' || USERNAME || '''';
+                PREDICATE := 'UPPER(MAGV) = ''' || USERNAME || '''';
             ELSE
                 SELECT COUNT(*) INTO USERROLE FROM DBA_ROLE_PRIVS WHERE GRANTEE = USERNAME AND (GRANTED_ROLE = 'TDV');
                 IF USERROLE > 0 THEN
