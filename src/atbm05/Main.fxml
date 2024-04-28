@@ -3,7 +3,7 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="743.0" prefWidth="1302.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="atbm05.MainController">
+<TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="743.0" prefWidth="1302.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="atbm05.MainController">
   <tabs>
       <Tab text="Nhân sự">
          <content>
@@ -55,6 +55,16 @@
       <Tab text="Thông báo">
          <content>
             <fx:include source="THONGBAO.fxml" />
+         </content>
+      </Tab>
+      <Tab fx:id="fgaTab" text="Fine-grained Audit">
+         <content>
+            <fx:include source="FGA.fxml" />
+         </content>
+      </Tab>
+      <Tab fx:id="fgaTab1" text="Standard Audit">
+         <content>
+            <fx:include source="STDA.fxml" />
          </content>
       </Tab>
   </tabs>
