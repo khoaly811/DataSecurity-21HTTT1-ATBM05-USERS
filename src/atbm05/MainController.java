@@ -1,6 +1,10 @@
 package atbm05;
 
 import java.sql.Connection;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,6 +27,7 @@ public class MainController {
 
     @FXML
     private void initialize() {
+            
         // Get the current user
         Boolean currentUser = getCurrentUser(); // Implement this method to get the current user
         System.out.println(currentUser);

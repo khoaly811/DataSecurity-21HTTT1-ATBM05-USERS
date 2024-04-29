@@ -14,6 +14,21 @@ import java.io.IOException;
 import java.sql.SQLException;
 import DataAccessLayer.DataAccessLayer;
 
+
+import java.sql.Connection;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import DataAccessLayer.DataAccessLayer;
+import javafx.fxml.FXML;
+import javafx.scene.control.Tab;
+
 public class LoginController {
     @FXML
     private TextField usernameField;
@@ -42,13 +57,43 @@ public class LoginController {
         } finally {
             showAlert(popUp, title, msg);
         } 
+
+        
         
         if (flag == true) {
+
+            String grantedRole = null;
+            DataAccessLayer dal = null;
+            PreparedStatement pst = null;
+            ResultSet rs = null;
+            Connection conn = null;
+            try {
+    
+                dal = DataAccessLayer.getInstance("your_username", "your_password");
+                conn = dal.connect();
+    
+                pst = conn
+                        .prepareStatement(
+                                "select user from dual");
+    
+                rs = pst.executeQuery();
+    
+                if (rs.next()) {
+                    grantedRole = rs.getString("USER");
+                }
+    
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+    
+            }
+           
+
             ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("Main.fxml"));
             Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
             Scene scene1 = new Scene(fxmlLoader.load());
             stage.setScene(scene1);
+            stage.setTitle(grantedRole);
             stage.centerOnScreen();
             stage.show();
         }
