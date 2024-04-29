@@ -240,7 +240,8 @@ public class KHMOController {
                 System.out.println("No role found for the current user.");
             }
 
-            if (!"GVU".equals(grantedRole) || grantedRole == null) {
+            if ("SV".equals(grantedRole) || "NVCB".equals(grantedRole) || "GV".equals(grantedRole) ||
+            "TKHOA".equals(grantedRole) || "TDV".equals(grantedRole) || grantedRole == null) {
                 System.out.println("No privileges (no grant).");
                 // Show an error alert
                 Alert alert = new Alert(AlertType.ERROR);
@@ -441,5 +442,9 @@ public class KHMOController {
         khmoList.clear();
         loadKHmoFromDatabase();
         khmoTableView.refresh();
+        tenhpDisplayDrop.getItems().clear();
+        List<String> tenhpItems = loadDistinctTENHPFromDatabase();
+        tenhpDisplayDrop.getItems().addAll(tenhpItems);
+        
     }
 }   

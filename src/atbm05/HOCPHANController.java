@@ -201,11 +201,12 @@ public class HOCPHANController {
     private void updateHPClick(ActionEvent event) {
         Hocphan selectedHocphan = hocphanTableView.getSelectionModel().getSelectedItem();
         String TENHP_OLD = selectedHocphan.getTENHP();
-        int SOTC_OLD = selectedHocphan.getSOTC();
-        int SOTIETLT_OLD = selectedHocphan.getSOTIETLT();
-        int SOTIETTH_OLD = selectedHocphan.getSOTIETTH();
-        int SOSVTOIDA_OLD =selectedHocphan.getSOSVTOIDA();
-        String TENDV_OLD = selectedHocphan.getDonvi().getTENDV();
+        String TENHP = tenhpDisplay.getText().trim();
+        int SOTC = Integer.parseInt(sotcDisplay.getText().trim());
+        int STLT = Integer.parseInt(sotietltDisplay.getText().trim());
+        int STTH = Integer.parseInt(sotietthDisplay.getText().trim());
+        int SOSVTD = Integer.parseInt(sosvtoidaDisplay.getText().trim());
+        String TENDV = ((String) tendvDisplayDrop.getValue()).trim(); 
         DataAccessLayer dal = null;
         Connection conn = null;
         CallableStatement cst = null;
@@ -214,15 +215,16 @@ public class HOCPHANController {
 
             dal = DataAccessLayer.getInstance("", "");
             conn = dal.connect();
-            cst = conn.prepareCall("{CALL C##QLK.SP_ALL_UPDATE_HOCPHAN(?,?,?,?,?,?)}");
+            cst = conn.prepareCall("{CALL C##QLK.SP_ALL_UPDATE_HOCPHAN(?,?,?,?,?,?,?)}");
             cst.setString(1, TENHP_OLD);
-            cst.setInt(2, SOTC_OLD);
-            cst.setInt(3, SOTIETLT_OLD);
-            cst.setInt(4, SOTIETTH_OLD);
-            cst.setInt(5, SOSVTOIDA_OLD);
-            cst.setString(6, TENDV_OLD);
+            cst.setString(2, TENHP);
+            cst.setInt(3, SOTC);
+            cst.setInt(4, STLT);
+            cst.setInt(5, STTH);
+            cst.setInt(6, SOSVTD);
+            cst.setString(7, TENDV);
 
-             int rowsAffected = cst.executeUpdate();
+            int rowsAffected = cst.executeUpdate();
 
             String grantedRole = null;
             PreparedStatement pst = null;
@@ -243,7 +245,8 @@ public class HOCPHANController {
                 System.out.println("No role found for the current user.");
             }
 
-            if (!"GVU".equals(grantedRole) || grantedRole == null) {
+            if ("SV".equals(grantedRole) || "NVCB".equals(grantedRole) || "GV".equals(grantedRole) ||
+            "TKHOA".equals(grantedRole) || "TDV".equals(grantedRole) || grantedRole == null) {
                 System.out.println("No privileges (no grant).");
                 // Show an error alert
                 Alert alert = new Alert(AlertType.ERROR);
@@ -271,7 +274,7 @@ public class HOCPHANController {
             }
 
         } catch (SQLException e) {
-            System.out.println("Failed to Delete: " + e.getMessage());
+            System.out.println("Failed to Update: " + e.getMessage());
             //showAlert(Alert.AlertType.ERROR, "Error", "Failed to Update user: " + e.getMessage());
             if (e.getMessage().contains("ORA-01031")) {
                 System.out.println("No privileges (no grant).");

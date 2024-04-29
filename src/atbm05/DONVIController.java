@@ -119,7 +119,8 @@ public class DONVIController {
     
     @FXML
     private void updateDVClick(ActionEvent event) {
-        String INP_MADV = madvDisplay.getText().trim();
+        Donvi selectedDonvi = donviTableView.getSelectionModel().getSelectedItem();
+        String OLD_TENDV = selectedDonvi.getTENDV();
         String INP_TENDV = tendvDisplay.getText().trim();
         String INP_TRUONGDV = truongdvDisPlay.getText().trim();
 
@@ -131,10 +132,10 @@ public class DONVIController {
             dal = DataAccessLayer.getInstance("your_username", "your_password");
             conn = dal.connect();
             cst = conn.prepareCall("{CALL C##QLK.SP_ALL_UPDATE_DONVI(?,?,?)}");
-            cst.setString(1, INP_TENDV);
-            cst.setString(2, INP_TRUONGDV);
-            cst.setString(3, INP_MADV);
-
+            cst.setString(1, OLD_TENDV);
+            cst.setString(2, INP_TENDV);
+            cst.setString(3, INP_TRUONGDV);
+            
             int rowsAffected = cst.executeUpdate();
 
             String grantedRole = null;
@@ -156,7 +157,8 @@ public class DONVIController {
                 System.out.println("No role found for the current user.");
             }
 
-            if (!"GVU".equals(grantedRole) || grantedRole == null) {
+            if ("SV".equals(grantedRole) || "NVCB".equals(grantedRole) || "GV".equals(grantedRole) ||
+            "TKHOA".equals(grantedRole) || "TDV".equals(grantedRole) || grantedRole == null) {
                 System.out.println("No privileges (no grant).");
                 // Show an error alert
                 Alert alert = new Alert(AlertType.ERROR);

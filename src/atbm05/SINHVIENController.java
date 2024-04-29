@@ -169,7 +169,7 @@ public class SINHVIENController {
                 sv.setMACT(rs.getString("MACT"));
                 sv.setMANGANH(rs.getString("MANGANH"));
                 sv.setSOTCTL(rs.getInt("SOTCTL"));
-                sv.setDIEMTBTL(rs.getint("DTBTL"));
+                sv.setDIEMTBTL(rs.getInt("DTBTL"));
                 sinhvienList.add(sv);
             }
         } catch (SQLException e) {
@@ -204,7 +204,7 @@ public class SINHVIENController {
                 sv.setMACT(rs.getString("MACT"));
                 sv.setMANGANH(rs.getString("MANGANH"));
                 sv.setSOTCTL(rs.getInt("SOTCTL"));
-                sv.setDIEMTBTL(rs.getint("DTBTL"));
+                sv.setDIEMTBTL(rs.getInt("DTBTL"));
                 sinhvienList.add(sv);
             }
         } catch (SQLException e) {
@@ -226,7 +226,7 @@ public class SINHVIENController {
         String INP_MACT = chuongtrinhDisplay.getText().trim();
         String INP_MANGANH = nganhDisplay.getText().trim();
         int INP_SOTCTL = Integer.parseInt(sotctlDisplay.getText().trim());
-        int INP_DTBTL = int.parseint(diemtbtlDisplay.getText().trim());
+        int INP_DTBTL = Integer.parseInt(diemtbtlDisplay.getText().trim());
 
 
         DataAccessLayer dal = null;
@@ -245,7 +245,7 @@ public class SINHVIENController {
             cst.setString(6, INP_MACT);
             cst.setString(7, INP_MANGANH);
             cst.setInt(8, INP_SOTCTL);
-            cst.setint(9, INP_DTBTL);
+            cst.setInt(9, INP_DTBTL);
             int rowsAffected = cst.executeUpdate();
 
             String grantedRole = null;
@@ -267,7 +267,8 @@ public class SINHVIENController {
                 System.out.println("No role found for the current user.");
             }
 
-            if ( !(!"GVU".equals(grantedRole) || !"SV".equals(grantedRole)) || grantedRole == null) {
+            if ("NVCB".equals(grantedRole) || "GV".equals(grantedRole) ||
+            "TKHOA".equals(grantedRole) || "TDV".equals(grantedRole) || grantedRole == null) {
                 System.out.println("No privileges (no grant).");
                 // Show an error alert
                 Alert alert = new Alert(AlertType.ERROR);
@@ -327,11 +328,11 @@ public class SINHVIENController {
             INP_SOTCTL = Integer.parseInt(sotcText.trim());
         }
         
-        Double INP_DTBTL = 0.0;
+        Integer INP_DTBTL = 0;
         String dtbText = diemtbtlDisplay.getText();
         if (dtbText != null && !dtbText.isEmpty()) { // Check if the text is not null and not empty
 
-            INP_DTBTL = Double.parseDouble(dtbText.trim());
+            INP_DTBTL = Integer.parseInt(dtbText.trim());
         }
         DataAccessLayer dal = null;
         Connection conn = null;
@@ -349,7 +350,7 @@ public class SINHVIENController {
             cst.setString(6, INP_MACT);
             cst.setString(7, INP_MANGANH);
             cst.setInt(8, INP_SOTCTL);
-            cst.setDouble(9, INP_DTBTL);
+            cst.setInt(9, INP_DTBTL);
 
             int rowsAffected = cst.executeUpdate();
 
@@ -372,7 +373,8 @@ public class SINHVIENController {
                 System.out.println("No role found for the current user.");
             }
 
-            if (!"GVU".equals(grantedRole) || grantedRole == null) {
+            if ("SV".equals(grantedRole) || "NVCB".equals(grantedRole) || "GV".equals(grantedRole) ||
+            "TKHOA".equals(grantedRole) || "TDV".equals(grantedRole) || grantedRole == null) {
                 System.out.println("No privileges (no grant).");
                 // Show an error alert
                 Alert alert = new Alert(AlertType.ERROR);
