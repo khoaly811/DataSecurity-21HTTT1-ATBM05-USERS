@@ -12,17 +12,16 @@
     <TableView fx:id="adddangkyTableView" layoutY="111.0" prefHeight="599.0" prefWidth="958.0">
       <columns>
     <!-- <TableColumn fx:id="MANV" prefWidth="75.0" text="MANV" /> -->
-    <TableColumn fx:id="TENHP" prefWidth="105.0" text="Tên học phần" />
-    <TableColumn fx:id="TENGV" prefWidth="95.0" text="Tên giảng viên" />
-    <TableColumn fx:id="HK" prefWidth="58.0" text="Học kỳ" />
-    <TableColumn fx:id="NAM" prefWidth="50.0" text="Năm" />
-    <TableColumn fx:id="NGAYBD" prefWidth="86.0" text="Ngày bắt đầu" />
+    <TableColumn fx:id="TENHP" prefWidth="126.0" text="Tên học phần" />
+    <TableColumn fx:id="HK" prefWidth="52.0" text="Học kỳ" />
+    <TableColumn fx:id="NAM" prefWidth="45.0" text="Năm" />
+    <TableColumn fx:id="NGAYBD" prefWidth="95.0" text="Ngày bắt đầu" />
     <TableColumn fx:id="MACT" prefWidth="91.0" text="Chương trình" />
-    <TableColumn fx:id="MADV" prefWidth="64.0" text="Ngành" />
-    <TableColumn fx:id="SOTC" prefWidth="60.0" text="Số tín chỉ" />
-    <TableColumn fx:id="STLT" prefWidth="104.0" text="Số tiết lý thuyết" />
-    <TableColumn fx:id="STTH" prefWidth="119.0" text="Số tiết thực hành" />
-    <TableColumn fx:id="SOSVTD" prefWidth="125.0" text="Số sinh viên tối đa" />
+    <TableColumn fx:id="MADV" prefWidth="129.0" text="Ngành" />
+    <TableColumn fx:id="SOTC" prefWidth="69.0" text="Số tín chỉ" />
+    <TableColumn fx:id="STLT" prefWidth="114.0" text="Số tiết lý thuyết" />
+    <TableColumn fx:id="STTH" prefWidth="117.0" text="Số tiết thực hành" />
+    <TableColumn fx:id="SOSVTD" prefWidth="119.0" text="Số sinh viên tối đa" />
       </columns>
     </TableView>
     <TextField layoutX="474.0" layoutY="42.0" prefHeight="26.0" prefWidth="292.0" promptText="Keywords..." />

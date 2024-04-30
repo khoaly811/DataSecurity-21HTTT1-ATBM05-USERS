@@ -8,7 +8,7 @@
 --select MAHP  from HOCPHAN join DONVI on DONVI.MADV = HOCPHAN.MADV where DONVI.TENDV = 'Van phong khoa';
 
 
-CREATE OR REPLACE FUNCTION F_CS_HOCPHAN(
+CREATE OR REPLACE FUNCTION F_CS_HOCPHAN_1(
     P_SCHEMA IN VARCHAR2,
     P_OBJECT IN VARCHAR2
 )
@@ -40,20 +40,66 @@ BEGIN
     DBMS_RLS.ADD_POLICY(
         OBJECT_SCHEMA    => 'C##QLK',
         OBJECT_NAME      => 'HOCPHAN',
-        policy_name      => 'HOCPHAN_POLICY',
+        policy_name      => 'HOCPHAN1_POLICY',
         function_schema  => 'C##QLK',
-        policy_function  => 'F_CS_HOCPHAN',
-        statement_types  => 'SELECT, UPDATE, INSERT, DELETE',
+        policy_function  => 'F_CS_HOCPHAN_1',
+        statement_types  => 'SELECT',
         update_check     => TRUE,
         enable           => TRUE);
 END;
 /
 grant select on HOCPHAN to NVCB,GV,GVU,TDV,TKHOA,SV;
+
+CREATE OR REPLACE FUNCTION F_CS_HOCPHAN_2(
+    P_SCHEMA IN VARCHAR2,
+    P_OBJECT IN VARCHAR2
+)
+RETURN VARCHAR2
+AS
+    USERNAME VARCHAR2(130);
+    USERROLE VARCHAR2(130);
+    PREDICATE   VARCHAR2(1000); 
+BEGIN
+    USERNAME := SYS_CONTEXT('USERENV', 'SESSION_USER');
+    
+    IF USERNAME = 'C##QLK' THEN
+        RETURN '';
+    ELSE
+        SELECT COUNT(*) INTO USERROLE FROM DBA_ROLE_PRIVS WHERE GRANTEE = USERNAME AND (GRANTED_ROLE = 'GVU');
+
+        IF USERROLE > 0 THEN
+            PREDICATE := '1=1'; 
+        ELSE
+            PREDICATE := '1=0'; 
+        END IF;
+    END IF;
+
+    RETURN PREDICATE;
+END;
+/
+BEGIN
+    DBMS_RLS.ADD_POLICY(
+        OBJECT_SCHEMA    => 'C##QLK',
+        OBJECT_NAME      => 'HOCPHAN',
+        policy_name      => 'HOCPHAN2_POLICY',
+        function_schema  => 'C##QLK',
+        policy_function  => 'F_CS_HOCPHAN_2',
+        statement_types  => 'UPDATE,INSERT',
+        update_check     => TRUE,
+        enable           => TRUE);
+END;
+/
 grant insert, update on HOCPHAN to GVU;
-commit;
+--BEGIN
+--    DBMS_RLS.DROP_POLICY(
+--        OBJECT_SCHEMA    => 'C##QLK',
+--        OBJECT_NAME      => 'KHMO',
+--        policy_name      => 'KHMO_POLICY'
+--      );
+--END;
+--/
 
-
-CREATE OR REPLACE FUNCTION F_CS_KHMO(
+CREATE OR REPLACE FUNCTION F_CS_KHMO_1(
     P_SCHEMA IN VARCHAR2,
     P_OBJECT IN VARCHAR2
 )
@@ -102,13 +148,53 @@ BEGIN
     DBMS_RLS.ADD_POLICY(
         OBJECT_SCHEMA    => 'C##QLK',
         OBJECT_NAME      => 'KHMO',
-        policy_name      => 'KHMO_POLICY',
+        policy_name      => 'KHMO1_POLICY',
         function_schema  => 'C##QLK',
-        policy_function  => 'F_CS_KHMO',
-        statement_types  => 'SELECT, UPDATE, INSERT, DELETE',
+        policy_function  => 'F_CS_KHMO_1',
+        statement_types  => 'SELECT',
         update_check     => TRUE,
         enable           => TRUE);
 END;
 /
 grant select on KHMO to NVCB,GV,GVU,TDV,TKHOA,SV;
+
+CREATE OR REPLACE FUNCTION F_CS_KHMO_2(
+    P_SCHEMA IN VARCHAR2,
+    P_OBJECT IN VARCHAR2
+)
+RETURN VARCHAR2
+AS
+    USERNAME VARCHAR2(130);
+    USERROLE VARCHAR2(130);
+    PREDICATE   VARCHAR2(1000); 
+BEGIN
+    USERNAME := SYS_CONTEXT('USERENV', 'SESSION_USER');
+    
+    IF USERNAME = 'C##QLK' THEN
+        RETURN '';
+    ELSE
+        SELECT COUNT(*) INTO USERROLE FROM DBA_ROLE_PRIVS WHERE GRANTEE = USERNAME AND (GRANTED_ROLE = 'GVU');
+
+        IF USERROLE > 0 THEN
+            PREDICATE := '1=1'; 
+        ELSE
+            PREDICATE := '1=0'; 
+        END IF;
+    END IF;
+
+    RETURN PREDICATE;
+END;
+/
+BEGIN
+    DBMS_RLS.ADD_POLICY(
+        OBJECT_SCHEMA    => 'C##QLK',
+        OBJECT_NAME      => 'KHMO',
+        policy_name      => 'KHMO2_POLICY',
+        function_schema  => 'C##QLK',
+        policy_function  => 'F_CS_KHMO_2',
+        statement_types  => 'INSERT, UPDATE',
+        update_check     => TRUE,
+        enable           => TRUE);
+END;
+/
 grant insert, update on KHMO to GVU;
