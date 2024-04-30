@@ -5,17 +5,17 @@
 
 <TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="743.0" prefWidth="1302.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="atbm05.MainController">
   <tabs>
-      <Tab text="Nhân sự">
+      <Tab  fx:id="nsTab" text="Nhân sự">
          <content>
             <fx:include source="NHANSU.fxml" />
          </content>
       </Tab>
-      <Tab text="Phân công">
+      <Tab  fx:id="pcTab" text="Phân công">
       <content>
         <fx:include source="ADDPHANCONG.fxml" />
       </content>
     </Tab>
-    <Tab text="Kết quả phân công">
+    <Tab fx:id="kqTab" text="Kết quả phân công">
       <content>
         <fx:include source="PHANCONG.fxml" />
       </content>
@@ -47,7 +47,7 @@
             <fx:include source="SINHVIEN.fxml" />
          </content>
       </Tab>
-      <Tab text="Đơn vị">
+      <Tab  fx:id="dvTab" text="Đơn vị">
          <content>
             <fx:include source="DONVI.fxml" />
          </content>
