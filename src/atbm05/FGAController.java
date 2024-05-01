@@ -15,7 +15,10 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Button;
+import javafx.scene.control.Alert.AlertType;
 import DataAccessLayer.DataAccessLayer;
 import dto.DBA_FGA_AUDIT_TRAIL;
 import javafx.scene.control.Tab;
@@ -94,6 +97,121 @@ public class FGAController {
         FGAList.clear();
         loadDBA_FGA_AUDIT_TRAILFromDatabase();
         FGATableView.refresh();
+    }
+
+    @FXML
+    private void onFGAmoney(ActionEvent event) {
+     
+        DataAccessLayer dal = null;
+        Connection conn = null;
+        CallableStatement cst = null;
+        try {
+            dal = DataAccessLayer.getInstance("", "");
+            conn = dal.connect();
+            cst = conn.prepareCall("{CALL dbms_fga.enable_policy('C##QLK', 'NHANSU', 'FGA_PHUCAP_AUDIT')}");
+            
+         
+             
+
+            int rowsAffected = cst.executeUpdate();
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText(null);
+            alert.setContentText("Kích hoạt thành công!");
+            alert.showAndWait();
+            
+
+        } catch (SQLException e) {
+            System.out.println("Failed to enble PHUCAP: " + e.getMessage());
+            //showAlert(Alert.AlertType.ERROR, "Error", "Failed to Update user: " + e.getMessage());
+            
+        }
+    }
+    @FXML
+    private void offFGAmoney(ActionEvent event) {
+        DataAccessLayer dal = null;
+        Connection conn = null;
+        CallableStatement cst = null;
+        try {
+            dal = DataAccessLayer.getInstance("", "");
+            conn = dal.connect();
+            cst = conn.prepareCall("{CALL dbms_fga.disable_policy('C##QLK', 'NHANSU', 'FGA_PHUCAP_AUDIT')}");
+            
+         
+             
+
+            int rowsAffected = cst.executeUpdate();
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText(null);
+            alert.setContentText("Hủy thành công!");
+            alert.showAndWait();
+            
+
+        } catch (SQLException e) {
+            System.out.println("Failed to dis-enble PHUCAP: " + e.getMessage());
+            //showAlert(Alert.AlertType.ERROR, "Error", "Failed to Update user: " + e.getMessage());
+            
+        }
+        
+    }
+
+    @FXML
+    private void offFGApoint(ActionEvent event) {
+        DataAccessLayer dal = null;
+        Connection conn = null;
+        CallableStatement cst = null;
+        try {
+            dal = DataAccessLayer.getInstance("", "");
+            conn = dal.connect();
+            cst = conn.prepareCall("{CALL dbms_fga.disable_policy('C##QLK', 'DANGKY', 'UPDATE_DIEM_AUDIT')}");
+            
+         
+             
+
+            int rowsAffected = cst.executeUpdate();
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText(null);
+            alert.setContentText("Hủy thành công!");
+            alert.showAndWait();
+            
+
+        } catch (SQLException e) {
+            System.out.println("Failed to dis-enble PHUCAP: " + e.getMessage());
+            //showAlert(Alert.AlertType.ERROR, "Error", "Failed to Update user: " + e.getMessage());
+            
+        }
+        
+    }
+
+    @FXML
+    private void onFGApoint(ActionEvent event) {
+     
+        DataAccessLayer dal = null;
+        Connection conn = null;
+        CallableStatement cst = null;
+        try {
+            dal = DataAccessLayer.getInstance("", "");
+            conn = dal.connect();
+            cst = conn.prepareCall("{CALL dbms_fga.enable_policy('C##QLK', 'DANGKY', 'UPDATE_DIEM_AUDIT')}");
+            
+         
+             
+
+            int rowsAffected = cst.executeUpdate();
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText(null);
+            alert.setContentText("Kích hoạt thành công!");
+            alert.showAndWait();
+            
+
+        } catch (SQLException e) {
+            System.out.println("Failed to enble PHUCAP: " + e.getMessage());
+            //showAlert(Alert.AlertType.ERROR, "Error", "Failed to Update user: " + e.getMessage());
+            
+        }
     }
        
 }
