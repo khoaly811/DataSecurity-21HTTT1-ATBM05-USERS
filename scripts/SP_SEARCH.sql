@@ -198,7 +198,6 @@ BEGIN
     END IF;
 END;
 /
-
 BEGIN
     C##QLK.SP_GRANT_EXECUTE('C##QLK.SP_SEARCH_DANGKY', 'TKHOA');
     C##QLK.SP_GRANT_EXECUTE('C##QLK.SP_SEARCH_DANGKY', 'TDV');
@@ -262,7 +261,7 @@ BEGIN
         SEARCH_PATTERN := '%' || INP_TENHP || '%';
         
         QUERY_STRING := 'SELECT HP.TENHP, KH.HK, KH.NAM, KH.MACT, KH.NGAYBD 
-                         FROM C##QLK.KHMO KH JOIN C##QLK.HOCPHAN ON KH.MAHP = HP.MAHP 
+                         FROM C##QLK.KHMO KH JOIN C##QLK.HOCPHAN HP ON KH.MAHP = HP.MAHP 
                          WHERE HP.TENHP LIKE ''%' || INP_TENHP || '%''';
         
         OPEN RESULT_CURSOR FOR QUERY_STRING;
@@ -296,7 +295,7 @@ BEGIN
         -- Construct the search pattern for partial match
         SEARCH_PATTERN := '%' || INP_TENDV || '%';
         
-        QUERY_STRING := 'SELECT DV.TENDV, NS.HOTEN FROM C##QLK.DONVI DV JOIN C##QLK.NHANSU NS ON NS.MANS = DV.TRUONGDV 
+        QUERY_STRING := 'SELECT DV.TENDV, NS.HOTEN FROM C##QLK.DONVI DV JOIN C##QLK.NHANSU NS ON NS.MANV = DV.TRGDV 
                          WHERE DV.TENDV LIKE ''%' || INP_TENDV || '%''';
         
         OPEN RESULT_CURSOR FOR QUERY_STRING;
