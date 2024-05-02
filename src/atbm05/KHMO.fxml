@@ -21,21 +21,21 @@
          </columns>
       </TableView>
       <Button layoutX="922.0" layoutY="162.0" mnemonicParsing="false" onAction="#updateKHMOClick" prefHeight="31.0" prefWidth="140.0" text="Cập nhật" />
-      <Label layoutX="24.0" layoutY="647.0" text="Tên học phần" />
+      <Label layoutX="24.0" layoutY="613.0" text="Tên học phần" />
       <!-- <TextField fx:id="ngaybdDisplay" layoutX="123.0" layoutY="698.0" /> -->
-      <Label layoutX="342.0" layoutY="703.0" text="Học kỳ" />
-      <TextField fx:id="hockyDisplay" layoutX="410.0" layoutY="698.0" prefHeight="31.0" prefWidth="129.0" />
+      <Label layoutX="438.0" layoutY="613.0" text="Học kỳ" />
+      <TextField fx:id="hockyDisplay" layoutX="481.0" layoutY="606.0" prefHeight="31.0" prefWidth="51.0" />
       <!-- <Label layoutX="25.0" layoutY="703.0" text="Ngày bắt đầu" /> -->
-      <TextField fx:id="chuongtrinhDisplay" layoutX="712.0" layoutY="698.0" />
-      <Label layoutX="583.0" layoutY="703.0" text="Tên chương trình" />
-      <Label layoutX="349.0" layoutY="647.0" text="Năm" />
-      <TextField fx:id="namDisplay" layoutX="410.0" layoutY="642.0" prefHeight="31.0" prefWidth="129.0" />
-      <Button layoutX="922.0" layoutY="653.0" mnemonicParsing="false" onAction="#refreshTable" text="Làm mới">
+      <TextField fx:id="chuongtrinhDisplay" layoutX="678.0" layoutY="609.0" prefHeight="25.0" prefWidth="166.0" />
+      <Label layoutX="563.0" layoutY="613.0" text="Tên chương trình" />
+      <Label layoutX="329.0" layoutY="613.0" text="Năm" />
+      <TextField fx:id="namDisplay" layoutX="368.0" layoutY="606.0" prefHeight="31.0" prefWidth="51.0" />
+      <Button layoutX="940.0" layoutY="602.0" mnemonicParsing="false" onAction="#refreshTable" text="Làm mới">
          <font>
             <Font name="System Bold" size="19.0" />
          </font>
       </Button>
-      <ChoiceBox fx:id="tenhpDisplayDrop" layoutX="123.0" layoutY="642.0" prefHeight="31.0" prefWidth="187.0" />
+      <ChoiceBox fx:id="tenhpDisplayDrop" layoutX="122.0" layoutY="606.0" prefHeight="31.0" prefWidth="187.0" />
       <Button layoutX="916.0" layoutY="107.0" mnemonicParsing="false" onAction="#insertKHmoClick" prefHeight="31.0" prefWidth="151.0" text="Thêm Kế hoạch mở" />
       <TextField fx:id="searchKHMO" layoutX="484.0" layoutY="52.0" prefHeight="26.0" prefWidth="292.0" promptText="Keywords..." />
    </children>
